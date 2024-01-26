@@ -43,7 +43,7 @@ class StudentResource extends Resource
         return $table
             ->columns([
                 //
-                TextColumn::make('full_name')->label('Nome'),
+                TextColumn::make('full_name')->label('Nome')->searchable(),
             ])
             ->filters([
                 //
