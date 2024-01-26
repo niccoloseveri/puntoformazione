@@ -11,8 +11,7 @@ echo "Deployment started ..."
 git pull origin production
 
 # Install composer dependencies
-composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-
+/usr/bin/php82 /usr/local/bin/composer.phar install
 # Clear the old cache
 php artisan clear-compiled
 
