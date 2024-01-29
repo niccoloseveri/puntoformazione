@@ -20,7 +20,7 @@ jobs:
     - name: Set up Node
       uses: actions/setup-node@v4.0.1
     - run: npm install
-    - run: npm run dev
+    - run: npm run
     - name: Commit built assets
       run: |
         git config --local user.email "action@github.com"
