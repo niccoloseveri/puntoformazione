@@ -16,14 +16,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Node
-        uses: actions/setup-node@v1
-        with:
-        node-version: '12.x'
-       - run: npm install
-       - run: npm run production
-       - name: Commit built assets
+    - uses: actions/checkout@v2
+    - name: Set up Node
+      uses: actions/setup-node@v4.0.1
+    - run: npm install
+    - run: npm run production
+    - name: Commit built assets
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
@@ -31,11 +29,11 @@ jobs:
         git add -f public/
         git commit -m "Build front-end assets"
         git push -f production deploy
-      - name: Deploy to server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSHKEY }}
-          script: "cd /home/u9-7tfzpstrxnlx/www/gestionalepf.pythonsrl.com/public_html && ./.scripts/deploy.sh"
+    - name: Deploy to production
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        port: ${{ secrets.PORT }}
+        key: ${{ secrets.SSHKEY }}
+        script: "cd /home/u9-7tfzpstrxnlx/www/gestionalepf.pythonsrl.com/public_html && ./.scripts/deploy.sh"
