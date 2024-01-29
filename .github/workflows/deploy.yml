@@ -20,15 +20,16 @@ jobs:
     - name: Set up Node
       uses: actions/setup-node@v4.0.1
     - run: npm install
-    - run: npm run production
+    - run: npm run
     - name: Commit built assets
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git checkout -B deploy
         git add -f public/
+        git add package-lock.json
         git commit -m "Build front-end assets"
-        git push -f production deploy
+        git push -f origin deploy
     - name: Deploy to production
       uses: appleboy/ssh-action@master
       with:
@@ -36,7 +37,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         port: ${{ secrets.PORT }}
         key: ${{ secrets.SSHKEY }}
-        script: "cd /home/u9-7tfzpstrxnlx/www/gestionalepf.pythonsrl.com/public_html && ./.scripts/deploy.sh"
+        script: "cd /home/u9-7tfzpstrxnlx/www/gestionalepf.pythonsrl.com/public_html && . .scripts/deploy.sh"
 
-
-          
