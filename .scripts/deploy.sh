@@ -2,7 +2,7 @@
 set -e
 
 echo "Deployment started ..."
-
+#c
 # Enter maintenance mode or return true
 # if already is in maintenance mode
 (php artisan down --message 'The app is being (quickly!) updated. Please try again in a minute.') || true
