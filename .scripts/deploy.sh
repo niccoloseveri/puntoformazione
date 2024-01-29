@@ -12,6 +12,10 @@ git pull origin production
 
 # Install composer dependencies
 /usr/bin/php82 /usr/local/bin/composer.phar install
+
+# Run database migrations
+php artisan migrate --force
+
 # Clear the old cache
 php artisan clear-compiled
 
@@ -19,10 +23,9 @@ php artisan clear-compiled
 php artisan optimize
 
 # Compile npm assets
-npm run prod
+#npm run prod
 
-# Run database migrations
-php artisan migrate --force
+
 
 # Exit maintenance mode
 php artisan up
