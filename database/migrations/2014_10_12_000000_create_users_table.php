@@ -14,19 +14,19 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('surname');
+            $table->string('surname')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('cf')->unique();
-            $table->string('via');
-            $table->string('citta');
-            $table->string('cap');
-            $table->string('tel');
+            $table->string('cf')->unique()->nullable();
+            $table->string('via')->nullable();
+            $table->string('citta')->nullable();
+            $table->string('cap')->nullable();
+            $table->string('tel')->nullable();
             $table->boolean('is_teacher')->default(false);
             $table->string('password');
             $table->rememberToken();
-            $table->string('full_name')->virtualAs('concat(name, \' \', surname)');
-            $table->string('address')->virtualAs('concat(via, \' \',cap, \' \', citta)');
+            $table->string('full_name')->virtualAs('concat(name, \' \', surname)')->nullable();
+            $table->string('address')->virtualAs('concat(via, \' \',cap, \' \', citta)')->nullable();
             $table->timestamps();
         });
     }
