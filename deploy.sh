@@ -6,7 +6,7 @@ set -e
 (git push) || true
 
 git checkout production
-git merge master
+git merge master -m "deploy"
 
 git push origin production
 
