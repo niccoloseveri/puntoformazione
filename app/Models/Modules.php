@@ -5,25 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Classrooms extends Model
+class Modules extends Model
 {
     use HasFactory;
 
-    /**
+     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
         'name',
+        'durata',
         'course_id',
     ];
 
     /**
-     * Get the Course that owns the Classrooms
+     * Get the Course that owns the Modules
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -32,21 +32,7 @@ class Classrooms extends Model
         return $this->belongsTo(Courses::class);
     }
 
-     /**
-     * The users that belong to the Classrooms
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class);
-    }
-
-    public function lessons() : HasMany {
-        return $this->hasMany(Lessons::class);
-    }
-
-    public function formativeunits() : HasMany {
+    public function formativeutits() : HasMany {
         return $this->hasMany(Formativeunits::class);
     }
 }
