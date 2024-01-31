@@ -17,8 +17,11 @@ class ModulesResource extends Resource
 {
     protected static ?string $model = Modules::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static ?string $navigationIcon = 'gmdi-view-module-r';
+    protected static ?string $navigationGroup = 'Didattica';
+    protected static ?string $modelLabel = 'Modulo';
+    protected static ?string $pluralModelLabel = 'Moduli';
+    protected static ?int $navigationSort = 3;
     public static function form(Form $form): Form
     {
         return $form

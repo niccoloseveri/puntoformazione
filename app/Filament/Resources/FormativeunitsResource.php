@@ -17,8 +17,11 @@ class FormativeunitsResource extends Resource
 {
     protected static ?string $model = Formativeunits::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static ?string $navigationIcon = 'gmdi-view-module-r';
+    protected static ?string $navigationGroup = 'Didattica';
+    protected static ?string $modelLabel = 'Unità Formativa';
+    protected static ?string $pluralModelLabel = 'Unità Formative';
+    protected static ?int $navigationSort = 4;
     public static function form(Form $form): Form
     {
         return $form
