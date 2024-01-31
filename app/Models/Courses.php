@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Courses extends Model
 {
@@ -30,5 +31,13 @@ class Courses extends Model
         'year' => 'date:Y',
     ];
 
-
+    /**
+     * Get all of the Classromms for the Courses
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function classrooms(): HasMany
+    {
+        return $this->hasMany(Classrooms::class,'course_id','id');
+    }
 }

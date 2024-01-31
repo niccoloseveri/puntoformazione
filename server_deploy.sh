@@ -23,6 +23,9 @@ php82 artisan clear-compiled
 # Recreate cache
 php82 artisan optimize
 
+#Icon cache
+php82 artisan icons:cache
+
 # Exit maintenance mode
 php82 artisan up
 
