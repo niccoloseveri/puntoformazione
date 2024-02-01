@@ -31,6 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->brandLogo(url("https://www.puntoformazione.net/fadonline/pluginfile.php/1/theme_lambda/logo/1695627872/punto%20logo%20top.jpeg"))
             ->profile()
+            ->registration()
             ->passwordReset()
             ->darkMode(false)
             ->colors([
