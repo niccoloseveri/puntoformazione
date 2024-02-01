@@ -47,7 +47,7 @@ class AdminPanelProvider extends PanelProvider
                      ->label('Anagrafica'),
                 NavigationGroup::make()->label('Gestione Pagamenti'),
                 NavigationGroup::make()->label('Didattica'),
-                NavigationGroup::make()->label(__('Roles and Permissions'))
+                NavigationGroup::make()->label(__('Roles and Permissions'))->collapsed()
             ])
             ->plugins([
                 FilamentSpatieRolesPermissionsPlugin::make(),

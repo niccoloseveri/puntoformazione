@@ -65,9 +65,9 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255),
 
-                Select::make('roles')->multiple()->relationship('roles', 'name')->preload(),
+                Select::make('roles')->multiple()->relationship('roles', 'name')->preload()->label('Ruolo'),
 
-                Forms\Components\Toggle::make('is_teacher')
+                Forms\Components\Toggle::make('is_teacher')->label('Insegnante?')
                     ->required(),
 
             ]);
