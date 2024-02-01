@@ -44,6 +44,10 @@ class StudentResource extends Resource
             ->columns([
                 //
                 TextColumn::make('full_name')->label('Nome')->searchable(),
+                Tables\Columns\TextColumn::make('cf')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('tel')
+                    ->searchable(),
             ])
             ->filters([
                 //
