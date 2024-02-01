@@ -8,6 +8,7 @@ use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Support\RawJs;
 use Filament\Tables;
@@ -30,7 +31,8 @@ class UserResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->live(),
                 Forms\Components\TextInput::make('surname')
                     ->required()
                     ->maxLength(255),
@@ -38,10 +40,12 @@ class UserResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
-                /*Forms\Components\TextInput::make('password')
+                Forms\Components\TextInput::make('password')
                     ->password()
                     ->required()
-                    ->maxLength(255),*/
+                    ->maxLength(255)
+                    ->default(fn (Get $get): string => ! $get('name')."@0000")
+                    ->live(),
                 Forms\Components\TextInput::make('cf')
                     ->required()
                     ->maxLength(16)
