@@ -35,6 +35,18 @@ class StudentResource extends Resource
         return $form
             ->schema([
                 //Test deploy 3
+                /*
+
+                    Nome
+                    Cognome
+                    Città nascita
+                    Data di nascita
+                    Città residenza
+                    Via residenza
+                    Cap residenza
+                    Codice Fiscale
+
+                */
             ]);
     }
 

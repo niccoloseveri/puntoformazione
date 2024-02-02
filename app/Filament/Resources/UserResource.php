@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Support\RawJs;
 use Filament\Tables;
@@ -32,7 +33,8 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255)
-                    ->live(),
+                    ->live(onBlur:true)
+                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('password', str_replace(' ','',$state).'0000')),
                 Forms\Components\TextInput::make('surname')
                     ->required()
                     ->maxLength(255),
@@ -41,11 +43,13 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
-                    ->password()
+                    ->live()
                     ->required()
+                    //->suffix('0000')
                     ->maxLength(255)
-                    ->default(fn (Get $get): string => ! $get('name')."@0000")
-                    ->live(),
+                    ->password()
+                    ->revealable()
+                    ,
                 Forms\Components\TextInput::make('cf')
                     ->required()
                     ->maxLength(16)
