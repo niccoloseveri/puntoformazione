@@ -73,7 +73,12 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255),
 
-                Select::make('roles')->multiple()->relationship('roles', 'name')->preload()->label('Ruolo'),
+                Select::make('roles')
+                /*->color('gray')*/
+                ->multiple()
+                ->relationship('roles', 'name')
+                ->preload()
+                ->label('Ruolo'),
 
                 Forms\Components\Toggle::make('is_teacher')->label('Insegnante?')
                     ->required(),
@@ -85,22 +90,22 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('full_name')
+                Tables\Columns\TextColumn::make('full_name')->label('Nome e Cognome')->copyable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
+                Tables\Columns\TextColumn::make('email')->copyable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('cf')
+                Tables\Columns\TextColumn::make('cf')->label('Codice Fiscale')->copyable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('address')
+                Tables\Columns\TextColumn::make('address')->label('Indirizzo')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tel')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('is_teacher')
-                    ->boolean(),
+                    ->boolean()->toggleable(isToggledHiddenByDefault:true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
