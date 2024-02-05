@@ -111,7 +111,7 @@ class UserResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                //TEST
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
