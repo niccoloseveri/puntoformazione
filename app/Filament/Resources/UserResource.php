@@ -47,6 +47,10 @@ class UserResource extends Resource
                     ->live()
                     ->required()
                     ->autocomplete(false)
+                    ->extraAttributes([
+                        'data-lpignore' => 'true',
+                        'data-1p-ignore'
+                    ])
                     //->disabled()
                     ->maxLength(255)
                     ->helperText('La password è formata dal nome dello studente + 0000')
