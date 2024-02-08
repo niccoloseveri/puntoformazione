@@ -45,8 +45,9 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->live()
                     ->required()
-                    //->suffix('0000')
+                    ->disabled()
                     ->maxLength(255)
+                    ->helperText('La password è formata dal nome dello studente + 0000')
                     ->password()
                     ->revealable()
                     ,
@@ -104,6 +105,8 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tel')
                     ->searchable(),
+                Tables\Columns\IconColumn::make('roles.name'),
+
                 Tables\Columns\IconColumn::make('is_teacher')
                     ->boolean()->toggleable(isToggledHiddenByDefault:true),
                 Tables\Columns\TextColumn::make('created_at')
