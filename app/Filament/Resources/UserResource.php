@@ -40,11 +40,13 @@ class UserResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
+                    ->autocomplete(false)
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
                     ->live()
                     ->required()
+                    ->autocomplete(false)
                     //->disabled()
                     ->maxLength(255)
                     ->helperText('La password è formata dal nome dello studente + 0000')
