@@ -45,7 +45,7 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->live()
                     ->required()
-                    ->disabled()
+                    //->disabled()
                     ->maxLength(255)
                     ->helperText('La password è formata dal nome dello studente + 0000')
                     ->password()
