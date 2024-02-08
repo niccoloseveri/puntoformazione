@@ -105,7 +105,7 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tel')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('roles.name'),
+                Tables\Columns\TextColumn::make('roles.name')->toggleable(isToggledHiddenByDefault:true),
 
                 Tables\Columns\IconColumn::make('is_teacher')
                     ->boolean()->toggleable(isToggledHiddenByDefault:true),
