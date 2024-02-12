@@ -15,6 +15,7 @@ use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
@@ -30,13 +31,23 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('name')->label('Nome')
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur:true)
+                    ->mask(RawJs::make(<<<'JS'
+                        $input.replace(/\w\S*/g, function(txt) {
+                            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                        });
+                    JS))
                     ->afterStateUpdated(fn (Set $set, ?string $state) => $set('password', str_replace(' ','',$state).'0000')),
-                Forms\Components\TextInput::make('surname')
+                Forms\Components\TextInput::make('surname')->label('Cognome')
                     ->required()
+                    ->mask(RawJs::make(<<<'JS'
+                        $input.replace(/\w\S*/g, function(txt) {
+                            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                        });
+                    JS))
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
@@ -46,6 +57,7 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->live()
                     ->required()
+                    ->readOnly()
                     ->autocomplete(false)
                     ->extraAttributes([
                         'data-lpignore' => 'true',
@@ -57,7 +69,7 @@ class UserResource extends Resource
                     ->password()
                     ->revealable()
                     ,
-                Forms\Components\TextInput::make('cf')
+                Forms\Components\TextInput::make('cf')->label('Codice Fiscale')
                     ->required()
                     ->maxLength(16)
                     ->mask(RawJs::make(<<<'JS'
@@ -111,8 +123,16 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tel')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('roles.name')->toggleable(isToggledHiddenByDefault:true),
-
+                Tables\Columns\IconColumn::make('roles')->toggleable(isToggledHiddenByDefault:false)
+                ->boolean(fn(Model $record) : bool => $record->hasRole('Insegnante'))
+                //->boolean(fn ($state) : bool => in_array(1,$state) ? true : false)
+                //->trueIcon('heroicon-o-x-circle')
+                //->falseIcon('heroicon-o-x-circle')
+                /*->boolean(function ($state){
+                    if(in_array(1,$state)) return true;
+                    else return false;
+                })*/
+                ,
                 Tables\Columns\IconColumn::make('is_teacher')
                     ->boolean()->toggleable(isToggledHiddenByDefault:true),
                 Tables\Columns\TextColumn::make('created_at')
