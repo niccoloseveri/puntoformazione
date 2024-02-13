@@ -10,13 +10,16 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
 use Filament\Support\RawJs;
 use Filament\Tables;
+use Filament\Tables\Columns\Column;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Log;
 
 class UserResource extends Resource
 {
@@ -56,7 +59,6 @@ class UserResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
                     ->live()
-                    ->required()
                     ->readOnly()
                     ->autocomplete(false)
                     ->extraAttributes([
@@ -68,6 +70,8 @@ class UserResource extends Resource
                     ->helperText('La password è formata dal nome dello studente + 0000')
                     ->password()
                     ->revealable()
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->required(fn ($livewire) => ($livewire instanceof CreateRecord))
                     ,
                 Forms\Components\TextInput::make('cf')->label('Codice Fiscale')
                     ->required()
@@ -80,12 +84,27 @@ class UserResource extends Resource
                 ]),
                 Forms\Components\TextInput::make('via')
                     ->required()
+                    ->mask(RawJs::make(<<<'JS'
+                        $input.replace(/\w\S*/g, function(txt) {
+                            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                        });
+                    JS))
                     ->maxLength(255),
                 Forms\Components\TextInput::make('citta')
                     ->required()
+                    ->mask(RawJs::make(<<<'JS'
+                        $input.replace(/\w\S*/g, function(txt) {
+                            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                        });
+                    JS))
                     ->maxLength(255),
                 Forms\Components\TextInput::make('cap')
                     ->required()
+                    ->mask(RawJs::make(<<<'JS'
+                        $input.replace(/\w\S*/g, function(txt) {
+                            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                        });
+                    JS))
                     ->maxLength(255),
                 Forms\Components\TextInput::make('tel')
                     ->tel()
@@ -123,16 +142,11 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tel')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('roles')->toggleable(isToggledHiddenByDefault:false)
-                ->boolean(fn(Model $record) : bool => $record->hasRole('Insegnante'))
-                //->boolean(fn ($state) : bool => in_array(1,$state) ? true : false)
-                //->trueIcon('heroicon-o-x-circle')
-                //->falseIcon('heroicon-o-x-circle')
-                /*->boolean(function ($state){
-                    if(in_array(1,$state)) return true;
-                    else return false;
-                })*/
-                ,
+                Tables\Columns\IconColumn::make('roles.id')->getStateUsing(function ($record) {
+                    if($record->roles->first()->id == 1) $a = 1;
+                    else $a=0;
+                    return $a;
+                })->boolean()->alignCenter()->label('Insegnante'),
                 Tables\Columns\IconColumn::make('is_teacher')
                     ->boolean()->toggleable(isToggledHiddenByDefault:true),
                 Tables\Columns\TextColumn::make('created_at')
