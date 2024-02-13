@@ -136,7 +136,7 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\IconColumn::make('roles.id')
                     ->getStateUsing(function ($record) {
-                        if($record->roles->first()->id == 1) $a = 1;
+                        if($record->roles->first()?->id == 1) $a = 1;
                         else $a=0;
                         return $a;
                     })
