@@ -5,7 +5,7 @@ echo "Deployment started ..."
 #c
 # Enter maintenance mode or return true
 # if already is in maintenance mode
-(php82 artisan down) || true
+(php82 artisan down --render="errors::update") || true
 
 # Update codebase
 git fetch origin deploy
