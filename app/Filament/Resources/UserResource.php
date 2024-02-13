@@ -105,6 +105,7 @@ class UserResource extends Resource
                     ->multiple()
                     ->relationship('roles', 'name')
                     ->preload()
+                    ->required()
                     ->label('Ruolo'),
                 Forms\Components\Toggle::make('is_teacher')->label('Insegnante?')
                     ->required(),
@@ -136,6 +137,7 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\IconColumn::make('roles.id')
                     ->getStateUsing(function ($record) {
+                        $a = 0;
                         if($record->roles->first()?->id == 1) $a = 1;
                         else $a=0;
                         return $a;
