@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string('citta')->nullable();
             $table->string('cap')->nullable();
             $table->string('tel')->nullable();
-            $table->boolean('is_teacher')->default(false);
+            $table->string('piva')->nullable();
+            $table->boolean('is_teacher')->default(false)->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->string('full_name')->virtualAs('concat(name, \' \', surname)')->nullable();

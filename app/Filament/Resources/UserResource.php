@@ -6,6 +6,7 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
@@ -107,8 +108,12 @@ class UserResource extends Resource
                     ->preload()
                     ->required()
                     ->label('Ruolo'),
-                Forms\Components\Toggle::make('is_teacher')->label('Insegnante?')
-                    ->required(),
+                Forms\Components\Toggle::make('piva_check')->label('Partita iva?')
+                    ->live(),
+                Forms\Components\TextInput::make('piva')
+                    ->hidden(fn (Get $get): bool => ! $get('piva_check'))
+                    ->label('Partita IVA'),
+
             ]);
     }
 
