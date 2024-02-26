@@ -23,4 +23,6 @@ Route::get('/', function () {
 });
 
 */
-
+Route::get('/contratto', function(){
+    return view('contratto');
+});
