@@ -33,16 +33,27 @@ class CoursesResource extends Resource
         return $form
             ->schema([
                 //
-                Forms\Components\TextInput::make('name')
+                /*
+                    #nomecorso
+                    #durata (ore)
+                    #prezzo
+                    #quota esame
+                    #quota assicurativa
+                    #codice
+                    #anno
+                    #edizione
+                    #sezione
+                */
+                Forms\Components\TextInput::make('name')->label('Nome Corso')
                     ->required()
                     ->maxLength(255)
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('code')
+                Forms\Components\TextInput::make('code')->label('Codice')
                     ->required(),
 
-                Forms\Components\DatePicker::make('year')->date('Y')->native(false)->displayFormat('Y')
+                Forms\Components\DatePicker::make('year')->label('Anno')->date('Y')->native(false)->displayFormat('Y')
                     ->required(),
-                Forms\Components\TextInput::make('edition')
+                Forms\Components\TextInput::make('edition')->label('Edizione')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -53,16 +64,16 @@ class CoursesResource extends Resource
         return $table
             ->columns([
                 //
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make('name')->label('Nome Corso')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('code')
+                Tables\Columns\TextColumn::make('code')->label('Codice')
                     ->numeric()
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('year')->date("Y")
+                Tables\Columns\TextColumn::make('year')->label('Anno Svolgimento')->date("Y")
                     ->sortable(),
-                Tables\Columns\TextColumn::make('edition')
+                Tables\Columns\TextColumn::make('edition')->label('Edizione')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

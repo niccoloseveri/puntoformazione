@@ -149,9 +149,9 @@
           <br>
           <div id="fullwrap" class="full">
             <p style="margin-top:10px; text-align:justify;">
-              Il sottoscritto <strong>{{__('ciao')}}</strong>, nato a <strong>{{__('ciao')}}</strong>, il <strong>{{__('ciao')}}</strong>,<br>
-              residente a <strong>{{__('ciao')}}</strong>, Via <strong>{{__('ciao')}}</strong>,
-              CAP <strong>{{__('ciao')}}</strong>,<br> Cod. Fisc <strong>{{__('ciao')}}</strong>, in possesso del Licenza Scuola
+              Il sottoscritto <strong>{{__('Nome e Cognome')}}</strong>, nato a <strong>{{__('Città Nascita')}}</strong>, il <strong>{{__('31/12/1999')}}</strong>,
+              residente a <strong>{{__('Città Resid.')}}</strong>,<br> Via <strong>{{__('Residenza')}}</strong>,
+              CAP <strong>{{__('12345')}}</strong>, Cod. Fisc <strong>{{__('ASQWER45R43D323E')}}</strong>, email <strong>indirizzo@email.com</strong>, tel. <strong>3209874433</strong>,<br> in possesso del Licenza Scuola
               dell'Obbligo (d'ora in avanti "Allievo")
             </p>
             <span class="bold">
@@ -159,8 +159,8 @@
             </span>
             <br>
             <p style="margin-top: 15px!important; margin-bottom:15px!important;">
-              di essere iscritto al Corso per OPERATORE SOCIO SANITARIO di cui alla legge 17/07/2002 n.13 corso accreditato con DGR
-              n. 1005 del 04/08/2014 e inserito nel piano DGR n. 879 del 02/08/2018, COD. CORSO 2/2021 SEZ U , gestito dall'ente
+              di essere iscritto al Corso per <strong> NOME DEL CORSO</strong><!-- di cui alla legge 17/07/2002 n.13 corso accreditato con DGR
+              n. 1005 del 04/08/2014 e inserito nel piano DGR n. 879 del 02/08/2018--> - <strong>COD. CORSO X/XXXX SEZ XXXX</strong> gestito, <strong><i>come da normativa di riferimento*</i></strong>, dall'ente
               formativo “Punto Formazione s.r.l.” con sede in Foligno, via delle Industrie, 5 (d'ora in avanti soltanto "Società"). A tal
               fine espressamente
             </p>
@@ -186,9 +186,9 @@
                 </li>
                 <li class="bold">
                   <span class="l_label">
-                    di impegnarsi alla frequenza del corso per tutta la sua durata, pari a <span class="bold">__________________ore__________</span>,
-                    e di assumere l'obbligo di pagare, nei termini di seguito stabiliti l'intera retta di frequenza, che
-                    è fissata in <span class="bold">€ 3000/00</span>, PIU' 200 EURO QUOTA ESAME E PIU 58 EURO ANNUE di QUOTA ASSICURATIVA della
+                    di impegnarsi alla frequenza del corso per tutta la sua durata, pari a <span class="bold">tot. monte ore del corso</span>,
+                    e di assumere l'obbligo di pagare, nei termini di seguito stabiliti l'intero costo del corso, che
+                    è fissato in <span class="bold">€ prezzo</span>, <!-- PIU' <strong> 200 EURO</strong> QUOTA ESAME E PIU <strong>58 EURO</strong> ANNUE di QUOTA ASSICURATIVA della--> del
                     quale pertanto si riconosce interamente debitore. Ciò, anche nel caso di mancata frequenza per qualsiasi
                     motivo o ragione, ivi compreso l'eventuale allontanamento d'autorità per indisciplina o altro, fatto salvo
                     l'esercizio del diritto di recesso dal presente contratto, da esercitarsi entro e non oltre quindici giorni dalla
@@ -196,11 +196,11 @@
                     Formazione s.r.l. Via delle Industrie, 5 – 06034 Foligno;
                   </span>
                   <p class="l_label" style="margin-top: 7px!important;">
-                    il versamento della retta di frequenza sarà regolato in una delle seguenti 4 modalità, a scelta:
+                    il versamento della rata di frequenza sarà regolato in una delle seguenti 4 modalità, a scelta:
                   </p><br>
                   <div class="row border orow">
                     <div class="col-1 l_label text-center ">1</div>
-                    <div class="col-11 border-start"><span class="ps-1">Quota totale della retta di frequenza di €______ entro il __/__/____</span></div>
+                    <div class="col-11 border-start"><span class="ps-1">Quota totale della rata di frequenza di €______ entro il __/__/____</span></div>
                   </div>
                   <div class="row border orow">
                     <div class="col-1 l_label text-center">2</div>
@@ -228,7 +228,7 @@
                     <div class="col-1"></div>
                     <div class="col"><span class="text-danger" style="font-size:6.5pt;">BARRARE TABELLA DI INTERESSE</span></div>
                   </div>
-                  <span class="l_label ms-4">I versamenti possono essere fatti direttamente presso la Segreteria Amministrativa del corso ovvero a mezzo bonifico bancario - <span class="fw-bold ms-4">IBAN: IT21 I030 6921 7051 0000 0003 197</span></span>
+                  <span class="l_label ms-4">I versamenti possono essere fatti diratamente presso la Segreteria Amministrativa del corso ovvero a mezzo bonifico bancario - <span class="fw-bold ms-4">IBAN: IT21 I030 6921 7051 0000 0003 197</span></span>
               </li><br>
               <li class="bold">
                 <span class="l_label">
@@ -237,7 +237,7 @@
               </li>
               <li class="bold"><span class="l_label">di esonerare la Società da ogni responsabilità e/o richiesta anche risarcitoria in merito al punto precedente;</span></li>
               <li class="bold"><span class="l_label">di accettare la competenza esclusiva del Foro di Perugia per ogni controversia possa insorgere,
-                nell'interpretazione e/o esecuzione del presente contratto;</span></li>
+                nell'interpretazione e/o esecuzione del presente contratto;</span></li><br>
               <li class="bold"><span class="l_label">di aver ricevuto informativa sul trattamento dei dati personali a norma del D.Lgs. 196/2003 e successive modifiche da cui risulta che titolare del trattamento dei dati personali è il legale rappresentante p.t. di Punto Formazione s.r.l con sede a Foligno via delle Industrie n. 5 e di esprimere il proprio consenso rispetto alla raccolta ed al trattamento dei dati personali, anche sensibili, da parte della citata Società, anche allo specifico fine di dare attuazione alle convenzioni stipulate con Enti pubblici e/o privati per l'espletamento del periodo di tirocinio pratico necessario al completamento dell'iter formativo del Corso;</span></li>
               <li class="bold"><span class="l_label">di esprimere il consenso alla trasmissione dei propri dati personali, anche sensibili, da parte di Punto Formazione s.r.l. agli Enti pubblici e/o privati con i quali sono state stipulate convenzioni per l'espletamento del periodo di tirocinio pratico, allo specifico fine di consentire lo svolgimento di tale periodo di tirocinio, nonché a soggetti pubblici, quando ne facciano richiesta, per il perseguimento dei propri fini istituzionali ed a soggetti pubblici e/o privati che — successivamente al conseguimento del diploma — inoltrino all'istituto richieste relative alla selezione, ricerca e/o assunzione di odontotecnici diplomati.</span></li>
             </ol>
@@ -254,7 +254,7 @@
             <p class="pt-3 fw-bold">FIRMA ___________________</p>
         </div>
 
-        <p class="mt-2">Confermo integralmente quanto sopra dichiarato e l'accettazione, anche ai sensi degli artt. 1341 e 1342 c.c., di ogni specifico punto, ivi compreso il riconoscimento del debito di cui al punto c); la presa visione ed accettazione del contenuto del Regolamento del corso e del Regolamento relativo al periodo di tirocinio; l'obbligo, di pagamento dell'intera retta, anche in caso di ritiro dalla frequenza del corso; le modalità di esercizio della facoltà di -recesso; la possibilità della sospensione dalle lezioni e/o della non ammissione agli esami da parte della Società anche in caso di mancato pagamento di una sola rata della retta nonché la possibilità per la stessa di agire immediatamente per il recupero del credito; il foro competente per le controversie.</p>
+        <p class="mt-2">Confermo integralmente quanto sopra dichiarato e l'accettazione, anche ai sensi degli artt. 1341 e 1342 c.c., di ogni specifico punto, ivi compreso il riconoscimento del debito di cui al punto c); la presa visione ed accettazione del contenuto del Regolamento del corso e del Regolamento relativo al periodo di tirocinio; l'obbligo, di pagamento dell'intera rata, anche in caso di ritiro dalla frequenza del corso; le modalità di esercizio della facoltà di -recesso; la possibilità della sospensione dalle lezioni e/o della non ammissione agli esami da parte della Società anche in caso di mancato pagamento di una sola rata della rata nonché la possibilità per la stessa di agire immediatamente per il recupero del credito; il foro competente per le controversie.</p>
         <div id="fullwrap" class="mt-4 ">
             <p class="pt-3 fw-bold">Foligno, lì __/__/____</p>
         </div>
