@@ -26,3 +26,6 @@ Route::get('/', function () {
 Route::get('/contratto', function(){
     return view('contratto');
 });
+Route::get('/contrattotw', function(){
+    return view('contrattotw');
+});

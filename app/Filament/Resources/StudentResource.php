@@ -6,6 +6,8 @@ use App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource\RelationManagers;
 use App\Models\Student;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Filament\Forms;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
@@ -15,6 +17,8 @@ use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
 use Filament\Support\RawJs;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -185,6 +189,12 @@ class StudentResource extends Resource
                 //
             ])
             ->actions([
+                ActionGroup::make([
+                    Action::make('cont-print')->label('Stampa Contratto')->action(fn($record) => SnappyPdf::loadView('contrattotw',$record->toArray())->save('contratto_test.pdf')),//->action(fn ($record) => Pdf::loadView('contrattotw',$record->toArray())->save('contratto_tw.pdf')),
+                    Action::make('priv-print')->url('#')->openUrlInNewTab()->label('Stampa informativa Privacy'),
+                    Action::make('whats-print')->url('#')->openUrlInNewTab()->label('Stampa autorizzazione Whatsapp'),
+
+                ])->icon('gmdi-print-r')->color('warning'),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
