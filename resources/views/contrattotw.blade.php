@@ -79,6 +79,13 @@
             font-weight: bold!important;
             }
 
+            .all_container{
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+                width: 100%;
+            }
+
             /*
 
             #fullwrap > p {
@@ -117,15 +124,20 @@
             .orow{
                 margin-bottom: 2.5mm!important;
             }
+            .col_2_grid{
+                display: grid;
+                width: 100%;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
 
 
         </style>
 
     </head>
     <body>
-        <div class="text-center mx-auto w-full" id="pagec">
+        <div class="all_container" id="pagec">
                 <!-- INTESTAZIONE -->
-                <div class="w-full grid grid-cols-2" id="intestazione">
+                <div class="col_2_grid" id="intestazione">
                     <div class="w-full text-left ">
                         <img id="logo" alt="image" src="{{asset('Image_001.png') }}"/>
                     </div>
