@@ -6,8 +6,6 @@ use App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource\RelationManagers;
 use App\Models\Student;
 use App\Models\User;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Barryvdh\Snappy\Facades\SnappyPdf;
 use Filament\Forms;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
@@ -26,6 +24,7 @@ use Illuminate\Database\Eloquent\Factories\Relationship;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
+use Spatie\LaravelPdf\Facades\Pdf;
 use Spatie\Permission\Traits\HasRoles;
 
 class StudentResource extends Resource
@@ -190,7 +189,7 @@ class StudentResource extends Resource
             ])
             ->actions([
                 ActionGroup::make([
-                    Action::make('cont-print')->label('Stampa Contratto')->action(fn ($record) => Pdf::loadView('contrattotw',$record->toArray())->save('contratto_tw.pdf')),//->action(fn($record) => SnappyPdf::loadView('contrattotw',$record->toArray())->save('contratto_test.pdf')),//->action(fn ($record) => Pdf::loadView('contrattotw',$record->toArray())->save('contratto_tw.pdf')),
+                    Action::make('cont-print')->label('Stampa Contratto')->action(fn ($record) => Pdf::view('contrattotw',['data'=>$record->toArray()])->save('contratto_tw.pdf')),//->action(fn($record) => SnappyPdf::loadView('contrattotw',$record->toArray())->save('contratto_test.pdf')),//->action(fn ($record) => Pdf::loadView('contrattotw',$record->toArray())->save('contratto_tw.pdf')),
                     Action::make('priv-print')->url('#')->openUrlInNewTab()->label('Stampa informativa Privacy'),
                     Action::make('whats-print')->url('#')->openUrlInNewTab()->label('Stampa autorizzazione Whatsapp'),
 
