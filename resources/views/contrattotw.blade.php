@@ -139,7 +139,7 @@
                 <!-- INTESTAZIONE -->
                 <div class="col_2_grid" id="intestazione">
                     <div class="w-full text-left ">
-                        <img id="logo" alt="image" src="{{asset('Image_001.png') }}"/>
+                        <img id="logo" alt="image" src="http://www.gestionalepf.pythonsrl.com/Image_001.png"/>
                     </div>
                     <div class="r1 text-right justify-end w-full " >
                         Punto Formazione SRL<br>
