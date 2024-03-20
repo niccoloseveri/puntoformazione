@@ -191,7 +191,7 @@ class StudentResource extends Resource
             ])
             ->actions([
                 ActionGroup::make([
-                    Action::make('cont-print')->label('Stampa Contratto')->action(fn($record) => SnappyPdf::loadView('contrattotw',$record->toArray())->save('contratto_test.pdf')),//->action(fn ($record) => FacadePdf::loadView('contrattotw',$record->toArray())->save('contratto_tw.pdf')),//->action(fn ($record) => Pdf::view('contrattotw',['data'=>$record->toArray()])->download()->save('contratto_tw.pdf')),//->action(fn($record) => SnappyPdf::loadView('contrattotw',$record->toArray())->save('contratto_test.pdf')),//->action(fn ($record) => Pdf::loadView('contrattotw',$record->toArray())->save('contratto_tw.pdf')),
+                    Action::make('cont-print')->label('Stampa Contratto')->action(fn($record) => SnappyPdf::loadView('contrattotw',$record->toArray())->inline('contratto_test.pdf')),//->action(fn ($record) => FacadePdf::loadView('contrattotw',$record->toArray())->save('contratto_tw.pdf')),//->action(fn ($record) => Pdf::view('contrattotw',['data'=>$record->toArray()])->download()->save('contratto_tw.pdf')),//->action(fn($record) => SnappyPdf::loadView('contrattotw',$record->toArray())->save('contratto_test.pdf')),//->action(fn ($record) => Pdf::loadView('contrattotw',$record->toArray())->save('contratto_tw.pdf')),
                     Action::make('priv-print')->url('#')->openUrlInNewTab()->label('Stampa informativa Privacy'),
                     Action::make('whats-print')->url('#')->openUrlInNewTab()->label('Stampa autorizzazione Whatsapp'),
 
