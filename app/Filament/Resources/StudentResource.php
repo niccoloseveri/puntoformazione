@@ -15,6 +15,8 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
+use Filament\Support\Assets\AlpineComponent;
+use Filament\Support\Assets\Js;
 use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
@@ -191,7 +193,20 @@ class StudentResource extends Resource
             ])
             ->actions([
                 ActionGroup::make([
-                    Action::make('cont-print')->label('Stampa Contratto')->action(fn($record) => SnappyPdf::loadView('contrattotw',$record->toArray())->inline('contratto_test.pdf')),//->action(fn ($record) => FacadePdf::loadView('contrattotw',$record->toArray())->save('contratto_tw.pdf')),//->action(fn ($record) => Pdf::view('contrattotw',['data'=>$record->toArray()])->download()->save('contratto_tw.pdf')),//->action(fn($record) => SnappyPdf::loadView('contrattotw',$record->toArray())->save('contratto_test.pdf')),//->action(fn ($record) => Pdf::loadView('contrattotw',$record->toArray())->save('contratto_tw.pdf')),
+                    Action::make('cont-print')->label('Stampa Contratto')//->action(fn($record) => SnappyPdf::loadView('contrattotw',$record->toArray())->inline('contratto_test.pdf')),//->action(fn ($record) => FacadePdf::loadView('contrattotw',$record->toArray())->save('contratto_tw.pdf')),//->action(fn ($record) => Pdf::view('contrattotw',['data'=>$record->toArray()])->download()->save('contratto_tw.pdf')),//->action(fn($record) => SnappyPdf::loadView('contrattotw',$record->toArray())->save('contratto_test.pdf')),//->action(fn ($record) => Pdf::loadView('contrattotw',$record->toArray())->save('contratto_tw.pdf')),
+                    ->url(fn($record) => route('contratto.pdf.stampa',[$record]))
+                    ->openUrlInNewTab(),
+                    /*->extraAttributes([
+                        'x-data' => '{
+                            result:{},
+                            async getPage(){
+                                this.result = document.write(escape('.view('contrattotw').'));
+                                console.log(this.result);
+                            },
+                        }',
+                        'wire:click' => 'getPage',
+                    ]),*/
+                     //'x-data="{test:{}, async ptest(){this.test="ciao"; console.log(this.test};"'
                     Action::make('priv-print')->url('#')->openUrlInNewTab()->label('Stampa informativa Privacy'),
                     Action::make('whats-print')->url('#')->openUrlInNewTab()->label('Stampa autorizzazione Whatsapp'),
 

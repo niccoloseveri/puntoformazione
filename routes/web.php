@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\printController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,3 +31,5 @@ Route::get('/contratto', function(){
 Route::get('/contrattotw', function(){
     return view('contrattotw');
 });
+
+Route::middleware(['auth'])->get('/{record}/stampacontratto', [printController::class, 'printContratto'])->name('contratto.pdf.stampa');

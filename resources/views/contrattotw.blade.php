@@ -133,6 +133,13 @@
 
         </style>
 
+    <script>
+        window.print();
+        window.onafterprint() = function (){
+            window.close();
+        }
+    </script>
+    @csrf
     </head>
     <body>
         <div class="all_container" id="pagec">
@@ -161,9 +168,9 @@
                         <br>
                         <div id="fullwrap" class="w-full">
                             <p>
-                                Il sottoscritto <strong>{{__('Nome e Cognome')}}</strong>, nato a <strong>{{__('Città Nascita')}}</strong>, il <strong>{{__('31/12/1999')}}</strong>,
-                                residente a <strong>{{__('Città Resid.')}}</strong>,<br> Via <strong>{{__('Residenza')}}</strong>,
-                                CAP <strong>{{__('12345')}}</strong>, Cod. Fisc <strong>{{__('ASQWER45R43D323E')}}</strong>, email <strong>indirizzo@email.com</strong>, tel. <strong>3209874433</strong>,<br> in possesso del Licenza Scuola
+                                Il sottoscritto <strong>{{$user->full_name}}</strong>, nato a <strong>{{$user->citta}}</strong>, il <strong>{{__('31/12/1999')}}</strong>,
+                                residente a <strong>{{$user->citta}}</strong>,<br> Via <strong>{{$user->via}}</strong>,
+                                CAP <strong>{{$user->cap}}</strong>, Cod. Fisc <strong>{{$user->cf}}</strong>, email <strong>{{$user->email}}</strong>, tel. <strong>{{$user->tel}}</strong>,<br> in possesso del Licenza Scuola
                                 dell'Obbligo (d'ora in avanti "Allievo")
                             </p>
                             <span class="font-bold">
@@ -294,6 +301,9 @@
                 </div>
             </div>
         </div>
+
     </body>
+
 </html>
 {{-- if per norme in footer/pie di pagina, attendere pf per testo corretto --}}
+
