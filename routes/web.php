@@ -32,4 +32,10 @@ Route::get('/contrattotw', function(){
     return view('contrattotw');
 });
 
-Route::middleware(['auth'])->get('/{record}/stampacontratto', [printController::class, 'printContratto'])->name('contratto.pdf.stampa');
+Route::middleware(['auth'])->group(function(){
+    Route::get('/{record}/stampacontratto', [printController::class, 'printContratto'])->name('contratto.pdf.stampa');
+    Route::get('/whatsapp', function(){return view('whatsapp');});
+    Route::get('/interesse', function(){return view('interesse');});
+    Route::get('/privacy', function(){return view('privacyinf');});
+
+});
