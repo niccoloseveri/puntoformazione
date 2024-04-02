@@ -135,12 +135,10 @@
 
 
         <script>
-            /*
             window.print();
             window.onafterprint() = function (){
                 window.close();
             }
-            */
         </script>
 
     @csrf
@@ -163,8 +161,23 @@
             <!-- FINE INTESTAZIONE -->
 
             <!-- SEZIONE 1 - ANAGRAFICA -->
-            <div class="w-full">
-
+            <div class="w-full mt-3">
+                <div id="fullwrap" class="w-full">
+                    <p>
+                        IL/La sottoscritto/a............................................ , nato/a a ............................... in provincia di................................, il .../.../.., residente a .................................., Via ........................................, CAP ..........................., (città)........................................., Cod. Fisc ................................................., in possesso del Licenza Scuola dell'Obbligo (d'ora in avanti "Allievo")
+                    </p>
+                    <span class="font-bold text-sm">
+                        Chiede
+                    </span>
+                    <p class="font-bold mt-2">
+                        di essere inserito/a, con il n telefonico indicato nella Manifestazione di Interesse già sottoscritta, nel gruppo whatsapp di lavoro della Sezione di riferimento
+                    </p>
+                    <br><br>
+                    <div class="grid grid-cols-2 justify-between items-center font-bold">
+                        <div class="text-start"><p>Foligno, il ___/___/_____/</p></div>
+                        <div class="text-end"><p class="text-center">In fede,<br><br>__________________________</p></div>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

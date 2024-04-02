@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Stampa Autorizzazione Whatsapp</title>
+        <title>Stampa Informativa Privacy</title>
         <script src="https://cdn.tailwindcss.com"></script>
 
 <!--
@@ -142,12 +142,12 @@
 
 
         <script>
-            /*
+
             window.print();
             window.onafterprint() = function (){
                 window.close();
             }
-            */
+
         </script>
 
     @csrf
@@ -251,6 +251,7 @@
                             </li>
                         </ol>
                     </p>
+                    <br>
                     <p class="corpotxt">
                         Di seguito ti elenchiamo i <span class="font-bold">tuoi diritti</span> (art. 15-20 del Regolamento UE 2016/679) che potrai esercitare utilizzando i contatti che ti abbiamo indicato sopra per chiedere di:
                     </p>
@@ -287,18 +288,23 @@
                         Ti assicuriamo anche che i tuoi dati personali li utilizziamo solo per quel che c'è scritto qui e se dovessimo utilizzarli per altri scopi te lo comunicheremo prima per chiederti il permesso.
                     </p>
                     <br>
-                    <p class="ml-7">
+                    <p class="ml-2">
                         <span class="italic">a) Se hai compreso il contenuto della presente informativa, il titolare ti chiede se presti il consenso al trattamento secondo le modalità sopra indicate, per <span class="font-bold">l’esecuzione del presente contratto</span> di servizi.<br/></span>
                         <span class="text-3xl align-sub">&#9744;</span><span class="mr-20">Presto il consenso</span><span class="text-3xl align-sub">&#9744;</span>Non presto il consenso
                     </p>
-                    <p class="ml-7">
+                    <p class="ml-2">
                         <span class="italic">b) Se hai compreso il contenuto della presente informativa, il titolare ti chiede se presti il consenso al trattamento secondo le modalità sopra indicate, per l’<span class="font-bold">invio di comunicazioni di carattere promozionale</span> dei servizi.<br></span>
                         <span class="text-3xl align-sub">&#9744;</span><span class="mr-20">Presto il consenso</span><span class="text-3xl align-sub">&#9744;</span>Non presto il consenso
                     </p>
-                    <p class="ml-7">
+                    <p class="ml-2">
                         <span class="italic">c) Se hai compreso il contenuto della presente informativa, il titolare ti chiede se presti il consenso al trattamento secondo le modalità sopra indicate, per <span class="font-bold">attività di profilazione.</span><br/></span>
                         <span class="text-3xl align-sub">&#9744;</span><span class="mr-20">Presto il consenso</span><span class="text-3xl align-sub">&#9744;</span>Non presto il consenso
                     </p>
+                    <br><br>
+                    <div class="grid grid-cols-2 justify-between items-center">
+                        <div class="text-start"><p>Foligno,___/___/_____/</p></div>
+                        <div class="text-end"><p class="text-center">FIRMA DEL CLIENTE<br><br>__________________________</p></div>
+                    </div>
                 </div>
 
             </div>
