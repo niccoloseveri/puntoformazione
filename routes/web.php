@@ -25,17 +25,17 @@ Route::get('/', function () {
 });
 
 */
-Route::get('/contratto', function(){
+/*Route::get('/contratto', function(){
     return view('contratto');
 });
 Route::get('/contrattotw', function(){
     return view('contrattotw');
 });
-
+*/
 Route::middleware(['auth'])->group(function(){
     Route::get('/{record}/stampacontratto', [printController::class, 'printContratto'])->name('contratto.pdf.stampa');
-    Route::get('/whatsapp', function(){return view('whatsapp');});
-    Route::get('/interesse', function(){return view('interesse');});
-    Route::get('/privacy', function(){return view('privacyinf');});
+    Route::get('/{record}/whatsapp', [printController::class, 'printWhatsapp'])->name('whatsapp.pdf.stampa');
+    //Route::get('/{record}/interesse', function(){return view('interesse');});
+    Route::get('/{record}/privacy', [printController::class, 'printPrivacy'])->name('privacy.pdf.stampa');
 
 });

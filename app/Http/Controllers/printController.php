@@ -17,4 +17,20 @@ class printController extends Controller
         //    'courses' => $courses,
         ]);
     }
+
+    function printPrivacy($record){
+        $user=User::find($record);
+        return view('privacyinf')->with([
+            'user' => $user,
+        ]);
+    }
+
+    function printWhatsapp($record){
+        $user=User::find($record);
+        return view('whatsapp')->with([
+            'user' => $user,
+        ]);
+    }
+
+
 }

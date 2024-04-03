@@ -207,8 +207,8 @@ class StudentResource extends Resource
                         'wire:click' => 'getPage',
                     ]),*/
                      //'x-data="{test:{}, async ptest(){this.test="ciao"; console.log(this.test};"'
-                    Action::make('priv-print')->url('#')->openUrlInNewTab()->label('Stampa informativa Privacy'),
-                    Action::make('whats-print')->url('#')->openUrlInNewTab()->label('Stampa autorizzazione Whatsapp'),
+                    Action::make('priv-print')->url(fn($record) => route('privacy.pdf.stampa',[$record]))->openUrlInNewTab()->label('Stampa informativa Privacy'),
+                    Action::make('whats-print')->url(fn($record) => route('whatsapp.pdf.stampa',[$record]))->openUrlInNewTab()->label('Stampa autorizzazione Whatsapp'),
 
                 ])->icon('gmdi-print-r')->color('warning'),
                 Tables\Actions\EditAction::make(),
