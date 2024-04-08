@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -19,6 +20,9 @@ class Courses extends Model
     protected $fillable = [
         'name',
         'code',
+        'price',
+        'start_date',
+        'end_date',
         'year',
         'edition',
     ];
@@ -30,6 +34,7 @@ class Courses extends Model
      */
     protected $casts = [
         'year' => 'date:Y',
+        'price' => MoneyCast::class,
     ];
 
     /**

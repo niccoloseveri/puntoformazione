@@ -7,10 +7,12 @@ use App\Filament\Resources\CoursesResource\RelationManagers;
 use App\Filament\Resources\CoursesResource\RelationManagers\ClassroomRelationManager;
 use App\Models\Courses;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -50,9 +52,15 @@ class CoursesResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('code')->label('Codice')
                     ->required(),
-
-                Forms\Components\DatePicker::make('year')->label('Anno')->date('Y')->native(false)->displayFormat('Y')
-                    ->required(),
+                Forms\Components\TextInput::make('year')->label('Anno')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\DatePicker::make('start_date')->label('Data inizio corso')->required(),
+                Forms\Components\DatePicker::make('end_date')->label('Data fine corso')->required(),
+                Forms\Components\TextInput::make('price')->label('Prezzo')
+                    ->required()
+                    ->numeric()
+                    ->suffixIcon('gmdi-euro-r'),
                 Forms\Components\TextInput::make('edition')->label('Edizione')
                     ->required()
                     ->maxLength(255),
@@ -73,6 +81,7 @@ class CoursesResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('year')->label('Anno Svolgimento')->date("Y")
                     ->sortable(),
+                Tables\Columns\TextColumn::make('price'),
                 Tables\Columns\TextColumn::make('edition')->label('Edizione')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -89,6 +98,7 @@ class CoursesResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
