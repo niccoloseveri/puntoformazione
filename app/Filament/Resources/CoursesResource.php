@@ -81,7 +81,7 @@ class CoursesResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('year')->label('Anno Svolgimento')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('price'),
+                Tables\Columns\TextColumn::make('price')->label('Costo del corso')->money('EUR'),
                 Tables\Columns\TextColumn::make('edition')->label('Edizione')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
