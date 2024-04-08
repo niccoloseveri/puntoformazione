@@ -33,7 +33,6 @@ class Courses extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'year' => 'date:Y',
         'price' => MoneyCast::class,
     ];
 

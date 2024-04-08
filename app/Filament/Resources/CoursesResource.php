@@ -79,7 +79,7 @@ class CoursesResource extends Resource
                     ->numeric()
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('year')->label('Anno Svolgimento')->date("Y")
+                Tables\Columns\TextColumn::make('year')->label('Anno Svolgimento')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('price'),
                 Tables\Columns\TextColumn::make('edition')->label('Edizione')
