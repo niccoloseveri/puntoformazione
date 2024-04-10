@@ -5,13 +5,16 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CoursesResource\Pages;
 use App\Filament\Resources\CoursesResource\RelationManagers;
 use App\Filament\Resources\CoursesResource\RelationManagers\ClassroomRelationManager;
+use App\Filament\Resources\CoursesResource\RelationManagers\ModulesRelationManager;
 use App\Models\Courses;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -36,34 +39,49 @@ class CoursesResource extends Resource
             ->schema([
                 //
                 /*
-                    #nomecorso
-                    #durata (ore)
-                    #prezzo
                     #quota esame
                     #quota assicurativa
-                    #codice
-                    #anno
-                    #edizione
                     #sezione
                 */
-                Forms\Components\TextInput::make('name')->label('Nome Corso')
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('code')->label('Codice')
-                    ->required(),
-                Forms\Components\TextInput::make('year')->label('Anno')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\DatePicker::make('start_date')->label('Data inizio corso')->required(),
-                Forms\Components\DatePicker::make('end_date')->label('Data fine corso')->required(),
-                Forms\Components\TextInput::make('price')->label('Prezzo')
-                    ->required()
-                    ->numeric()
-                    ->suffixIcon('gmdi-euro-r'),
-                Forms\Components\TextInput::make('edition')->label('Edizione')
-                    ->required()
-                    ->maxLength(255),
+                Section::make('Info Corso')->schema([
+                    Forms\Components\TextInput::make('name')->label('Nome Corso')
+                        ->required()
+                        ->maxLength(255)
+                        ->columnSpanFull(),
+                    Forms\Components\TextInput::make('code')->label('Codice')
+                        ->required(),
+                    Forms\Components\TextInput::make('year')->label('Anno')
+                        ->required()
+                        ->numeric(),
+                    Forms\Components\TextInput::make('edition')->label('Edizione')
+                        ->required()
+                        ->maxLength(255),
+                ])->columns(3),
+
+
+
+                Section::make('Durata corso')->schema([
+                    Forms\Components\TimePicker::make('ore_corso')->label('Durata (ore)')->seconds(false)->required(),
+                    Forms\Components\DatePicker::make('start_date')->label('Data inizio corso')->required(),
+                    Forms\Components\DatePicker::make('end_date')->label('Data fine corso')->required(),
+                ])->columns(3),
+                Section::make('Costo corso')->schema([
+                    Forms\Components\TextInput::make('exam_price')->label('Prezzo esame')
+                        ->required()
+                        ->numeric()
+                        ->suffixIcon('gmdi-euro-r'),
+                    Forms\Components\TextInput::make('ass_price')->label('Prezzo assicurazione')
+                        ->required()
+                        ->numeric()
+                        ->suffixIcon('gmdi-euro-r'),
+                    Forms\Components\TextInput::make('price')->label('Prezzo totale')->placeholder('corso + esame + assicuraz.')
+                        ->required()
+                        ->numeric()
+                        ->suffixIcon('gmdi-euro-r')
+                        ->columnSpanFull(),
+                ])->columns(2),
+
+
             ]);
     }
 
@@ -84,21 +102,20 @@ class CoursesResource extends Resource
                 Tables\Columns\TextColumn::make('price')->label('Costo del corso')->money('EUR'),
                 Tables\Columns\TextColumn::make('edition')->label('Edizione')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('created_at')->label('Creato il')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                DeleteAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -114,7 +131,10 @@ class CoursesResource extends Resource
             //
             RelationGroup::make('Classi', [
                 ClassroomRelationManager::class,
-            ])
+            ]),
+            RelationGroup::make('Moduli',[
+                ModulesRelationManager::class,
+            ]),
         ];
     }
 

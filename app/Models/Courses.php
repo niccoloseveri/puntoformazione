@@ -21,9 +21,12 @@ class Courses extends Model
         'name',
         'code',
         'price',
+        'exam_price',
+        'ass_price',
         'start_date',
         'end_date',
         'year',
+        'ore_corso',
         'edition',
     ];
 
@@ -34,6 +37,8 @@ class Courses extends Model
      */
     protected $casts = [
         'price' => MoneyCast::class,
+        'exam_price' => MoneyCast::class,
+        'ass_price' => MoneyCast::class,
     ];
 
     /**

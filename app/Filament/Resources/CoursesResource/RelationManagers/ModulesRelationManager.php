@@ -10,17 +10,18 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ClassroomRelationManager extends RelationManager
+class ModulesRelationManager extends RelationManager
 {
-    protected static string $relationship = 'classrooms';
+    protected static string $relationship = 'modules';
+    protected static ?string $navigationLabel = 'Moduli';
+
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')->label('Nome')
+                Forms\Components\TextInput::make('name')
                     ->required()
-                    ->columnSpanFull()
                     ->maxLength(255),
             ]);
     }
@@ -28,10 +29,12 @@ class ClassroomRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-        ->heading("Classi")
-            //->recordTitleAttribute('name')
+            ->recordTitleAttribute('name')
+            ->heading('Moduli')
             ->columns([
-                Tables\Columns\TextColumn::make('name')->label('Nome'),
+                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('durata')->label('Durata (ore)'),
+
             ])
             ->filters([
                 //
