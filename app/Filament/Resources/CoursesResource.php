@@ -61,7 +61,7 @@ class CoursesResource extends Resource
 
 
                 Section::make('Durata corso')->schema([
-                    Forms\Components\TimePicker::make('ore_corso')->label('Durata (ore)')->seconds(false)->required(),
+                    Forms\Components\TextInput::make('ore_corso')->label('Durata (ore)')->placeholder('hh:mm')->required(),
                     Forms\Components\DatePicker::make('start_date')->label('Data inizio corso')->required(),
                     Forms\Components\DatePicker::make('end_date')->label('Data fine corso')->required(),
                 ])->columns(3),
