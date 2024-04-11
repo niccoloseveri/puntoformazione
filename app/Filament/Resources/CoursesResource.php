@@ -7,6 +7,7 @@ use App\Filament\Resources\CoursesResource\RelationManagers\ClassroomRelationMan
 use App\Filament\Resources\CoursesResource\RelationManagers\ModulesRelationManager;
 use App\Models\Courses;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationGroup;
@@ -86,6 +87,7 @@ class CoursesResource extends Resource
                             ->numeric()
                             ->suffixIcon('gmdi-euro-r')
                             ->columnSpanFull(),
+                        //FileUpload::make('document')->label('Carica file')->disk('ftp')->columnSpanFull(),
                     ])
                     ->columns(2)
                     ->collapsible()
