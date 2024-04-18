@@ -34,9 +34,7 @@ class CoursesResource extends Resource
         return $form
             ->schema([
                 /*
-                    #quota esame
-                    #quota assicurativa
-                    #sezione
+                    #area di riferimento (foligno o fuori)
                 */
 
                 Section::make('Info Corso')->schema([

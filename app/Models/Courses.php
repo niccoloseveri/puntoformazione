@@ -79,4 +79,14 @@ class Courses extends Model
         return $this->hasMany(Lessons::class);
     }
 
+    /**
+     * Get all of the subscriptions for the Courses
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function subscriptions(): HasMany
+    {
+        return $this->hasMany(Subscriptions::class);
+    }
+
 }
