@@ -77,27 +77,27 @@ class UserResource extends Resource
                     ]),
                 Forms\Components\TextInput::make('via')
                     ->required()
-                    ->mask(RawJs::make(<<<'JS'
-                        $input.replace(/\w\S*/g, function(txt) {
-                            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                            });
-                        JS))
+                    //->mask(RawJs::make(<<<'JS'
+                    //    $input.replace(/\w\S*/g, function(txt) {
+                    //        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                    //        });
+                    //    JS))
                     ->maxLength(255),
                 Forms\Components\TextInput::make('citta')
                     ->required()
-                    ->mask(RawJs::make(<<<'JS'
-                        $input.replace(/\w\S*/g, function(txt) {
-                            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                            });
-                        JS))
+                    //->mask(RawJs::make(<<<'JS'
+                    //    $input.replace(/\w\S*/g, function(txt) {
+                    //        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                    //        });
+                    //    JS))
                     ->maxLength(255),
                 Forms\Components\TextInput::make('cap')
                     ->required()
-                    ->mask(RawJs::make(<<<'JS'
-                        $input.replace(/\w\S*/g, function(txt) {
-                            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                            });
-                        JS))
+                    //->mask(RawJs::make(<<<'JS'
+                    //    $input.replace(/\w\S*/g, function(txt) {
+                    //        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                    //        });
+                    //    JS))
                     ->maxLength(255),
                 Forms\Components\TextInput::make('tel')
                     ->tel()
