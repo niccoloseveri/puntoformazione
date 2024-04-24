@@ -31,19 +31,20 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur:true)
-                    ->mask(RawJs::make(<<<'JS'
-                        $input.replace(/\w\S*/g, function(txt) {
-                            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                            });
-                        JS))
+
+                    //->mask(RawJs::make(<<<'JS'
+                    //    $input.replace(/\w\S*/g, function(txt) {
+                    //        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                    //        });
+                    //    JS))
                     ->afterStateUpdated(fn (Set $set, ?string $state) => $set('password', str_replace(' ','',$state).'0000')),
                 Forms\Components\TextInput::make('surname')->label('Cognome')
                     ->required()
-                    ->mask(RawJs::make(<<<'JS'
-                        $input.replace(/\w\S*/g, function(txt) {
-                            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                            });
-                        JS))
+                    //->mask(RawJs::make(<<<'JS'
+                    //    $input.replace(/\w\S*/g, function(txt) {
+                    //        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                    //        });
+                    //    JS))
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
