@@ -37,6 +37,7 @@ class SubscriptionsResource extends Resource
                 Forms\Components\Select::make('courses_id')->label('Corso')
                     ->relationship(name: 'courses', titleAttribute: 'name')
                     ->searchable('name')
+                    ->live()
                     ->preload(),
 
                 Forms\Components\TextInput::make('classrooms_id')
