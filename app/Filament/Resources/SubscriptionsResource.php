@@ -28,8 +28,9 @@ class SubscriptionsResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('users_id')->label('Nome studente')
+                Forms\Components\Select::make('users_id')->label('Studente')
                     ->relationship(name: 'user', titleAttribute: 'full_name')
+                    ->createOptionForm(fn(Form $form) => UserResource::form($form))
                     ->searchable('name','surname','full_name','email')
                     ->preload(),
 

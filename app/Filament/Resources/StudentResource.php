@@ -57,20 +57,20 @@ class StudentResource extends Resource
                         ->columns(1)
                         ->maxLength(255)
                         ->live(onBlur:true)
-                        ->mask(RawJs::make(<<<'JS'
-                            $input.replace(/\w\S*/g, function(txt) {
-                                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                                });
-                            JS))
+                        //->mask(RawJs::make(<<<'JS'
+                        //    $input.replace(/\w\S*/g, function(txt) {
+                        //        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                        //        });
+                        //    JS))
                         ->afterStateUpdated(fn (Set $set, ?string $state) => $set('password', str_replace(' ', '', $state) . '0000')),
                     Forms\Components\TextInput::make('surname')->label('Cognome')
                         ->required()
                         ->columns(1)
-                        ->mask(RawJs::make(<<<'JS'
-                            $input.replace(/\w\S*/g, function(txt) {
-                                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                                });
-                            JS))
+                        //->mask(RawJs::make(<<<'JS'
+                        //    $input.replace(/\w\S*/g, function(txt) {
+                        //        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                        //        });
+                        //    JS))
                         ->maxLength(255),
                     Forms\Components\TextInput::make('email')
                         ->email()
@@ -104,27 +104,27 @@ class StudentResource extends Resource
                         ]),
                     Forms\Components\TextInput::make('via')
                         ->required()
-                        ->mask(RawJs::make(<<<'JS'
-                            $input.replace(/\w\S*/g, function(txt) {
-                                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                                });
-                            JS))
+                        //->mask(RawJs::make(<<<'JS'
+                        //    $input.replace(/\w\S*/g, function(txt) {
+                        //        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                        //        });
+                        //    JS))
                         ->maxLength(255),
                     Forms\Components\TextInput::make('citta')
                         ->required()
-                        ->mask(RawJs::make(<<<'JS'
-                            $input.replace(/\w\S*/g, function(txt) {
-                                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                                });
-                            JS))
+                        //->mask(RawJs::make(<<<'JS'
+                        //    $input.replace(/\w\S*/g, function(txt) {
+                        //        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                        //        });
+                        //    JS))
                         ->maxLength(255),
                     Forms\Components\TextInput::make('cap')
                         ->required()
-                        ->mask(RawJs::make(<<<'JS'
-                            $input.replace(/\w\S*/g, function(txt) {
-                                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                                });
-                            JS))
+                        //->mask(RawJs::make(<<<'JS'
+                        //    $input.replace(/\w\S*/g, function(txt) {
+                        //        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                        //        });
+                        //    JS))
                         ->maxLength(255),
                     Forms\Components\TextInput::make('tel')
                         ->tel()

@@ -109,6 +109,12 @@ class UserResource extends Resource
                     ->preload()
                     ->required()
                     ->label('Ruolo'),
+                Forms\Components\Select::make('course')->label('Corso (non obbligatorio)')
+                ->columnSpanFull()
+                ->relationship(name:'courses', titleAttribute:'name')
+                ->searchable('name')
+                ->preload()
+                ,
                 Forms\Components\Toggle::make('piva_check')->label('Partita iva?')
                     ->live(),
                 Forms\Components\TextInput::make('piva')
