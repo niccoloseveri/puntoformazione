@@ -35,6 +35,18 @@ class User extends Authenticatable implements FilamentUser
         'cf',
         'is_teacher',
         'password',
+        'data_nascita',
+        'luogo_nascita',
+        'paese_nascita',
+        'prov_nascita',
+        'cittadinanza',
+        'titolo_studio',
+        'genere',
+        'note',
+        'prov',
+        'paese_residenza',
+        'piva',
+        'document_uploaded',
     ];
 
     /**

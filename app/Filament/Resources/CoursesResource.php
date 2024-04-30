@@ -85,7 +85,10 @@ class CoursesResource extends Resource
                             ->numeric()
                             ->suffixIcon('gmdi-euro-r')
                             ->columnSpanFull(),
-                        //FileUpload::make('document')->label('Carica file')->disk('ftp')->columnSpanFull(),
+                        FileUpload::make('document')->label('Carica documenti di identità')->disk('ftp')->columnSpanFull(),
+                        FileUpload::make('document')->label('Carica manifestazione di interesse')->disk('ftp')->columnSpanFull(),
+                        FileUpload::make('document')->label('Carica codice fiscale')->disk('ftp')->columnSpanFull(),
+
                     ])
                     ->columns(2)
                     ->collapsible()

@@ -27,6 +27,10 @@ class SubscriptionsResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+
+        /*
+            sede di riferimento (foligno o altro)
+        */
             ->schema([
                 Forms\Components\Select::make('users_id')->label('Studente')
                     ->relationship(name: 'user', titleAttribute: 'full_name')
