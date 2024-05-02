@@ -117,7 +117,7 @@ class UserResource extends Resource
                     Forms\Components\TextInput::make('cittadinanza')
                     ->maxLength(255)
                     ->label('Cittadinanza'),
-                    FileUpload::make('document_uploaded')->label('Documento o Permesso di soggiorno')
+                    FileUpload::make('document_uploaded')->label('Documento o Passaporto')
                     ->disk('ftp')
                     ->getUploadedFileNameForStorageUsing(
                         fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
@@ -216,6 +216,35 @@ class UserResource extends Resource
                         ->label('Partita IVA')
                         ->columnSpanFull(),
                 ]),
+                Fieldset::make('Caricamenti')
+                    ->schema([
+                        FileUpload::make('cf_uploaded')->label('Codice Fiscale o Tessera Sanitaria')
+                        ->disk('ftp')
+                        ->getUploadedFileNameForStorageUsing(
+                            fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
+                            ->prepend('codicefiscale-'),
+                        )
+                        ->visibility('private')
+                        ->columnSpanFull(),
+                        FileUpload::make('permesso_uploaded')->label('Permesso di soggiorno')
+                        ->disk('ftp')
+                        ->getUploadedFileNameForStorageUsing(
+                            fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
+                            ->prepend('permessosoggiorno-'),
+                        )
+                        ->visibility('private')
+                        ->columnSpanFull(),
+
+                        FileUpload::make('interesse_uploaded')->label('Manifestazione di interesse')
+                        ->disk('ftp')
+                        ->getUploadedFileNameForStorageUsing(
+                            fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
+                            ->prepend('interesse-'),
+                        )
+                        ->visibility('private')
+                        ->columnSpanFull(),
+
+                    ]),
                 RichEditor::make('note')->label('Note')->columnSpanFull(),
             ]);
     }
