@@ -32,6 +32,7 @@ class SubscriptionsResource extends Resource
             sede di riferimento (foligno o altro)
         */
             ->schema([
+
                 Forms\Components\Select::make('users_id')->label('Studente')
                     ->relationship(name: 'user', titleAttribute: 'full_name')
                     ->createOptionForm(fn(Form $form) => UserResource::form($form))
@@ -39,7 +40,7 @@ class SubscriptionsResource extends Resource
                     ->preload(),
 
                 Forms\Components\Select::make('courses_id')->label('Corso')
-                    ->relationship(name: 'courses', titleAttribute: 'name')
+                    ->relationship(name: 'course', titleAttribute: 'name')
                     ->searchable('name')
                     ->live()
                     ->preload(),

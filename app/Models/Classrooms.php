@@ -42,6 +42,16 @@ class Classrooms extends Model
         return $this->belongsToMany(User::class);
     }
 
+    /**
+     * Get all of the subscriptions for the Classrooms
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function subscriptions(): HasMany
+    {
+        return $this->hasMany(Subscriptions::class);
+    }
+
     public function lessons() : HasMany {
         return $this->hasMany(Lessons::class);
     }

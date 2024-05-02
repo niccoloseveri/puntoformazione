@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -20,15 +21,10 @@ class Subscriptions extends Model
         //
     ];
 
-    /**
-     * The courses that belong to the Subscriptions
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function courses(): HasOne
-    {
-        return $this->hasOne(Courses::class);
-    }
+
+
+
+
 
     /**
      * Get the status associated with the Subscriptions
@@ -53,10 +49,30 @@ class Subscriptions extends Model
     /**
      * Get the user associated with the Subscriptions
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user(): HasOne
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * The courses that belong to the Subscriptions
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function course(): BelongsTo
+    {
+        return $this->belongsTo(Courses::class);
+    }
+
+    /**
+     * Get the classrooms associated with the Subscriptions
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function classrooms(): BelongsTo
+    {
+        return $this->belongsTo(Classrooms::class);
     }
 }

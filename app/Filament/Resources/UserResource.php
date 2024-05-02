@@ -3,6 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
+use App\Models\Classrooms;
+use App\Models\Courses;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Fieldset;
@@ -176,7 +178,19 @@ class UserResource extends Resource
                     Forms\Components\Select::make('course')->label('Corso (non obbligatorio)')
                         ->relationship(name:'courses', titleAttribute:'name')
                         ->searchable('name')
-                        ->preload(),
+                        ->preload()
+                        ->live(),
+                    /*Forms\Components\Select::make('classroom')->label('Classe (non obbligatorio)')
+                        ->relationship(name:'classrooms', titleAttribute:'name')
+                        ->searchable()
+                        ->hidden(
+                            fn(Get $get) :bool => !$get('course')
+                        )
+                        ->options(
+                            fn($get) =>
+                                Classrooms::where('course_id',$get('course'))->pluck('name','id')
+                        ),
+*/
                     Forms\Components\Select::make('genere')->label('Genere')
                         ->options([
                             'Uomo',

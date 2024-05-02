@@ -74,10 +74,6 @@ class User extends Authenticatable implements FilamentUser
         return true;
     }
 
-    public function courses() : BelongsToMany {
-        return $this->belongsToMany(Courses::class);
-    }
-
     /**
      * Get all of the subscriptions for the User
      *
@@ -88,9 +84,25 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Subscriptions::class);
     }
 
-    /*public function classrooms() : HasManyThrough
+    /**
+     * The courses that belong to the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function courses() : BelongsToMany {
+        return $this->belongsToMany(Courses::class,'subscriptions','users_id');
+    }
+
+    /**
+     * The classrooms that belong to the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function classrooms(): BelongsToMany
     {
-        return $this;
-    }*/
+        return $this->belongsToMany(Classrooms::class,'subscriptions','users_id');
+    }
+
+
 
 }
