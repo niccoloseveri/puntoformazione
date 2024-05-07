@@ -32,15 +32,6 @@ class UserResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            /*
-
-                paese residenza
-                cittadinanza
-                note
-                titolo di studio
-                genere
-
-            */
             ->schema([
                 Fieldset::make('Generali')
                 ->schema([
@@ -180,7 +171,8 @@ class UserResource extends Resource
                         ->searchable('name')
                         ->preload()
                         ->live(),
-                    /*Forms\Components\Select::make('classroom')->label('Classe (non obbligatorio)')
+                    /*
+                    Forms\Components\Select::make('classroom')->label('Classe (non obbligatorio)')
                         ->relationship(name:'classrooms', titleAttribute:'name')
                         ->searchable()
                         ->hidden(
@@ -190,7 +182,7 @@ class UserResource extends Resource
                             fn($get) =>
                                 Classrooms::where('course_id',$get('course'))->pluck('name','id')
                         ),
-*/
+                    */
                     Forms\Components\Select::make('genere')->label('Genere')
                         ->options([
                             'Uomo',
