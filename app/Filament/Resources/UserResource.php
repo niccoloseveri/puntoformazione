@@ -111,7 +111,7 @@ class UserResource extends Resource
                                 ."&access_token=".env("CF_TOKEN")."";
                                 $json=file_get_contents($url2);
                                 $response=json_decode($json,true);
-                                //dd($response);
+                                dd($response);
                                 if($response['status']!='true') {
                                     $fail(':attribute non valido. '.$response['message'].'');
                                 }
