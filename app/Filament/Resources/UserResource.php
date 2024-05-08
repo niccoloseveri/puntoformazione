@@ -111,7 +111,7 @@ class UserResource extends Resource
                                 ."&access_token=0cbdd1530238d52f19344becbd927b25592ea7509d7c330b68ddf172b4870c85820";
                                 $json=file_get_contents($url2);
                                 $response=json_decode($json,true);
-                                dd($url2);
+                                //dd($url2);
                                 if($response['status']!='true') {
                                     $fail(':attribute non valido. '.$response['message'].'');
                                 }
