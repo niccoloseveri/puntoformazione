@@ -108,7 +108,7 @@ class UserResource extends Resource
                                 */
                                 $url2="http://api.miocodicefiscale.com/reverse"
                                 ."?cf=$value"
-                                ."&access_token=".env("CF_TOKEN");
+                                ."&access_token=".env('CF_TOKEN');
                                 $json=file_get_contents($url2);
                                 $response=json_decode($json,true);
                                 dd($url2);
