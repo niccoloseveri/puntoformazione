@@ -6,6 +6,9 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Models\Classrooms;
 use App\Models\Courses;
 use App\Models\User;
+use Carbon\Carbon;
+use Closure;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
@@ -83,10 +86,42 @@ class UserResource extends Resource
                         ->mask(RawJs::make(<<<'JS'
                             $input.toUpperCase();
                             JS))
-                        ->regex("/^(?:[A-Z][AEIOU][AEIOUX]|[AEIOU]X{2}|[B-DF-HJ-NP-TV-Z]{2}[A-Z]){2}(?:[\dLMNP-V]{2}(?:[A-EHLMPR-T](?:[04LQ][1-9MNP-V]|[15MR][\dLMNP-V]|[26NS][0-8LMNP-U])|[DHPS][37PT][0L]|[ACELMRT][37PT][01LM]|[AC-EHLMPR-T][26NS][9V])|(?:[02468LNQSU][048LQU]|[13579MPRTV][26NS])B[26NS][9V])(?:[A-MZ][1-9MNP-V][\dLMNP-V]{2}|[A-M][0L](?:[1-9MNP-V][\dLMNP-V]|[0L][1-9MNP-V]))[A-Z]$/i")
-                        ->validationMessages([
-                            'regex' => 'Codice Fiscale non valido.'
-                        ]),
+                        ->validationAttribute('Codice Fiscale')
+                        ->rules([
+                            fn (/*Get $get*/): Closure => function ($attribute, $value, Closure $fail) /*use ($get)*/ {
+
+                                /*$day=date('d',strtotime($get('data_nascita')));
+                                $month=date('m',strtotime($get('data_nascita')));
+                                $year=date('Y',strtotime($get('data_nascita')));
+                                $url="http://api.miocodicefiscale.com/compare"
+                                ."?cf=$value"
+                                ."&lname=".$get('surname')
+                                ."&fname=".$get('name')
+                                ."&gender=".$get('genere')
+                                ."&city=".$get('luogo_nascita')
+                                ."&state=".$get('prov_nascita')
+                                ."&day=".$day
+                                ."&month=".$month
+                                ."&year=".$year
+                                ."&access_token=".env("CF_TOKEN");
+                                //dd($url);
+                                */
+                                $url2="http://api.miocodicefiscale.com/reverse"
+                                ."?cf=$value"
+                                ."&access_token=".env("CF_TOKEN")."";
+                                $json=file_get_contents($url2);
+                                $response=json_decode($json,true);
+                                //dd($response);
+                                if($response['status']!='true') {
+                                    $fail(':attribute non valido. '.$response['message'].'');
+                                }
+                            },
+                        ])
+                        //->regex("/^(?:[A-Z][AEIOU][AEIOUX]|[AEIOU]X{2}|[B-DF-HJ-NP-TV-Z]{2}[A-Z]){2}(?:[\dLMNP-V]{2}(?:[A-EHLMPR-T](?:[04LQ][1-9MNP-V]|[15MR][\dLMNP-V]|[26NS][0-8LMNP-U])|[DHPS][37PT][0L]|[ACELMRT][37PT][01LM]|[AC-EHLMPR-T][26NS][9V])|(?:[02468LNQSU][048LQU]|[13579MPRTV][26NS])B[26NS][9V])(?:[A-MZ][1-9MNP-V][\dLMNP-V]{2}|[A-M][0L](?:[1-9MNP-V][\dLMNP-V]|[0L][1-9MNP-V]))[A-Z]$/i")
+                        //->validationMessages([
+                        //    'regex' => 'Codice Fiscale non valido.'
+                        //]),
+                        ,
                     Forms\Components\TextInput::make('tel')->label('Telefono')
                         ->tel()
                         ->required()
@@ -185,19 +220,19 @@ class UserResource extends Resource
                     */
                     Forms\Components\Select::make('genere')->label('Genere')
                         ->options([
-                            'Uomo',
-                            'Donna',
-                            'Altro',
+                            'M' => 'Uomo',
+                            'F' => 'Donna',
+                            'MF' => 'Altro',
                         ])
                         ->searchable(),
                     Forms\Components\Select::make('titolo_studio')->label('Titolo di studio')
                         ->options([
-                            'Diploma Liceo',
-                            'Diploma Istituto tecnico',
-                            'Laurea Triennale',
-                            'Laurea Magistrale',
-                            'Diploma scuola secondaria di primo grado',
-                            'Nessuno',
+                            'Diploma Liceo' => 'Diploma Liceo',
+                            'Diploma Istituto tecnico' => 'Diploma Istituto tecnico',
+                            'Laurea Triennale' => 'Laurea Triennale',
+                            'Laurea Magistrale' => 'Laurea Magistrale',
+                            'Diploma scuola secondaria di primo grado' => 'Diploma scuola secondaria di primo grado',
+                            'Nessuno' => 'Nessuno',
                         ])
                         ->searchable(),
 
@@ -232,6 +267,15 @@ class UserResource extends Resource
                         ->getUploadedFileNameForStorageUsing(
                             fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                             ->prepend('interesse-'),
+                        )
+                        ->visibility('private')
+                        ->columnSpanFull(),
+
+                        FileUpload::make('contratto_uploaded')->label('Contratto')
+                        ->disk('ftp')
+                        ->getUploadedFileNameForStorageUsing(
+                            fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
+                            ->prepend('contratto-'),
                         )
                         ->visibility('private')
                         ->columnSpanFull(),
@@ -280,6 +324,10 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ActionGroup::make([
+                    Action::make('priv-print')->url(fn($record) => route('privacy.pdf.stampa',[$record]))->openUrlInNewTab()->label('Stampa informativa Privacy'),
+                    Action::make('whats-print')->url(fn($record) => route('whatsapp.pdf.stampa',[$record]))->openUrlInNewTab()->label('Stampa autorizzazione Whatsapp'),
+                ])->icon('gmdi-print-r')->color('warning'),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

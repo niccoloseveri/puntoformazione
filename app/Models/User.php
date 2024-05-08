@@ -47,6 +47,10 @@ class User extends Authenticatable implements FilamentUser
         'paese_residenza',
         'piva',
         'document_uploaded',
+        'cf_uploaded',
+        'permesso_uploaded',
+        'interesse_uploaded',
+        'contratto_uploaded'
     ];
 
     /**

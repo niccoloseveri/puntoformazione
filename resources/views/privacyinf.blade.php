@@ -302,8 +302,8 @@
                     </p>
                     <br><br>
                     <div class="grid grid-cols-2 justify-between items-center">
-                        <div class="text-start"><p>Foligno,___/___/_____/</p></div>
-                        <div class="text-end"><p class="text-center">FIRMA DEL CLIENTE<br><br>__________________________</p></div>
+                        <div class="text-start"><p>Foligno, {{date('d/m/Y')}}</p></div>
+                        <div class="text-end"><p class="text-center">FIRMA DEL CLIENTE<br><br>_____________________________</p></div>
                     </div>
                 </div>
 

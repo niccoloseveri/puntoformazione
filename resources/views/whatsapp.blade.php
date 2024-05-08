@@ -163,18 +163,40 @@
             <!-- SEZIONE 1 - ANAGRAFICA -->
             <div class="w-full mt-3">
                 <div id="fullwrap" class="w-full">
-                    <p>
-                        IL/La sottoscritto/a............................................ , nato/a a ............................... in provincia di................................, il .../.../.., residente a .................................., Via ........................................, CAP ..........................., (città)........................................., Cod. Fisc ................................................., in possesso del Licenza Scuola dell'Obbligo (d'ora in avanti "Allievo")
-                    </p>
-                    <span class="font-bold text-sm">
-                        Chiede
-                    </span>
-                    <p class="font-bold mt-2">
-                        di essere inserito/a, con il n telefonico indicato nella Manifestazione di Interesse già sottoscritta, nel gruppo whatsapp di lavoro della Sezione di riferimento
-                    </p>
+                    @if ($user->genere == 'M')
+                        <p>
+                            Il sottoscritto <span class="font-bold">{{$user->full_name}}</span>, nato a <span class="font-bold">{{$user->luogo_nascita}}</span> in provincia di <span class="font-bold">{{$user->prov_nascita}}</span>, il <span class="font-bold">{{date('d/m/Y', strtotime($user->data_nascita))}}</span>, residente a <span class="font-bold">{{$user->citta}}</span>, Via <span class="font-bold">{{$user->via}}</span>, CAP <span class="font-bold">{{$user->cap}}</span>, Cod. Fisc <span class="font-bold">{{$user->cf}}</span>, in possesso del <span class="font-bold">{{$user->titolo_studio}}</span> (d'ora in avanti "Allievo")
+                        </p>
+                        <span class="font-bold text-sm">
+                            Chiede
+                        </span>
+                        <p class="font-bold mt-2">
+                            di essere inserito, con il n telefonico indicato nella Manifestazione di Interesse già sottoscritta, nel gruppo whatsapp di lavoro della Sezione di riferimento
+                        </p>
+                    @elseif ($user->genere == 'MF')
+                        <p>
+                            L* sottoscritt* <span class="font-bold">{{$user->full_name}}</span>, nat* a <span class="font-bold">{{$user->luogo_nascita}}</span> in provincia di <span class="font-bold">{{$user->prov_nascita}}</span>, il <span class="font-bold">{{date('d/m/Y', strtotime($user->data_nascita))}}</span>, residente a <span class="font-bold">{{$user->citta}}</span>, Via <span class="font-bold">{{$user->via}}</span>, CAP <span class="font-bold">{{$user->cap}}</span>, Cod. Fisc <span class="font-bold">{{$user->cf}}</span>, in possesso del <span class="font-bold">{{$user->titolo_studio}}</span> (d'ora in avanti "Alliev*")
+                        </p>
+                        <span class="font-bold text-sm">
+                            Chiede
+                        </span>
+                        <p class="font-bold mt-2">
+                            di essere inserit*, con il n telefonico indicato nella Manifestazione di Interesse già sottoscritta, nel gruppo whatsapp di lavoro della Sezione di riferimento
+                        </p>
+                    @else
+                        <p>
+                            La sottoscritta <span class="font-bold">{{$user->full_name}}</span>, nata a <span class="font-bold">{{$user->luogo_nascita}}</span> in provincia di <span class="font-bold">{{$user->prov_nascita}}</span>, il <span class="font-bold">{{date('d/m/Y', strtotime($user->data_nascita))}}</span>, residente a <span class="font-bold">{{$user->citta}}</span>, Via <span class="font-bold">{{$user->via}}</span>, CAP <span class="font-bold">{{$user->cap}}</span>, Cod. Fisc <span class="font-bold">{{$user->cf}}</span>, in possesso del <span class="font-bold">{{$user->titolo_studio}}</span> (d'ora in avanti "Allieva")
+                        </p>
+                        <span class="font-bold text-sm">
+                            Chiede
+                        </span>
+                        <p class="font-bold mt-2">
+                            di essere inserita, con il n telefonico indicato nella Manifestazione di Interesse già sottoscritta, nel gruppo whatsapp di lavoro della Sezione di riferimento
+                        </p>
+                    @endif
                     <br><br>
                     <div class="grid grid-cols-2 justify-between items-center font-bold">
-                        <div class="text-start"><p>Foligno, il ___/___/_____/</p></div>
+                        <div class="text-start"><p>Foligno, il {{date('d/m/Y')}}</p></div>
                         <div class="text-end"><p class="text-center">In fede,<br><br>__________________________</p></div>
                     </div>
                 </div>
