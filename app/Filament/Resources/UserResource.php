@@ -251,16 +251,14 @@ class UserResource extends Resource
                             fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                             ->prepend('codicefiscale-'),
                         )
-                        ->visibility('private')
-                        ->columnSpanFull(),
+                        ->visibility('private'),
                         FileUpload::make('permesso_uploaded')->label('Permesso di soggiorno')
                         ->disk('ftp')
                         ->getUploadedFileNameForStorageUsing(
                             fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                             ->prepend('permessosoggiorno-'),
                         )
-                        ->visibility('private')
-                        ->columnSpanFull(),
+                        ->visibility('private'),
 
                         FileUpload::make('interesse_uploaded')->label('Manifestazione di interesse')
                         ->disk('ftp')
@@ -268,14 +266,21 @@ class UserResource extends Resource
                             fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                             ->prepend('interesse-'),
                         )
-                        ->visibility('private')
-                        ->columnSpanFull(),
+                        ->visibility('private'),
 
                         FileUpload::make('contratto_uploaded')->label('Contratto')
                         ->disk('ftp')
                         ->getUploadedFileNameForStorageUsing(
                             fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                             ->prepend('contratto-'),
+                        )
+                        ->visibility('private'),
+
+                        FileUpload::make('whatsapp_uploaded')->label('Autorizzazione Whatsapp')
+                        ->disk('ftp')
+                        ->getUploadedFileNameForStorageUsing(
+                            fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
+                            ->prepend('whatsapp-'),
                         )
                         ->visibility('private')
                         ->columnSpanFull(),
