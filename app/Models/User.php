@@ -50,7 +50,9 @@ class User extends Authenticatable implements FilamentUser
         'cf_uploaded',
         'permesso_uploaded',
         'interesse_uploaded',
-        'contratto_uploaded'
+        'contratto_uploaded',
+        'whatsapp_uploaded'
+
     ];
 
     /**
