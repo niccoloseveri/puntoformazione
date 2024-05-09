@@ -42,15 +42,21 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 //Pages\Dashboard::class,
             ])
+
             ->navigationGroups([
                 NavigationGroup::make()
                      ->label('Anagrafica'),
                 NavigationGroup::make()->label('Gestione Pagamenti'),
                 NavigationGroup::make()->label('Didattica'),
-                NavigationGroup::make()->label(__('Roles and Permissions'))->collapsed()
+                NavigationGroup::make()->label(__('Ruoli e Permessi'))->collapsed(),
+                NavigationGroup::make()->label(__('Impostazioni'))->collapsed()
+
             ])
             ->plugins([
                 FilamentSpatieRolesPermissionsPlugin::make(),
+            ])
+            ->resources([
+                config('filament-logger.activity_resource'),
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
