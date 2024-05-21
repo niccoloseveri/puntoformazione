@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -40,7 +41,7 @@ class SubscriptionsResource extends Resource
                     ->preload(),
 
                 Forms\Components\Select::make('courses_id')->label('Corso')
-                    ->relationship(name: 'course', titleAttribute: 'name')
+                    ->relationship(name: 'courses', titleAttribute: 'name')
                     ->searchable('name')
                     ->live()
                     ->preload(),
@@ -70,14 +71,12 @@ class SubscriptionsResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('users_id')
-                    ->numeric()
+                TextColumn::make('user.full_name')
+                    ->searchable()
+                    ->label('Studente'),
+                Tables\Columns\TextColumn::make('courses.name')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('courses_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('classrooms_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('classrooms.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('payment_options_id')
                     ->numeric()

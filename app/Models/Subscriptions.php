@@ -61,7 +61,7 @@ class Subscriptions extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function course(): BelongsTo
+    public function courses(): BelongsTo
     {
         return $this->belongsTo(Courses::class);
     }
