@@ -96,7 +96,7 @@ class User extends Authenticatable implements FilamentUser
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function courses() : BelongsToMany {
-        return $this->belongsToMany(Courses::class,'subscriptions','user_id');
+        return $this->belongsToMany(Courses::class,'subscriptions','user_id')->withPivot('classrooms_id','start_date');
     }
 
     /**
@@ -106,7 +106,7 @@ class User extends Authenticatable implements FilamentUser
      */
     public function classrooms(): BelongsToMany
     {
-        return $this->belongsToMany(Classrooms::class,'classrooms_users');
+        return $this->belongsToMany(Classrooms::class,'subscriptions','user_id')->withPivot('courses_id','start_date');
     }
 
 

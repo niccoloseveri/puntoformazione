@@ -39,7 +39,7 @@ class Classrooms extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class,'subscriptions')->withPivot('course_id','start_date');
     }
 
     /**

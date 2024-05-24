@@ -4,9 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SubscriptionsResource\Pages;
 use App\Filament\Resources\SubscriptionsResource\RelationManagers;
+use App\Models\Classrooms;
 use App\Models\Subscriptions;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -34,24 +36,31 @@ class SubscriptionsResource extends Resource
         */
             ->schema([
 
-                Forms\Components\Select::make('users_id')->label('Studente')
+                Forms\Components\Select::make('user_id')->label('Studente')
                     ->relationship(name: 'user', titleAttribute: 'full_name')
                     ->createOptionForm(fn(Form $form) => UserResource::form($form))
                     ->searchable('name','surname','full_name','email')
                     ->preload(),
 
-                Forms\Components\Select::make('courses_id')->label('Corso')
-                    ->relationship(name: 'courses', titleAttribute: 'name')
+                    Forms\Components\Select::make('course')->label('Corso')
+                    ->relationship(name:'courses', titleAttribute:'name')
                     ->searchable('name')
-                    ->live()
-                    ->preload(),
+                    ->preload()
+                    ->live(),
 
-                Forms\Components\TextInput::make('classrooms_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('classroom')->label('Classe')
+                    ->relationship(name:'classrooms', titleAttribute:'name')
+                    ->searchable()
+                    ->hidden(
+                        fn(Get $get) :bool => !$get('course')
+                    )
+                    ->options(
+                        fn($get) =>
+                            Classrooms::where('course_id',$get('course'))->pluck('name','id')
+                    ),
 
                 Forms\Components\Select::make('payment_options_id')->label('Opzioni Pagamento')
-                    ->relationship(name: 'paymentoption', titleAttribute: 'name')
+                    ->relationship(name: 'paymentoptions', titleAttribute: 'name')
                     ->searchable('name')
                     ->preload(),
 
@@ -75,31 +84,40 @@ class SubscriptionsResource extends Resource
                     ->searchable()
                     ->label('Studente'),
                 Tables\Columns\TextColumn::make('courses.name')
-                    ->sortable(),
+                    ->sortable()
+                    ->label('Corso'),
                 Tables\Columns\TextColumn::make('classrooms.name')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('payment_options_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('is_teacher')
-                    ->boolean(),
+                    ->sortable()
+                    ->label('Sezione'),
+                Tables\Columns\TextColumn::make('paymentoptions.name')
+                    ->sortable()
+                    ->label('Opz. Pagamento'),
+                Tables\Columns\TextColumn::make('status.name')
+                    ->sortable()
+                    ->label('Stato'),
                 Tables\Columns\TextColumn::make('start_date')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('statuses_id')
-                    ->numeric()
-                    ->sortable(),
+                    ->date('d/m/Y')
+                    ->sortable()
+                    ->label('Iscritto dal'),
                 Tables\Columns\TextColumn::make('next_payment')
-                    ->date()
-                    ->sortable(),
+                    ->date('d/m/Y')
+                    ->sortable()
+                    ->label('Prossimo pagamento'),
                 Tables\Columns\IconColumn::make('printed_cont')
-                    ->boolean(),
+                    ->boolean()
+                    ->label('Contratto')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\IconColumn::make('printed_priv')
-                    ->boolean(),
+                    ->boolean()
+                    ->label('Privacy')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\IconColumn::make('printed_whats')
-                    ->boolean(),
-                Tables\Columns\IconColumn::make('is_active')
-                    ->boolean(),
+                    ->boolean()
+                    ->label('Whatsapp')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\IconColumn::make('is_teacher')
+                    ->boolean()
+                    ->label('Insegnante?'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -60,7 +60,7 @@ class Courses extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class,'subsctiptions');
+        return $this->belongsToMany(User::class,'subsctiptions')->withPivot('classrooms_id','start_date');
     }
 
     /**

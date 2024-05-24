@@ -19,32 +19,20 @@ class Subscriptions extends Model
      */
     protected $fillable=[
         //
+        'user_id',
+        'courses_id',
+        'classrooms_id',
+        'payment_options_id',
+        'is_teacher',
+        'start_date',
+        'statuses_id',
+        'next_payment',
+        'printed_cont',
+        'printed_priv',
+        'printed_whats',
+        'is_active'
+
     ];
-
-
-
-
-
-
-    /**
-     * Get the status associated with the Subscriptions
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function status(): HasOne
-    {
-        return $this->hasOne(Status::class);
-    }
-
-    /**
-     * Get the paymentoption associated with the Subscriptions
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function paymentoption(): HasOne
-    {
-        return $this->hasOne(Payment_options::class);
-    }
 
     /**
      * Get the user associated with the Subscriptions
@@ -75,4 +63,27 @@ class Subscriptions extends Model
     {
         return $this->belongsTo(Classrooms::class);
     }
+
+    /**
+     * Get the paymentoption associated with the Subscriptions
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function paymentoptions(): BelongsTo
+    {
+        return $this->belongsTo(Payment_options::class,'payment_options_id');
+    }
+
+    /**
+     * Get the status associated with the Subscriptions
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(Status::class,'statuses_id');
+    }
+
+
+
 }
