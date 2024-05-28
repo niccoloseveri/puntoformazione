@@ -51,7 +51,10 @@ class User extends Authenticatable implements FilamentUser
         'permesso_uploaded',
         'interesse_uploaded',
         'contratto_uploaded',
-        'whatsapp_uploaded'
+        'whatsapp_uploaded',
+        'roles',
+        'courses_id',
+        'classrooms'
 
     ];
 

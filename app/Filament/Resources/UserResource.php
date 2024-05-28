@@ -3,8 +3,10 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\RelationManagers\SubscriptionsRelationManager;
 use App\Models\Classrooms;
 use App\Models\Courses;
+use App\Models\Subscriptions;
 use App\Models\User;
 use Carbon\Carbon;
 use Closure;
@@ -164,21 +166,18 @@ class UserResource extends Resource
                         //}
                         ->maxLength(255),
                 ]),
-                Fieldset::make('Altre info')
-                ->schema([
-                    Forms\Components\Select::make('roles')
-                        ->multiple()
-                        ->relationship('roles', 'name')
-                        ->preload()
-                        ->required()
-                        ->label('Ruolo'),
-                    Forms\Components\Select::make('course')->label('Corso (non obbligatorio)')
+
+                /*Fieldset::make('Iscrizione')
+                    ->model(Subscriptions::class)
+                    ->schema([
+                        Forms\Components\Select::make('course')->label('Corso')
                         ->relationship(name:'courses', titleAttribute:'name')
                         ->searchable('name')
+                        ->columnSpanFull()
                         ->preload()
                         ->live(),
 
-                    Forms\Components\Select::make('classroom')->label('Classe (non obbligatorio)')
+                        Forms\Components\Select::make('classroom')->label('Classe')
                         ->relationship(name:'classrooms', titleAttribute:'name')
                         ->searchable()
                         ->hidden(
@@ -187,33 +186,11 @@ class UserResource extends Resource
                         ->options(
                             fn($get) =>
                                 Classrooms::where('course_id',$get('course'))->pluck('name','id')
-                        ),
-
-                    Forms\Components\Select::make('genere')->label('Genere')
-                        ->options([
-                            'M' => 'Uomo',
-                            'F' => 'Donna',
-                            'MF' => 'Altro',
-                        ])
-                        ->searchable(),
-                    Forms\Components\Select::make('titolo_studio')->label('Titolo di studio')
-                        ->options([
-                            'Diploma Liceo' => 'Diploma Liceo',
-                            'Diploma Istituto tecnico' => 'Diploma Istituto tecnico',
-                            'Laurea Triennale' => 'Laurea Triennale',
-                            'Laurea Magistrale' => 'Laurea Magistrale',
-                            'Diploma scuola secondaria di primo grado' => 'Diploma scuola secondaria di primo grado',
-                            'Nessuno' => 'Nessuno',
-                        ])
-                        ->searchable(),
-
-                    Forms\Components\Toggle::make('piva_check')->label('Partita iva?')
-                        ->live(),
-                    Forms\Components\TextInput::make('piva')
-                        ->hidden(fn (Get $get): bool => ! $get('piva_check'))
-                        ->label('Partita IVA')
+                        )
                         ->columnSpanFull(),
-                ]),
+                    ])//->model(Subscriptions::class)
+                    ,
+                    */
                 Fieldset::make('Caricamenti')
                     ->schema([
                         FileUpload::make('cf_uploaded')->label('Codice Fiscale o Tessera Sanitaria')
@@ -257,7 +234,41 @@ class UserResource extends Resource
                         ->columnSpanFull(),
 
                     ]),
-                RichEditor::make('note')->label('Note')->columnSpanFull(),
+                    Fieldset::make('Altre info')
+                ->schema([
+                    Forms\Components\Select::make('roles')
+                        ->multiple()
+                        ->relationship('roles', 'name')
+                        ->preload()
+                        ->required()
+                        ->label('Ruolo'),
+
+                    Forms\Components\Select::make('genere')->label('Genere')
+                        ->options([
+                            'M' => 'Uomo',
+                            'F' => 'Donna',
+                            'MF' => 'Altro',
+                        ])
+                        ->searchable(),
+                    Forms\Components\Select::make('titolo_studio')->label('Titolo di studio')
+                        ->options([
+                            'Diploma Liceo' => 'Diploma Liceo',
+                            'Diploma Istituto tecnico' => 'Diploma Istituto tecnico',
+                            'Laurea Triennale' => 'Laurea Triennale',
+                            'Laurea Magistrale' => 'Laurea Magistrale',
+                            'Diploma scuola secondaria di primo grado' => 'Diploma scuola secondaria di primo grado',
+                            'Nessuno' => 'Nessuno',
+                        ])
+                        ->searchable(),
+
+                    Forms\Components\Toggle::make('piva_check')->label('Partita iva?')
+                        ->live(),
+                    Forms\Components\TextInput::make('piva')
+                        ->hidden(fn (Get $get): bool => ! $get('piva_check'))
+                        ->label('Partita IVA')
+                        ->columnSpanFull(),
+                    RichEditor::make('note')->label('Note')->columnSpanFull(),
+                ]),
             ]);
     }
 
@@ -317,6 +328,7 @@ class UserResource extends Resource
     {
         return [
             //
+            SubscriptionsRelationManager::class,
         ];
     }
 

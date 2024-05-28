@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource\RelationManagers;
 use App\Models\Student;
+use App\Models\Subscriptions;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\Snappy\Facades\SnappyPdf;
@@ -146,7 +147,7 @@ class StudentResource extends Resource
 
                 Wizard\Step::make('Iscrizione')
                 ->schema([
-
+                    //
                 ]),
                 Wizard\Step::make('Fatturazione')
                 ->schema([
