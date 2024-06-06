@@ -309,7 +309,7 @@ class UserResource extends Resource
     {
         return $table
             ->defaultPaginationPageOption(25)
-            ->defaultSort('created_at','desc')
+            ->defaultSort('surname','asc')
             ->columns([
                 Tables\Columns\TextColumn::make('full_name')
                     ->label('Nome e Cognome')

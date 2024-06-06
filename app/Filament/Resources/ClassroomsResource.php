@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ClassroomResource\RelationManagers\UsersRelationManager;
+use App\Filament\Resources\ClassroomsResource\RelationManagers\UsersRelationManager;
 use App\Filament\Resources\ClassroomsResource\Pages;
 use App\Filament\Resources\ClassroomsResource\RelationManagers;
 use App\Models\Classrooms;

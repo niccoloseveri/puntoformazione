@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\ClassroomResource\RelationManagers;
+namespace App\Filament\Resources\ClassroomsResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -29,13 +29,19 @@ class UsersRelationManager extends RelationManager
         return $table
             //->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('full_name'),
-            ])
+                Tables\Columns\TextColumn::make('full_name')->label('Cognome e Nome')
+                ->formatStateUsing(function ($record) {
+                    return $record->surname. ' ' .$record->name. ' ';
+                })
+                ->html()
+                ->sortable('surname')
+                ,
+            ])->defaultSort('surname','asc')
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                //Tables\Actions\CreateAction::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
