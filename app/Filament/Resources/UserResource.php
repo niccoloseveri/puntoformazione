@@ -312,7 +312,12 @@ class UserResource extends Resource
             ->defaultSort('surname','asc')
             ->columns([
                 Tables\Columns\TextColumn::make('full_name')
-                    ->label('Nome e Cognome')
+                    ->label('Cognome e nome')
+                    ->formatStateUsing(function ($record) {
+                        return $record->surname. ' ' .$record->name. ' ';
+                    })
+                    ->html()
+                    ->sortable('surname')
                     ->copyable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
