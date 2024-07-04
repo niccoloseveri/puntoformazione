@@ -32,6 +32,8 @@ class ClassroomRelationManager extends RelationManager
             //->recordTitleAttribute('name')
             ->columns([
                 Tables\Columns\TextColumn::make('name')->label('Nome'),
+                Tables\Columns\TextColumn::make('users_count')->label('N. Iscritti')->counts('users'),
+
             ])
             ->filters([
                 //
