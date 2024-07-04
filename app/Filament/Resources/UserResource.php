@@ -224,13 +224,12 @@ class UserResource extends Resource
                 Fieldset::make('Caricamenti')
                     ->schema([
                         FileUpload::make('cf_uploaded')->label('Codice Fiscale o Tessera Sanitaria')
-                        ->disk('ftp')
+                        ->disk('s3')
                         ->getUploadedFileNameForStorageUsing(
                             fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                             ->prepend('codicefiscale-'),
                         )
                         ->openable()
-                        ->downloadable()
                         ->visibility('private'),
 
                         FileUpload::make('permesso_uploaded')->label('Permesso di soggiorno')
@@ -239,7 +238,8 @@ class UserResource extends Resource
                             fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                             ->prepend('permessosoggiorno-'),
                         )
-                        ->visibility('private'),
+                        ->visibility('private')
+                        ->openable(),
 
                         FileUpload::make('interesse_uploaded')->label('Manifestazione di interesse')
                         ->disk('ftp')
@@ -247,7 +247,8 @@ class UserResource extends Resource
                             fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                             ->prepend('interesse-'),
                         )
-                        ->visibility('private'),
+                        ->visibility('private')
+                        ->openable(),
 
                         FileUpload::make('contratto_uploaded')->label('Contratto')
                         ->disk('ftp')
@@ -255,7 +256,8 @@ class UserResource extends Resource
                             fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                             ->prepend('contratto-'),
                         )
-                        ->visibility('private'),
+                        ->visibility('private')
+                        ->openable(),
 
                         FileUpload::make('whatsapp_uploaded')->label('Autorizzazione Whatsapp')
                         ->disk('ftp')
@@ -264,6 +266,7 @@ class UserResource extends Resource
                             ->prepend('whatsapp-'),
                         )
                         ->visibility('private')
+                        ->openable()
                         ->columnSpanFull(),
 
                     ]),
