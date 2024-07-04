@@ -46,6 +46,7 @@ class StudentResource extends Resource
     {
         return parent::getEloquentQuery()->role('studente');
     }
+
     public static function form(Form $form): Form
     {
         return $form

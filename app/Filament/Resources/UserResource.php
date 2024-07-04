@@ -309,7 +309,6 @@ class UserResource extends Resource
     {
         return $table
             ->defaultPaginationPageOption(25)
-            ->defaultSort('surname','asc')
             ->columns([
                 Tables\Columns\TextColumn::make('full_name')
                     ->label('Cognome e nome')
@@ -344,7 +343,8 @@ class UserResource extends Resource
                     ->boolean()
                     ->alignCenter()
                     ->label('Insegnante'),
-            ])
+            ])->defaultSort('surname','asc')
+
             ->filters([
                 //
             ])
