@@ -37,7 +37,7 @@ class UsersRelationManager extends RelationManager
                 ->html()
                 ->sortable('surname')
                 ,
-            ])->defaultSort('surname','asc')
+            ])->defaultSort('surname','asc')->defaultPaginationPageOption('all')
             ->filters([
                 //
             ])
