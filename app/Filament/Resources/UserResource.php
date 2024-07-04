@@ -147,7 +147,7 @@ class UserResource extends Resource
                     ->maxLength(255)
                     ->label('Cittadinanza'),
                     FileUpload::make('document_uploaded')->label('Documento o Passaporto')
-                    ->disk('ftp')
+                    ->disk('s3')
                     ->getUploadedFileNameForStorageUsing(
                         fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                         ->prepend('documento-'),
@@ -233,7 +233,7 @@ class UserResource extends Resource
                         ->visibility('private'),
 
                         FileUpload::make('permesso_uploaded')->label('Permesso di soggiorno')
-                        ->disk('ftp')
+                        ->disk('s3')
                         ->getUploadedFileNameForStorageUsing(
                             fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                             ->prepend('permessosoggiorno-'),
@@ -242,7 +242,7 @@ class UserResource extends Resource
                         ->openable(),
 
                         FileUpload::make('interesse_uploaded')->label('Manifestazione di interesse')
-                        ->disk('ftp')
+                        ->disk('s3')
                         ->getUploadedFileNameForStorageUsing(
                             fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                             ->prepend('interesse-'),
@@ -251,7 +251,7 @@ class UserResource extends Resource
                         ->openable(),
 
                         FileUpload::make('contratto_uploaded')->label('Contratto')
-                        ->disk('ftp')
+                        ->disk('s3')
                         ->getUploadedFileNameForStorageUsing(
                             fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                             ->prepend('contratto-'),
@@ -260,7 +260,7 @@ class UserResource extends Resource
                         ->openable(),
 
                         FileUpload::make('whatsapp_uploaded')->label('Autorizzazione Whatsapp')
-                        ->disk('ftp')
+                        ->disk('s3')
                         ->getUploadedFileNameForStorageUsing(
                             fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                             ->prepend('whatsapp-'),
