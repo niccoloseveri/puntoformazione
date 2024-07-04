@@ -229,7 +229,7 @@ class UserResource extends Resource
                             fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                             ->prepend('codicefiscale-'),
                         )
-                        //->openable()
+                        ->openable()
                         ->visibility('private'),
 
                         FileUpload::make('permesso_uploaded')->label('Permesso di soggiorno')
