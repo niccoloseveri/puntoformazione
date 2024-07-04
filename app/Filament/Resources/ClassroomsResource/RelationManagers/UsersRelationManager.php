@@ -27,6 +27,7 @@ class UsersRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->heading('Iscritti')
             //->recordTitleAttribute('id')
             ->columns([
                 Tables\Columns\TextColumn::make('full_name')->label('Cognome e Nome')

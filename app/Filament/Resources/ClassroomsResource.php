@@ -48,6 +48,7 @@ class ClassroomsResource extends Resource
                 Tables\Columns\TextColumn::make('course.name')
                     ->label("Corso")
                     ->sortable(),
+                Tables\Columns\TextColumn::make('users_count')->label('N. Iscritti')->counts('users'),
                 Tables\Columns\TextColumn::make('created_at')->label('Creata il')
                     ->dateTime()
                     ->sortable()
