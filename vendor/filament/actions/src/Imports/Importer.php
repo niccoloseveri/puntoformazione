@@ -37,8 +37,7 @@ abstract class Importer
         protected Import $import,
         protected array $columnMap,
         protected array $options,
-    ) {
-    }
+    ) {}
 
     /**
      * @param  array<string, mixed>  $data
@@ -249,6 +248,11 @@ abstract class Importer
     }
 
     abstract public static function getCompletedNotificationBody(Import $import): string;
+
+    public static function getCompletedNotificationTitle(Import $import): string
+    {
+        return __('filament-actions::import.notifications.completed.title');
+    }
 
     /**
      * @return array<int, object>

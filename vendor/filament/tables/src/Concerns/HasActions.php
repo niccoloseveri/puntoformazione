@@ -62,9 +62,7 @@ trait HasActions
     #[Url(as: 'tableActionRecord')]
     public $defaultTableActionRecord = null;
 
-    protected function configureTableAction(Action $action): void
-    {
-    }
+    protected function configureTableAction(Action $action): void {}
 
     /**
      * @param  array<string, mixed>  $arguments
@@ -99,13 +97,13 @@ trait HasActions
             if ($this->mountedTableActionHasForm(mountedAction: $action)) {
                 $action->callBeforeFormValidated();
 
-                $action->formData(
-                    $form->getState(afterValidate: function () use ($action) {
-                        $action->callAfterFormValidated();
+                $form->getState(afterValidate: function (array $state) use ($action) {
+                    $action->callAfterFormValidated();
 
-                        $action->callBefore();
-                    }),
-                );
+                    $action->formData($state);
+
+                    $action->callBefore();
+                });
             } else {
                 $action->callBefore();
             }
