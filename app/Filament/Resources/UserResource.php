@@ -22,6 +22,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
 use Filament\Support\RawJs;
 use Filament\Tables;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
@@ -322,13 +323,14 @@ class UserResource extends Resource
                     ->sortable('surname')
                     ->copyable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->copyable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('cf')
+                    Tables\Columns\TextColumn::make('cf')
                     ->label('Codice Fiscale')
                     ->copyable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->copyable()
+                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('address')
                     ->label('Indirizzo')
                     ->searchable(),
@@ -352,12 +354,18 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
+
+            ])
+
+            ->actions([
+                Tables\Actions\EditAction::make()->iconButton()->tooltip('Modifica'),
+                /*
                 Tables\Actions\ActionGroup::make([
                     Action::make('priv-print')->url(fn($record) => route('privacy.pdf.stampa',[$record]))->openUrlInNewTab()->label('Stampa informativa Privacy'),
                     Action::make('whats-print')->url(fn($record) => route('whatsapp.pdf.stampa',[$record]))->openUrlInNewTab()->label('Stampa autorizzazione Whatsapp'),
                 ])->icon('gmdi-print-r')->color('warning'),
-                Tables\Actions\EditAction::make(),
-            ])
+                */
+                ],position:ActionsPosition::BeforeCells)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

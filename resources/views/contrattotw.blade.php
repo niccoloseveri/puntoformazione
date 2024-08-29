@@ -207,8 +207,8 @@
                                         <span class="l_label">
                                             di impegnarsi alla frequenza del corso per tutta la sua durata, pari a <span class="font-bold">tot. monte ore del corso</span>,
                                             e di assumere l'obbligo di pagare, nei termini di seguito stabiliti, l'intero importo del contratto, <span class="font-bold">che
-                                            è fissato in € prezzo. Si precisa inoltre che nell'eventualità di scelta del pagamento rateale al versamento di ciascuna rata dovrà essere
-                                            corrisposto l'importo di €20,00 per spese amministrative e di segreteria</span>, di tutto quanto suddetto pertanto
+                                            è fissato in € prezzo. <!--Si precisa inoltre che nell'eventualità di scelta del pagamento rateale al versamento di ciascuna rata dovrà essere
+                                            corrisposto l'importo di €20,00 per spese amministrative e di segreteria--></span>, di tutto quanto suddetto pertanto
                                             <!-- PIU' <strong> 200 EURO</strong> QUOTA ESAME E PIU <strong>58 EURO</strong> ANNUE di QUOTA ASSICURATIVA della-->
                                             si riconosce <span class="font-bold">interamente debitore</span>. Ciò, anche nel caso di mancata frequenza per qualsiasi
                                             motivo o ragione, ivi compreso l'eventuale allontanamento d'autorità per indisciplina o altro, fatto salvo

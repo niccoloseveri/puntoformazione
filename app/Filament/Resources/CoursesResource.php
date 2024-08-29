@@ -71,23 +71,26 @@ class CoursesResource extends Resource
 
                 Section::make('Costo corso')
                     ->schema([
-                        Forms\Components\TextInput::make('exam_price')->label('Prezzo esame')
+                        /*
+                        Forms\Components\TextInput::make('exam_price')->label('Prezzo fisso')
                             ->required()
                             ->numeric()
                             ->suffixIcon('gmdi-euro-r'),
-                        Forms\Components\TextInput::make('ass_price')->label('Prezzo assicurazione')
+                        */
+                        Forms\Components\TextInput::make('ass_price')->label('Prezzo pagamento rateale')
                             ->required()
                             ->numeric()
                             ->suffixIcon('gmdi-euro-r'),
-                        Forms\Components\TextInput::make('price')->label('Prezzo totale')
-                            ->placeholder('corso + esame + assicuraz.')
+                        Forms\Components\TextInput::make('price')->label('Prezzo pagamento unico')
+                            //->placeholder('corso + esame + assicuraz.')
                             ->required()
                             ->numeric()
                             ->suffixIcon('gmdi-euro-r')
-                            ->columnSpanFull(),
-                        FileUpload::make('document')->label('Carica documenti di identità')->disk('ftp')->columnSpanFull(),
+                            ,
+                        /*FileUpload::make('document')->label('Carica documenti di identità')->disk('ftp')->columnSpanFull(),
                         FileUpload::make('document')->label('Carica manifestazione di interesse')->disk('ftp')->columnSpanFull(),
                         FileUpload::make('document')->label('Carica codice fiscale')->disk('ftp')->columnSpanFull(),
+                        */
 
                     ])
                     ->columns(2)
