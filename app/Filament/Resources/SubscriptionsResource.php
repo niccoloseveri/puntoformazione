@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SubscriptionsResource\Pages;
 use App\Filament\Resources\SubscriptionsResource\RelationManagers;
 use App\Models\Classrooms;
+use App\Models\Payment_options;
 use App\Models\Subscriptions;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -62,7 +63,19 @@ class SubscriptionsResource extends Resource
                 Forms\Components\Select::make('payment_options_id')->label('Opzioni Pagamento')
                     ->relationship(name: 'paymentoptions', titleAttribute: 'name')
                     ->searchable('name')
+                    ->live()
                     ->preload(),
+
+                Forms\Components\TextInput::make('imp_rata')->label('Importo Rata')
+                    ->required()
+                    ->numeric()
+                    ->suffixIcon('gmdi-euro-r')
+                    ->live()
+                    ->hidden(function(Get $get) : bool {
+                        $test = Payment_options::find($get('payment_options_id'))!=null ? $test=Payment_options::find($get('payment_options_id')): null ;
+                        //dd($test);
+                        return !(str_contains($test?->name, 'Rateale')||str_contains($test?->name, 'rateale'));
+                    }),
 
                 Forms\Components\DatePicker::make('start_date')
                     ->required(),

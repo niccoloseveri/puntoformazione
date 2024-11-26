@@ -13,6 +13,7 @@
         "barryvdh/laravel-dompdf": "^2.1",
         "barryvdh/laravel-snappy": "^1.0",
         "codeat3/blade-google-material-design-icons": "^1.18",
+        "eightynine/filament-excel-import": "^3.1",
         "filament/filament": "^3.1",
         "guzzlehttp/guzzle": "^7.2",
         "h4cc/wkhtmltoimage-amd64": "0.12.x",
