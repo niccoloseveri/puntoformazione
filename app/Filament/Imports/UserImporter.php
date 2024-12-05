@@ -94,7 +94,6 @@ class UserImporter extends Importer
     protected function beforeValidate(): void
     {
         // Runs before the CSV data for a row is validated.
-        dd($this->data['Telefono']);
         if($this->data['via']=='' || $this->data['via']==null ){
             $this->data['via']='via non specificata';
         }
