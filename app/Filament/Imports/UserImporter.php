@@ -94,6 +94,7 @@ class UserImporter extends Importer
     protected function beforeValidate(): void
     {
         // Runs before the CSV data for a row is validated.
+        dd($this->data['Telefono']);
         if($this->data['via']=='' || $this->data['via']==null ){
             $this->data['via']='via non specificata';
         }
@@ -104,7 +105,12 @@ class UserImporter extends Importer
             $this->data['cap']='00000';
         }
         if($this->data['tel']=='' || $this->data['tel']==null ){
-            $this->data['tel']='123456789';
+            if($this->data['Cellulare'] == null || $this->data['Cellulare'] == ''){
+                $this->data['tel']='123456789';
+            }else{
+                $this->data['tel']=$this->data['Cellulare'];
+            }
+
         }
         if($this->data['genere']=='male'){
             $this->data['genere']='M';
