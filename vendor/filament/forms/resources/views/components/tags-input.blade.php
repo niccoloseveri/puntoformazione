@@ -6,7 +6,7 @@
     $id = $getId();
     $isDisabled = $isDisabled();
     $isPrefixInline = $isPrefixInline();
-    $isReorderable = $isReorderable();
+    $isReorderable = (! $isDisabled) && $isReorderable();
     $isSuffixInline = $isSuffixInline();
     $prefixActions = $getPrefixActions();
     $prefixIcon = $getPrefixIcon();
@@ -52,7 +52,7 @@
     >
         <div
             @if (FilamentView::hasSpaMode())
-                ax-load="visible"
+                {{-- format-ignore-start --}}ax-load="visible || event (ax-modal-opened)"{{-- format-ignore-end --}}
             @else
                 ax-load
             @endif
@@ -102,10 +102,7 @@
                                 x-sortable
                                 data-sortable-animation-duration="{{ $getReorderAnimationDuration() }}"
                             @endif
-                            @class([
-                                'flex w-full flex-wrap gap-1.5 p-2',
-                                'border-t border-t-gray-200 dark:border-t-white/10',
-                            ])
+                            class="fi-fo-tags-input-tags-ctn flex w-full flex-wrap gap-1.5 border-t border-t-gray-200 p-2 dark:border-t-white/10"
                         >
                             <template
                                 x-for="(tag, index) in state"
