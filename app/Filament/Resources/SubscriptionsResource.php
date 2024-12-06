@@ -95,6 +95,9 @@ class SubscriptionsResource extends Resource
             ->defaultPaginationPageOption('all')
             ->defaultSort('created_at','desc')
             ->columns([
+                /*Tables\Columns\IconColumn::make('status.name')
+                    ->boolean()
+                    ->label('In Regola?'),*/
                 TextColumn::make('user.full_name')
                     ->searchable()
                     ->label('Studente'),
