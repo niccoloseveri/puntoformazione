@@ -352,6 +352,11 @@ class UserResource extends Resource
 
             ->filters([
                 //
+                Tables\Filters\SelectFilter::make('roles')
+                    ->relationship('roles','name')
+                    ->label('Ruolo')
+                    ->searchable()
+                    ->preload(),
             ])
             ->actions([
 

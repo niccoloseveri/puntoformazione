@@ -6,6 +6,10 @@ use App\Filament\Resources\LessonsResource\Pages;
 use App\Filament\Resources\LessonsResource\RelationManagers;
 use App\Models\Lessons;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -26,7 +30,23 @@ class LessonsResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')
+                    ->label('Nome Lezione')
+                    ->required(),
+                DateTimePicker::make('starts_at')
+                    ->label('Data e Ora Inizio')
+                    ->required(),
+                DateTimePicker::make('ends_at')
+                    ->label('Data e Ora Fine')
+                    ->required(),
+                Select::make('course_id')
+                    ->label('Corso')
+                    ->relationship('course', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+                
+
             ]);
     }
 

@@ -80,6 +80,9 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
+        /*if($panel->getId() === 'admin'){
+            return auth()->user()->isAdmin();
+        }*/
         return true;
     }
 
@@ -110,6 +113,17 @@ class User extends Authenticatable implements FilamentUser
     public function classrooms(): BelongsToMany
     {
         return $this->belongsToMany(Classrooms::class,'subscriptions','user_id')->withPivot('courses_id','start_date');
+    }
+
+    public function isAdmin() {
+        return $this->roles->contains('name', 'admin');
+    }
+    public function notAdmin() {
+        if($this->roles->contains('name', 'admin')){
+            return false;
+        }else {
+            return true;
+        }
     }
 
 

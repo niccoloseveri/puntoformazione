@@ -144,7 +144,7 @@ class SubscriptionsResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ])->defaultSort('surname','asc')
             ->filters([
                 //
             ])

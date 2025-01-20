@@ -5,10 +5,13 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ModulesResource\Pages;
 use App\Filament\Resources\ModulesResource\RelationManagers;
 use App\Models\Modules;
+use App\Models\User;
+use Dompdf\FrameDecorator\Text;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -26,7 +29,22 @@ class ModulesResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')
+                    ->label('Nome Modulo')
+                    ->required(),
+                Forms\Components\Select::make('course_id')->relationship(name: 'course', titleAttribute: 'name')
+                    ->label('Corso')
+                    ->searchable()
+                    ->required()
+                    ->preload(),
+                Forms\Components\TextInput::make('durata')->label('Durata (minuti)')
+                    ->placeholder('minuti')
+                    ->required()
+                    //->hidden(fn (User $user) => !$user->isAdmin())
+                    ,
+                //Forms\Components\Select::make('formativeunit_id')->relationship(name: 'formativeunits', titleAttribute: 'name')
+
+
             ]);
     }
 
@@ -34,6 +52,14 @@ class ModulesResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('name')
+                    ->label('Nome Modulo')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('course.name')
+                    ->label('Corso')
+                    ->searchable()
+                    ->sortable(),
                 //
             ])
             ->filters([

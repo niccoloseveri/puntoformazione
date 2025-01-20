@@ -4,14 +4,19 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\FormativeunitsResource\Pages;
 use App\Filament\Resources\FormativeunitsResource\RelationManagers;
+use App\Models\Courses;
 use App\Models\Formativeunits;
+use App\Models\Modules;
 use Filament\Forms;
+use Filament\Forms\Components\Livewire as ComponentsLivewire;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Livewire\Livewire;
 
 class FormativeunitsResource extends Resource
 {
@@ -27,6 +32,24 @@ class FormativeunitsResource extends Resource
         return $form
             ->schema([
                 //
+                Forms\Components\Select::make('course')
+                    ->live()
+                    ->label('Corso')
+                    ->relationship(name:'courses', titleAttribute:'name')
+                    ->searchable('name')
+                    ->preload(),
+
+                Forms\Components\Select::make('module')
+                    ->label('Modulo')
+                    ->relationship(name:'modules', titleAttribute:'name')
+                    ->searchable('name')
+                    ->hidden(fn(Get $get) :bool => !$get('course'))
+                    ->options(
+                        fn($get) =>
+                            Modules::where('course_id',$get('course'))->pluck('name','id')
+                    )
+                    ->live(),
+
             ]);
     }
 

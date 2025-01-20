@@ -78,6 +78,7 @@ class UserImporter extends Importer
                 ->rules(['required', 'max:255']),
             ImportColumn::make('piva')
                 ->rules(['max:255']),
+
             /*ImportColumn::make('is_teacher')
                 ->boolean()
                 ->rules(['boolean']),*/
@@ -126,10 +127,11 @@ class UserImporter extends Importer
 
     public function resolveRecord(): ?User
     {
-        // return User::firstOrNew([
-        //     // Update existing records, matching them by `$this->data['column_name']`
-        //     'email' => $this->data['email'],
-        // ]);
+        //return User::firstOrNew([
+            // Update existing records, matching them by `$this->data['column_name']`
+        //    'email' => $this->data['email'],
+        //]);
+
 
         return new User();
     }
