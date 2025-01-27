@@ -27,6 +27,7 @@ class UserPanelProvider extends PanelProvider
         return $panel
             ->id('user')
             ->path('user')
+            ->sidebarCollapsibleOnDesktop()
             ->colors([
                 'primary' => Color::Green,
             ])
