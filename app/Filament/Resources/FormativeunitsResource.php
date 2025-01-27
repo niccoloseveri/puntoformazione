@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\FormativeunitsResource\Pages;
 use App\Filament\Resources\FormativeunitsResource\RelationManagers;
+use App\Models\Classrooms;
 use App\Models\Courses;
 use App\Models\Formativeunits;
 use App\Models\Modules;
@@ -31,24 +32,32 @@ class FormativeunitsResource extends Resource
     {
         return $form
             ->schema([
-                //
-                Forms\Components\Select::make('course')
+                Forms\Components\Select::make('courses_id')
                     ->live()
                     ->label('Corso')
                     ->relationship(name:'courses', titleAttribute:'name')
                     ->searchable('name')
-                    ->preload(),
+                    ->preload()
+                    ->live(),
 
-                Forms\Components\Select::make('module')
+                Forms\Components\Select::make('modules_id')
                     ->label('Modulo')
                     ->relationship(name:'modules', titleAttribute:'name')
                     ->searchable('name')
-                    ->hidden(fn(Get $get) :bool => !$get('course'))
+                    ->hidden(fn(Get $get) :bool => !$get('courses_id'))
                     ->options(
                         fn($get) =>
-                            Modules::where('course_id',$get('course'))->pluck('name','id')
+                            Modules::where('course_id',$get('courses_id'))->pluck('name','id')
                     )
                     ->live(),
+
+                Forms\Components\TextInput::make('title')
+                    ->label('Nome')
+                    ->required(),
+                //
+
+
+
 
             ]);
     }
@@ -57,6 +66,9 @@ class FormativeunitsResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('title')
+                    ->label('Nome'),
+                Tables\Columns\TextColumn::make('courses.name')
                 //
             ])
             ->filters([

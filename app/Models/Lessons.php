@@ -11,7 +11,7 @@ class Lessons extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
+        'name',
         'modules_id',
         'classrooms_id',
         'formativeunits_id',
@@ -19,15 +19,21 @@ class Lessons extends Model
         'users_id',
         'starts_at',
         'ends_at',
+        'qr_code',
+        'options',
+    ];
+
+    protected $casts=[
+        'options'=>'array',
     ];
 
     //classrooms_id
-    public function classroom() : BelongsTo {
+    public function classrooms() : BelongsTo {
         return $this->belongsTo(Classrooms::class);
     }
 
     //courses_id
-    public function course() : BelongsTo {
+    public function courses() : BelongsTo {
         return $this->belongsTo(Courses::class);
     }
 
@@ -37,8 +43,13 @@ class Lessons extends Model
     }
 
     //users_id
-    public function user() : BelongsTo {
+    public function users() : BelongsTo {
         return $this->belongsTo(User::class);
+    }
+
+    //attendance_id
+    public function attendances() {
+        return $this->hasMany(Attendance::class);
     }
 
 }
