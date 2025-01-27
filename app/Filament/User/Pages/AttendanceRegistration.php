@@ -11,6 +11,7 @@ class AttendanceRegistration extends Page
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static string $view = 'filament.user.pages.attendance-registration';
+    protected static ?string $title = 'Registrazione Presenze';
 
     //implement auth middleware
 
