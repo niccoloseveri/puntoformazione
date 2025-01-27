@@ -118,7 +118,7 @@ class LessonsResource extends Resource
                 Tables\Actions\Action::make('qr-code')
                     ->fillForm(fn(Model $record) => [
                         'qr-options' => \LaraZeus\Qr\Facades\Qr::getDefaultOptions(),// or $record->qr-options
-                        'qr-data' => env('APP_URL').'/user/attendance-registration?lesson='.$record->id,// or $record->url
+                        'qr-data' => config('app.url').'/user/attendance-registration?lesson='.$record->id,// or $record->url
                     ])
                     ->form(\LaraZeus\Qr\Facades\Qr::getFormSchema('qr-data', 'qr-options'))
                     ->action(fn($data) => dd($data))
