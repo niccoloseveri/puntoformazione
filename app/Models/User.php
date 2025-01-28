@@ -82,7 +82,8 @@ class User extends Authenticatable implements FilamentUser
     {
         /*if($panel->getId() === 'admin'){
             return auth()->user()->isAdmin();
-        }*/
+        }
+            */
         return true;
     }
 

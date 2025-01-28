@@ -13,10 +13,12 @@ class LoginResponse extends BaseLoginResponse
 {
     public function toResponse($request): RedirectResponse | Redirector
     {
+
         if(auth()->user()->notAdmin()){
             return redirect()->to(Dashboard::getUrl(panel: 'user'));
         }
-        //return redirect()->intended(Filament::getUrl());
         return parent::toResponse($request);
+
+        //return redirect()->intended(Filament::getUrl());
     }
 }

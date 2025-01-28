@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+use App\Http\Middleware\RedirectToProperPanelMiddleware;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -74,8 +75,10 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
+                RedirectToProperPanelMiddleware::class,
                 Authenticate::class,
             ])
+
             ->sidebarCollapsibleOnDesktop();
             //->spa();
     }
