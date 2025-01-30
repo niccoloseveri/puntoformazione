@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Number::useLocale('it');
-        FilamentAsset::register([
+        /*FilamentAsset::register([
             Js::make('mobile-sidebar', '<script>
             document.addEventListener("DOMContentLoaded", () => {
                 Alpine.store("mobileSidebar", {
@@ -48,6 +48,6 @@ class AppServiceProvider extends ServiceProvider
                 }
             });
             </script>'),
-        ]);
+        ]);*/
     }
 }
