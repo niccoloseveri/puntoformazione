@@ -124,16 +124,22 @@ class UserImporter extends Importer
 
     }
 
+    protected function afterCreate(): void
+    {
+        // Similar to `afterSave()`, but only runs when creating a new record.
+        $this->record->roles()->attach(1);
+    }
+
 
     public function resolveRecord(): ?User
     {
-        //return User::firstOrNew([
+        return User::firstOrNew([
             // Update existing records, matching them by `$this->data['column_name']`
-        //    'email' => $this->data['email'],
-        //]);
+            'email' => $this->data['email'],
+        ]);
 
 
-        return new User();
+        //return new User();
     }
 
     public static function getCompletedNotificationBody(Import $import): string
