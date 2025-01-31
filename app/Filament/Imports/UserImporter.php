@@ -105,7 +105,9 @@ class UserImporter extends Importer
             $this->data['cap']='00000';
         }
         if($this->data['tel']=='' || $this->data['tel']==null ){
-            $this->data['tel']='123456789';
+            if($this->originalData['Cellulare']!='' || $this->originalData['Cellulare']!=null){
+                $this->data['tel']=$this->originalData['Cellulare'];
+            }else $this->data['tel']='123456789';
         }
         if($this->data['genere']=='male'){
             $this->data['genere']='M';
