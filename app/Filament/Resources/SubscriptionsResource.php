@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -92,14 +93,15 @@ class SubscriptionsResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->defaultPaginationPageOption('all')
-            ->defaultSort('created_at','desc')
+            ->defaultPaginationPageOption('50')
+            //->defaultSort('created_at','desc')
             ->columns([
                 /*Tables\Columns\IconColumn::make('status.name')
                     ->boolean()
                     ->label('In Regola?'),*/
                 TextColumn::make('user.full_name')
                     ->searchable()
+                    ->sortable()
                     ->label('Studente'),
                 Tables\Columns\TextColumn::make('courses.name')
                     ->sortable()
@@ -144,7 +146,8 @@ class SubscriptionsResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])->defaultSort('surname','asc')
+            ])
+            ->defaultSort('user_surname','asc')
             ->filters([
                 //
             ])
@@ -163,6 +166,11 @@ class SubscriptionsResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withAggregate('user', 'surname');
     }
 
     public static function getPages(): array

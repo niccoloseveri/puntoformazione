@@ -2,13 +2,16 @@
 
 namespace App\Filament\Resources\ClassroomsResource\RelationManagers;
 
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Mail;
 
 class UsersRelationManager extends RelationManager
 {
@@ -43,6 +46,12 @@ class UsersRelationManager extends RelationManager
             ])
             ->headerActions([
                 //Tables\Actions\CreateAction::make(),
+                Action::make('Invia Dati Login')->action(function () {
+                    foreach($this->getOwnerRecord()->users()->get() as $data){
+                        Mail::to($data)->send(new \App\Mail\SendLoginInfo($data));
+                    }
+                    //Mail::to($this->user)->send(new \App\Mail\SendLoginInfo($this->user));
+                })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
