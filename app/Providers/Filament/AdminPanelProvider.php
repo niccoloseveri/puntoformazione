@@ -78,7 +78,7 @@ class AdminPanelProvider extends PanelProvider
                 RedirectToProperPanelMiddleware::class,
                 Authenticate::class,
             ])
-
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->sidebarCollapsibleOnDesktop();
             //->spa();
     }

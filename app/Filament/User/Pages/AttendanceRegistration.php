@@ -12,7 +12,7 @@ class AttendanceRegistration extends Page
 
     protected static string $view = 'filament.user.pages.attendance-registration';
     protected static ?string $title = 'Registrazione Presenze';
-    protected static bool $shouldRegisterNavigation = false;
+    //protected static bool $shouldRegisterNavigation = false;
 
     //implement auth middleware
 

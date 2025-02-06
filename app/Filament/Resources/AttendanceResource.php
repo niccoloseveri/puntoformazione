@@ -6,6 +6,7 @@ use App\Filament\Resources\AttendanceResource\Pages;
 use App\Filament\Resources\AttendanceResource\RelationManagers;
 use App\Models\Attendance;
 use App\Models\Courses;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -51,10 +52,25 @@ class AttendanceResource extends Resource
                 Tables\Columns\TextColumn::make('lesson.name')->label('Lezione')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')->label('Stato')
-                    ->searchable(),
+                    ->searchable()
+                    ->badge()->color(
+                        fn (string $state): string => match ($state) {
+                            'present' => 'success',
+                            'reviewing' => 'warning',
+                            'published' => 'success',
+                            'rejected' => 'danger',
+                    }),
+
                 Tables\Columns\TextColumn::make('attend_at')->label('Orario Ingresso')
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()
+                    ->extraAttributes(function (Attendance $att) {
+                        $a=Carbon::create($att->lesson->starts_at);
+                        if ($a->diffInMinutes($att->attend_at)>=30) {
+                            return ['class' => 'bg-red-200 dark:bg-red-500'];
+                        }
+                        return [];
+                    }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
