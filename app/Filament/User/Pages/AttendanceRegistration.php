@@ -16,11 +16,18 @@ class AttendanceRegistration extends Page
 
     //implement auth middleware
 
+    /**
+     * Determine if the page should be registered in the navigation.
+     *
+     * @return bool
+     */
+
+     /*
     public static function shouldRegisterNavigation(): bool
     {
         return auth()->user()->hasRole('Insegnante') || auth()->user()->hasRole('admin');
     }
-
+    */
 
     public function boot()
     {
