@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources\CoursesResource\RelationManagers;
 
+use App\Filament\Resources\ClassroomsResource;
+use App\Filament\Resources\UserResource;
+use App\Models\Classrooms;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -35,6 +38,7 @@ class ClassroomRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('users_count')->label('N. Iscritti')->counts('users'),
 
             ])
+            ->recordUrl(fn ($record) => ClassroomsResource::getUrl('edit', ['record' => $record->id]))
             ->filters([
                 //
             ])

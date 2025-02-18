@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ClassroomsResource\RelationManagers;
 
+use App\Filament\Resources\UserResource;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -54,7 +55,7 @@ class UsersRelationManager extends RelationManager
                 })
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->url(fn ($record) => UserResource::getUrl('edit', ['record' => $record->id])),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
