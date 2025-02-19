@@ -182,7 +182,7 @@ class StudentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->defaultSort('created_at','desc')
+            ->defaultSort('surname','desc')
 
             ->columns([
                 //

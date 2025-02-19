@@ -39,7 +39,7 @@ class LessonsResource extends Resource
                 TextInput::make('name')
                     ->label('Nome Lezione')
                     ->required(),
-                Select::make('users_id')
+                Select::make('users.full_name')
                     ->label('Docente')
                     ->relationship('users', 'full_name')
                     ->searchable()

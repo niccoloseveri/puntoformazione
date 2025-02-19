@@ -42,10 +42,10 @@ class TeacherResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-        ->defaultSort('created_at','desc')
+        ->defaultSort('surname','asc')
 
             ->columns([
-                TextColumn::make('full_name'),
+                TextColumn::make('full_name')->searchable(),
             ])
             ->filters([
                 //

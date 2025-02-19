@@ -47,6 +47,13 @@ class Lessons extends Model
         return $this->belongsTo(User::class);
     }
 
+    //docente
+    /*
+    public function docente() {
+        return
+    }
+    */
+
     //attendance_id
     public function attendances() {
         return $this->hasMany(Attendance::class);
