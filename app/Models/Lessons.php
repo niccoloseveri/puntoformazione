@@ -56,7 +56,7 @@ class Lessons extends Model
 
     //attendance_id
     public function attendances() {
-        return $this->hasMany(Attendance::class);
+        return $this->hasMany(Attendance::class,'lesson_id','id');
     }
 
 }

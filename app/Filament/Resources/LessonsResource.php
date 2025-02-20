@@ -136,6 +136,7 @@ class LessonsResource extends Resource
     {
         return [
             //
+            RelationManagers\AttendancesRelationManager::class,
         ];
     }
 
