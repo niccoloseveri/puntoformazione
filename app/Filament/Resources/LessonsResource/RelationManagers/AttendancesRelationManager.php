@@ -35,7 +35,14 @@ class AttendancesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('user_id')
             ->columns([
-                Tables\Columns\TextColumn::make('user.full_name')->label('Utente'),
+                Tables\Columns\TextColumn::make('user.full_name')->label('Utente')
+                ->formatStateUsing(function ($record) {
+                    return $record->surname. ' ' .$record->name. ' ';
+                })
+                ->html()
+                ->sortable('surname')
+                ->copyable()
+                ->searchable(),
                 Tables\Columns\TextColumn::make('attend_at')->label('Orario ingresso')
                 ->dateTime()
                 ->sortable()
@@ -48,6 +55,8 @@ class AttendancesRelationManager extends RelationManager
                 }),
 
             ])
+            ->defaultSort('attend_at','asc')
+            ->defaultPaginationPageOption('all')
             ->filters([
                 //
             ])

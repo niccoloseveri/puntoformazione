@@ -45,7 +45,15 @@ class TeacherResource extends Resource
         ->defaultSort('surname','asc')
 
             ->columns([
-                TextColumn::make('full_name')->searchable(),
+                TextColumn::make('full_name')
+                ->label('Nome e Cognome')
+                ->formatStateUsing(function ($record) {
+                    return $record->surname. ' ' .$record->name. ' ';
+                })
+                ->html()
+                ->sortable('surname')
+                ->copyable()
+                ->searchable(),
             ])
             ->filters([
                 //

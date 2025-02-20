@@ -100,8 +100,13 @@ class SubscriptionsResource extends Resource
                     ->boolean()
                     ->label('In Regola?'),*/
                 TextColumn::make('user.full_name')
+                    ->formatStateUsing(function ($record) {
+                        return $record->user->surname. ' ' .$record->user->name. ' ';
+                    })
+                    ->html()
+                    ->sortable('surname')
+                    ->copyable()
                     ->searchable()
-                    ->sortable()
                     ->label('Studente'),
                 Tables\Columns\TextColumn::make('courses.name')
                     ->sortable()

@@ -182,16 +182,22 @@ class StudentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->defaultSort('surname','desc')
-
             ->columns([
                 //
-                TextColumn::make('full_name')->label('Nome')->searchable(),
+                TextColumn::make('full_name')->label('Nome')
+                ->formatStateUsing(function ($record) {
+                    return $record->surname. ' ' .$record->name. ' ';
+                })
+                ->html()
+                ->sortable('surname')
+                ->copyable()
+                ->searchable(),
                 Tables\Columns\TextColumn::make('cf')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tel')
                     ->searchable(),
             ])
+            ->defaultSort('surname','asc')
             ->filters([
                 //
             ])

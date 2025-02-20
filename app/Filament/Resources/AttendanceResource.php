@@ -30,9 +30,11 @@ class AttendanceResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('user_id')->label('Studente')
+                    ->relationship('user', 'full_name')
+                    ->searchable('name','surname','full_name','email')
+                    ->preload()
+                    ->required(),
                 Forms\Components\TextInput::make('lesson_id')
                     ->required()
                     ->numeric(),
@@ -48,7 +50,13 @@ class AttendanceResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.full_name')->label('Studente')
-                    ->sortable(),
+                ->formatStateUsing(function ($record) {
+                    return $record->user->surname. ' ' .$record->user->name. ' ';
+                })
+                ->html()
+                ->sortable('surname')
+                ->copyable()
+                ->searchable(),
                 Tables\Columns\TextColumn::make('lesson.name')->label('Lezione')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')->label('Stato')
