@@ -5,9 +5,11 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ClassroomsResource\RelationManagers\UsersRelationManager;
 use App\Filament\Resources\ClassroomsResource\Pages;
 use App\Filament\Resources\ClassroomsResource\RelationManagers;
+use App\Filament\Resources\ClassroomsResource\RelationManagers\LessonsRelationManager;
 use App\Models\Classrooms;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\DeleteAction;
@@ -72,8 +74,12 @@ class ClassroomsResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
-            UsersRelationManager::class,
+            RelationGroup::make('Iscritti', [
+                UsersRelationManager::class,
+            ]),
+            RelationGroup::make('Lezioni',[
+                LessonsRelationManager::class,
+            ]),
         ];
     }
 

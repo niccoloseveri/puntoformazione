@@ -37,7 +37,7 @@ class AttendancesRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('user.full_name')->label('Utente')
                 ->formatStateUsing(function ($record) {
-                    return $record->surname. ' ' .$record->name. ' ';
+                    return $record->user->surname. ' ' .$record->user->name. ' ';
                 })
                 ->html()
                 ->sortable('surname')
