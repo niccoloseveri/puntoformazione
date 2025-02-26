@@ -294,6 +294,7 @@ class UserResource extends Resource
                             'Laurea Triennale' => 'Laurea Triennale',
                             'Laurea Magistrale' => 'Laurea Magistrale',
                             'Diploma scuola secondaria di primo grado' => 'Diploma scuola secondaria di primo grado',
+                            "Scuola dell'obbligo" => "Scuola dell'obbligo",
                             'Nessuno' => 'Nessuno',
                         ])
                         ->searchable(),
