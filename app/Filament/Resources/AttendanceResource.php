@@ -14,6 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AttendanceResource extends Resource
@@ -31,9 +32,10 @@ class AttendanceResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')->label('Studente')
-                    ->relationship('user', 'full_name')
+                    ->relationship('user', 'full_name',modifyQueryUsing: fn (Builder $query) => $query->orderBy('surname'))
                     ->searchable('name','surname','full_name','email')
                     ->preload()
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->surname} {$record->name}")
                     ->required(),
                 Forms\Components\TextInput::make('lesson_id')
                     ->required()

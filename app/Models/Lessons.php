@@ -48,11 +48,12 @@ class Lessons extends Model
     }
 
     //docente
-    /*
-    public function docente() {
-        return
+    //function that returns all the users with role "insegnante"
+    public function insegnanti()
+    {
+        return $this->users()->where('role', 'insegnante')->get();
     }
-    */
+
 
     //attendance_id
     public function attendances() {

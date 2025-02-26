@@ -39,16 +39,15 @@ class LessonsResource extends Resource
                 TextInput::make('name')
                     ->label('Nome Lezione')
                     ->required(),
-                Select::make('users.full_name')
+                Select::make('users_id')
                     ->label('Docente')
-                    ->relationship('users', 'full_name')
+                    ->relationship('users', 'full_name', modifyQueryUsing: fn (Builder $query) => $query->whereHas('roles', function ($query) {
+                        $query->where('name', 'insegnante');
+                    })->orderBy('surname'))
                     ->searchable()
                     ->preload()
-                    ->required()
-                    ->options(
-                        fn($get) =>
-                            User::role('insegnante')->pluck('full_name','id')
-                    ),
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->surname} {$record->name}")
+                    ->required(),
                 DateTimePicker::make('starts_at')
                     ->label('Data e Ora Inizio')
                     ->required(),

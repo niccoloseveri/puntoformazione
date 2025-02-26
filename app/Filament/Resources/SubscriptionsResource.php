@@ -16,6 +16,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SubscriptionsResource extends Resource
@@ -39,9 +40,10 @@ class SubscriptionsResource extends Resource
             ->schema([
 
                 Forms\Components\Select::make('user_id')->label('Studente')
-                    ->relationship(name: 'user', titleAttribute: 'full_name')
+                    ->relationship(name: 'user', titleAttribute: 'full_name', modifyQueryUsing: fn (Builder $query) => $query->orderBy('surname'))
                     ->createOptionForm(fn(Form $form) => UserResource::form($form))
                     ->searchable('name','surname','full_name','email')
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->surname} {$record->name}")
                     ->preload(),
 
                     Forms\Components\Select::make('course')->label('Corso')
