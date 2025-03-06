@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payments;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -29,6 +30,18 @@ class printController extends Controller
         $user=User::find($record);
         return view('whatsapp')->with([
             'user' => $user,
+        ]);
+    }
+
+    function printRicevuta($record){
+        $payment=Payments::find($record);
+        $user=User::find($payment->users_id);
+        $sub=($user->subscriptions()->where('courses_id', $payment->courses_id)->first());
+        //dd($sub->paymentoptions->name);
+        return view('ricevuta')->with([
+            'user' => $user,
+            'payment' => $payment,
+            'sub' => $sub,
         ]);
     }
 

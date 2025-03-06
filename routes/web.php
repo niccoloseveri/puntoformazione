@@ -40,5 +40,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/{record}/whatsapp', [printController::class, 'printWhatsapp'])->name('whatsapp.pdf.stampa');
     //Route::get('/{record}/interesse', function(){return view('interesse');});
     Route::get('/{record}/privacy', [printController::class, 'printPrivacy'])->name('privacy.pdf.stampa');
+    Route::get('/payments/{record}/ricevuta', [printController::class, 'printRicevuta'])->name('ricevuta.pdf.stampa');
     //Route::get('/user/attendance-registration')->name('attendance-registration');
 });
