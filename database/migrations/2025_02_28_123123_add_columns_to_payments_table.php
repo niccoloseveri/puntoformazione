@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('payments', function (Blueprint $table) {
             //
             $table->foreignId('classrooms_id')->nullable()->after('courses_id');
-            $table->int('n_rata')->nullable()->after('classrooms_id');
+            $table->integer('n_rata')->nullable()->after('classrooms_id');
 
         });
     }
