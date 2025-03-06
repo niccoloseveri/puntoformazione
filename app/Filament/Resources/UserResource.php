@@ -25,6 +25,7 @@ use Filament\Tables;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UserResource extends Resource
 {
@@ -365,6 +366,7 @@ class UserResource extends Resource
 
             ->actions([
                 Tables\Actions\EditAction::make()->iconButton()->tooltip('Modifica'),
+                Impersonate::make(),
                 /*
                 Tables\Actions\ActionGroup::make([
                     Action::make('priv-print')->url(fn($record) => route('privacy.pdf.stampa',[$record]))->openUrlInNewTab()->label('Stampa informativa Privacy'),

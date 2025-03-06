@@ -90,13 +90,13 @@ class PaymentsResource extends Resource
             ->columns([
                 //
                 Tables\Columns\TextColumn::make('user.full_name')->label('Studente')
-                ->label('Cognome e nome')
-                ->formatStateUsing(function ($record) {
-                    return $record->user->surname. ' ' .$record->user->name. ' ';
-                })
-                ->html()
-                ->sortable('surname')
-                ->searchable(),
+                    ->label('Cognome e nome')
+                    ->formatStateUsing(function ($record) {
+                        return $record->user->surname. ' ' .$record->user->name. ' ';
+                    })
+                    ->html()
+                    ->sortable('surname')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('course.name')->label('Corso')
                     ->sortable()
                     ->searchable(),

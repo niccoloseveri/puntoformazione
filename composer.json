@@ -27,6 +27,7 @@
         "livewire/livewire": "^3.3",
         "spatie/laravel-activitylog": "^4.8",
         "spatie/laravel-pdf": "^1.4",
+        "stechstudio/filament-impersonate": "^3.15",
         "z3d0x/filament-logger": "^0.7.1"
     },
     "require-dev": {

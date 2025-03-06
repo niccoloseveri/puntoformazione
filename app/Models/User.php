@@ -87,6 +87,10 @@ class User extends Authenticatable implements FilamentUser
         return true;
     }
 
+    public function canImpersonate(){
+        return $this->isAdmin();
+    }
+
     /**
      * Get all of the subscriptions for the User
      *

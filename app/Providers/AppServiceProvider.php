@@ -7,6 +7,9 @@ use Illuminate\Support\Number;
 use Illuminate\Support\ServiceProvider;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
+use Filament\Support\Facades\FilamentView;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Support\Facades\Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -49,5 +52,9 @@ class AppServiceProvider extends ServiceProvider
             });
             </script>'),
         ]);*/
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::BODY_END,
+            fn () :string => Blade::render('<x-impersonate::banner/>'),
+        );
     }
 }
