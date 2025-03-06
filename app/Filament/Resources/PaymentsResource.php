@@ -52,7 +52,7 @@ class PaymentsResource extends Resource
                             })->get()->pluck('name', 'id')
                     ),
                 Forms\Components\Select::make('classrooms_id')->label('Classe')
-                    ->relationship(name: 'classrooms', titleAttribute:'name')
+                    ->relationship(name: 'classroom', titleAttribute:'name')
                     ->searchable()
                     ->hidden(
                         fn(Get $get) :bool => !$get('courses_id')
