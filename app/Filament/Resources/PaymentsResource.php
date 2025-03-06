@@ -9,6 +9,7 @@ use App\Models\Courses;
 use App\Models\Payments;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
@@ -78,7 +79,7 @@ class PaymentsResource extends Resource
                     Forms\Components\DatePicker::make('payment_date')->label('Data Pagamento')->default(now()),
                     Forms\Components\Checkbox::make('is_paid')->label('Pagato'),
                 ])->columns(3)->compact(),
-                Forms\Components\TextArea::make('notes')->label('Note')->rows(3)->columnSpanFull(),
+                Textarea::make('notes')->label('Note')->rows(3)->columnSpanFull(),
             ])
             ->columns(3);
     }
