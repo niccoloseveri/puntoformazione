@@ -8,18 +8,23 @@ use App\Models\Classrooms;
 use App\Models\Courses;
 use App\Models\Payments;
 use Filament\Forms;
+use Filament\Forms\Components\Livewire;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Arr;
 
 class PaymentsResource extends Resource
 {
@@ -124,11 +129,26 @@ class PaymentsResource extends Resource
 
             ])
             ->filters([
-                //
-                SelectFilter::make('classroom')->label('Classe')
-                    ->relationship('classroom', 'name'),
 
-            ])
+                Filter::make('courses_id')
+                ->form([
+                    Select::make('courses_id')->label('Corso')
+                    ->live()
+                    ->dehydrated(false)
+                    ->options(Courses::pluck('name', 'id'))
+                    ->placeholder('Seleziona un corso')
+                    ->afterStateUpdated(function (Set $set, $state) {
+                        $set('data.class_id', null);
+                    }),
+                ]),
+                Filter::make('class_id')
+                ->form([
+                    Select::make('class_id')->label('Classe')
+                    ->live()
+                    ->placeholder(fn (Get $get): string => empty($get('courses_id')) ? 'Seleziona prima un corso' : 'Seleziona la classe')
+                    ->options(fn($get) => Classrooms::where('course_id', $get('courses_id'))->pluck('name', 'id'))
+                ]),
+            ],layout:FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

@@ -19,6 +19,7 @@ class Payments extends Model
         'is_paid',
         'payment_date',
         'payment_method',
+        'classrooms_id'
     ];
 
     /**

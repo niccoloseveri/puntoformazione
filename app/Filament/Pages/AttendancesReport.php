@@ -17,14 +17,19 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\Indicator;
 use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection as Collection;
 
 class AttendancesReport extends Page implements HasTable
 {
     use InteractsWithTable;
-    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+    protected static ?string $navigationIcon = 'gmdi-perm-contact-calendar';
 
     protected static string $view = 'filament.pages.attendances-report';
+    protected static ?string $navigationLabel = 'Report Presenze';
+    protected static ?string $title = 'Report Presenze';
 
     public static function table(Table $table) : Table {
         return $table
@@ -65,21 +70,47 @@ class AttendancesReport extends Page implements HasTable
                 Filter::make('courses_id')
                 ->form([
                     Select::make('courses_id')->label('Corso')
-                    ->live()
-                    ->dehydrated(false)
-                    ->options(Courses::pluck('name', 'id'))
-                    ->placeholder('Seleziona un corso')
-                    ->afterStateUpdated(function (Livewire $livewire) {
-                        $livewire->reset('data.class_id');
-                    }),
-                ]),
-                Filter::make('class_id')
-                ->form([
-                    Select::make('class_id')->label('Classe')
-                    ->live()
-                    ->placeholder(fn (Get $get): string => empty($get('course_id')) ? 'Seleziona prima un corso' : 'Seleziona la classe')
-                    ->options(fn($get) => Classrooms::where('course_id', $get('course_id'))->pluck('name', 'id'))
-                ]),
+                        ->live()
+                        ->dehydrated(false)
+                        ->options(Courses::pluck('name', 'id'))
+                        ->placeholder('Seleziona un corso')
+                        ->native(false),
+                    Select::make('classrooms_id')->label('Classe')
+                        ->options(fn (Get $get):Collection => Classrooms::query()
+                            ->where('course_id', $get('courses_id'))
+                            ->pluck('name', 'id')
+                        )
+                        ->preload()
+                        ->native(false)
+                ])
+                ->columns(2)
+                ->columnSpanFull()
+                ->query(function (Builder $query, array $data):Builder{
+                    if (isset($data['courses_id'])) {
+                        $query->whereHas('lesson', function (Builder $query) use ($data) {
+                            $query->where('courses_id', $data['courses_id']);
+                        });
+                    }
+                    if (isset($data['classrooms_id'])) {
+                        $query->whereHas('lesson', function (Builder $query) use ($data) {
+                            $query->where('classrooms_id', $data['classrooms_id']);
+                        });
+                    }
+                    return $query;
+                })
+                ->indicateUsing(function (array $data) : array {
+                    $indicators=[];
+                    if($data['courses_id'] ?? null){
+                        $indicators[] = Indicator::make('Corso: '.Courses::find($data['courses_id'])->name)
+                        ->removeField('courses_id');
+                    }
+                    if($data['classrooms_id'] ?? null){
+                        $indicators[] = Indicator::make('Classe: '.Classrooms::find($data['classrooms_id'])->name)
+                        ->removeField('classrooms_id');
+                    }
+                    return $indicators;
+                }),
+
                 ],layout:FiltersLayout::AboveContent)
            ;
 
