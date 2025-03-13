@@ -48,6 +48,13 @@ class PaymentsReport extends Page implements HasTable
             ->sortable('surname')
             ->copyable()
             ,
+            //data pagamento
+            Tables\Columns\TextColumn::make('payment_date')->label('Data Pagamento')
+                ->sortable(),
+            //amount_paid
+            Tables\Columns\TextColumn::make('amount_paid')->label('Importo Pagato')
+                ->sortable()
+                ->money('EUR'),
            ])
            ->filters([
                 /*
