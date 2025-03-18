@@ -8,6 +8,7 @@ use App\Models\Classrooms;
 use App\Models\Formativeunits;
 use App\Models\Lessons;
 use App\Models\User;
+use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -121,7 +122,19 @@ class LessonsResource extends Resource
                     ])
                     ->form(\LaraZeus\Qr\Facades\Qr::getFormSchema('qr-data', 'qr-options'))
                     ->action(fn($data) => dd($data))
-                    ->icon('gmdi-qr-code-2'),
+                    ->icon('gmdi-qr-code-2')
+                    ->visible(function(Model $record){
+                        $a=Carbon::createFromFormat('Y-m-d H:i:s',$record->starts_at);
+                        if($a->isPast()){
+                            if($a->isToday()){
+                                return true;
+                            }
+                        }else if($a->isToday() || $a->isFuture()){
+                            return true;
+                        }
+                        return false;
+                    }),
+
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
