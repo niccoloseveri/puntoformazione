@@ -134,9 +134,16 @@ class User extends Authenticatable implements FilamentUser
     public function notAdmin() {
         if($this->roles->contains('name', 'admin')){
             return false;
-        }else {
+        }else if ($this->roles->contains('name', 'Nazzareno')){
+            return false;
+        }
+        else {
             return true;
         }
+    }
+
+    public function isNazza(){
+        return $this->roles->contains('name', 'Nazzareno');
     }
 
 

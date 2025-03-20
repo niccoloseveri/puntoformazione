@@ -37,6 +37,7 @@ class PaymentsReport extends Page implements HasTable
 
     protected static string $view = 'filament.pages.payments-report';
 
+
     public static function table(Table $table) : Table {
         return $table
             ->query(Payments::query())
