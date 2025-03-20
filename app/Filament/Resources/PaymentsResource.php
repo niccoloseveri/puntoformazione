@@ -30,7 +30,9 @@ class PaymentsResource extends Resource
 {
     protected static ?string $model = Payments::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'gmdi-payment-r';
+    protected static ?string $modelLabel = 'Pagamento';
+    protected static ?string $pluralModelLabel = 'Pagamenti';
 
     public static function form(Form $form): Form
     {
@@ -42,7 +44,8 @@ class PaymentsResource extends Resource
                     ->searchable('name','surname','full_name','email')
                     ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->surname} {$record->name}")
                     ->preload()
-                    ->live(),
+                    ->live()
+                    ->required(),
                 Forms\Components\Select::make('courses_id')->label('Corso')
                     ->relationship(name: 'course', titleAttribute:'name')
                     ->searchable()
@@ -55,7 +58,8 @@ class PaymentsResource extends Resource
                             Courses::whereHas('users', function ($query) use ($get) {
                                 $query->where('users.id', $get('users_id'));
                             })->get()->pluck('name', 'id')
-                    ),
+                    )
+                    ->required(),
                 Forms\Components\Select::make('classrooms_id')->label('Classe')
                     ->relationship(name: 'classroom', titleAttribute:'name')
                     ->searchable()
@@ -67,22 +71,24 @@ class PaymentsResource extends Resource
                             Classrooms::whereHas('course', function ($query) use ($get) {
                                 $query->where('courses.id', $get('courses_id'));
                             })->get()->pluck('name', 'id')
-                    ),
+                    )
+                    ->required(),
                 ])->columns(3)->compact(),
                 Section::make('Informazioni Pagamento')->schema([
                     Forms\Components\Select::make('payment_method')->label('Metodo di Pagamento')
                     ->placeholder('Seleziona un metodo di pagamento')
+                    ->native(false)
                     ->options([
                         'cash' => 'Contanti',
                         'credit_card' => 'Carta di Credito',
                         'bank_transfer' => 'Bonifico Bancario',
                         'other' => 'Altro',
-                    ]),
-                    Forms\Components\TextInput::make('amount_paid')->numeric()->label('Importo Pagato'),
+                    ])->required(),
+                    Forms\Components\TextInput::make('amount_paid')->numeric()->label('Importo Pagato')->required(),
                     //Forms\Components\TextInput::make('discount')->numeric()->label('Sconto'),
                     //Forms\Components\TextInput::make('total_amount')->numeric()->label('Importo Totale'),
-                    Forms\Components\DatePicker::make('payment_date')->label('Data Pagamento')->default(now()),
-                    Forms\Components\Checkbox::make('is_paid')->label('Pagato'),
+                    Forms\Components\DatePicker::make('payment_date')->label('Data Pagamento')->date()->required(),
+                    Forms\Components\Checkbox::make('is_paid')->label('Pagato')->default(true),
                 ])->columns(3)->compact(),
                 Textarea::make('notes')->label('Note')->rows(3)->columnSpanFull(),
             ])

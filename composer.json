@@ -25,6 +25,7 @@
         "league/flysystem-aws-s3-v3": "^3.0",
         "league/flysystem-ftp": "^3.0",
         "livewire/livewire": "^3.3",
+        "malzariey/filament-daterangepicker-filter": "^3.2",
         "spatie/laravel-activitylog": "^4.8",
         "spatie/laravel-pdf": "^1.4",
         "stechstudio/filament-impersonate": "^3.15",

@@ -22,6 +22,7 @@ use Filament\Tables\Filters\Indicator;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 
 class PaymentsReport extends Page implements HasTable
 {
@@ -112,6 +113,7 @@ class PaymentsReport extends Page implements HasTable
 
                         return $indicators;
                     }),
+                    DateRangeFilter::make('payment_date')->label('Data Pagamento')->placeholder('Seleziona un periodo')->columns(2)->columnSpanFull(),
                 /*
                 Filter::make('course_id')
                 ->form([
