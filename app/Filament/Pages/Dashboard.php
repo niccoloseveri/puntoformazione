@@ -17,10 +17,13 @@ class Dashboard extends \Filament\Pages\Dashboard
 
     protected function getHeaderActions(): array
     {
-       return [
-            Action::make('subscribe')->label('Nuova Iscrizione')->color('success')->size(ActionSize::Large)->icon('gmdi-person-add-alt-1')->url(fn():string => route('filament.admin.resources.users.create')),
-            Action::make('subscribe')->label('Nuovo Studente + Contratto')->color('info')->size(ActionSize::Large)->icon('gmdi-contact-page-r')->url(fn():string => route('filament.admin.resources.students.create'))->disabled(),
-            Action::make('payment')->color('warning')->label('Nuovo Pagamento')->size(ActionSize::Large)->icon('gmdi-payments-r')->url(fn():string => route('filament.admin.resources.payments.create'))
-       ];
+        if(auth()->user()->isAdmin()){
+            return [
+                    Action::make('subscribe')->label('Nuova Iscrizione')->color('success')->size(ActionSize::Large)->icon('gmdi-person-add-alt-1')->url(fn():string => route('filament.admin.resources.users.create')),
+                    Action::make('subscribe')->label('Nuovo Studente + Contratto')->color('info')->size(ActionSize::Large)->icon('gmdi-contact-page-r')->url(fn():string => route('filament.admin.resources.students.create'))->disabled(),
+                    Action::make('payment')->color('warning')->label('Nuovo Pagamento')->size(ActionSize::Large)->icon('gmdi-payments-r')->url(fn():string => route('filament.admin.resources.payments.create'))
+            ];
+        }
+        else return [];
     }
 }

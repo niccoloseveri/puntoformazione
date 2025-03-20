@@ -3,7 +3,13 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Policies\PermissionPolicy;
+use App\Policies\RolePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -22,5 +28,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        Gate::policy(Role::class, RolePolicy::class);
+        //same for permission
+        Gate::policy(Permission::class, PermissionPolicy::class);
     }
 }
