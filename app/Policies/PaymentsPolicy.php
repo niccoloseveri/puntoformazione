@@ -13,7 +13,7 @@ class PaymentsPolicy
     public function viewAny(User $user): bool
     {
         //
-        return $user->notAdmin();
+        return $user->isAdmin();
     }
 
 
