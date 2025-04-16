@@ -110,6 +110,19 @@ class AttendancesReport extends Page implements HasTable
                     }
                     return $indicators;
                 }),
+                //lesson filter
+                Filter::make('lessons_id')
+                ->form([
+                    Select::make('lessons_id')->label('Lezione')
+                        ->options(fn (Get $get):Collection => \App\Models\Lessons::query()
+                            ->where('courses_id', $get('courses_id'))
+                            ->where('classrooms_id', $get('classrooms_id'))
+                            ->pluck('name', 'id')
+                        )
+                        ->placeholder('Seleziona una lezione')
+                        ->preload()
+                        ->native(false),
+                ])
 
                 ],layout:FiltersLayout::AboveContent)
            ;

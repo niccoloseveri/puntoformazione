@@ -52,7 +52,8 @@ class PaymentsReport extends Page implements HasTable
             ,
             //data pagamento
             Tables\Columns\TextColumn::make('payment_date')->label('Data Pagamento')
-                ->sortable(),
+                ->sortable()
+                ,
             //amount_paid
             Tables\Columns\TextColumn::make('amount_paid')->label('Importo Pagato')
                 ->sortable()

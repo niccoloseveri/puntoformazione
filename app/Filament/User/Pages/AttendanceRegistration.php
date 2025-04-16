@@ -3,6 +3,7 @@
 namespace App\Filament\User\Pages;
 
 use App\Models\Attendance;
+use App\Models\Lessons;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,6 +40,29 @@ class AttendanceRegistration extends Page
     {
         // Register attendance
         $userId=auth()->user()->id;
+
+        // Check if attendance already exists
+        $existingAttendance = Attendance::where('user_id', $userId)
+            ->where('lesson_id', $lessonId)
+            ->first();
+        if ($existingAttendance) {
+            session()->flash('error','Presenza già registrata');
+            return;
+        }
+        // Create new attendance record
+        // Check if the lesson is in the past or in the future (2hrs offset)
+
+
+
+        // Check if the user is already registered for the lesson
+        $isRegistered = Attendance::where('user_id', $userId)
+            ->where('lesson_id', $lessonId)
+            ->exists();
+        if ($isRegistered) {
+            session()->flash('error','Sei già registrato per questa lezione');
+            return;
+        }
+
         Attendance::create([
             'user_id'=>$userId,
             'lesson_id'=>$lessonId,

@@ -103,6 +103,7 @@ class LessonsResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('starts_at', 'desc')
             ->columns([
                 //
                 Tables\Columns\TextColumn::make('name')

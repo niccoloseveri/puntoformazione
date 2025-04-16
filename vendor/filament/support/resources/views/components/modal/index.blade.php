@@ -93,6 +93,7 @@
     @if ($id)
         x-on:{{ $closeEventName }}.window="if ($event.detail.id === '{{ $id }}') close()"
         x-on:{{ $openEventName }}.window="if ($event.detail.id === '{{ $id }}') open()"
+        data-fi-modal-id="{{ $id }}"
     @endif
     x-trap.noscroll{{ $autofocus ? '' : '.noautofocus' }}="isOpen"
     x-bind:class="{
@@ -106,7 +107,9 @@
 >
     @if ($trigger)
         <div
-            x-on:click="open"
+            @if (! $trigger->attributes->get('disabled'))
+                x-on:click="open"
+            @endif
             {{ $trigger->attributes->class(['fi-modal-trigger flex cursor-pointer']) }}
         >
             {{ $trigger }}
@@ -298,7 +301,10 @@
                                     ])
                                 >
                                     <x-filament::modal.heading
-                                        @class(['me-5' => $closeButton])
+                                        @class([
+                                            'me-6' => $closeButton && ((! $hasIcon) || in_array($alignment, [Alignment::Start, Alignment::Left])),
+                                            'ms-6' => $closeButton && (! $hasIcon) && ($alignment === Alignment::Center),
+                                        ])
                                     >
                                         {{ $heading }}
                                     </x-filament::modal.heading>
