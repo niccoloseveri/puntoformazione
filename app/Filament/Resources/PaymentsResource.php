@@ -87,7 +87,7 @@ class PaymentsResource extends Resource
                     Forms\Components\TextInput::make('amount_paid')->numeric()->label('Importo Pagato')->required(),
                     //Forms\Components\TextInput::make('discount')->numeric()->label('Sconto'),
                     //Forms\Components\TextInput::make('total_amount')->numeric()->label('Importo Totale'),
-                    Forms\Components\DatePicker::make('payment_date')->label('Data Pagamento')->date()->required(),
+                    Forms\Components\DatePicker::make('payment_date')->label('Data Pagamento')->displayFormat('d/m/Y')->required(),
                     Forms\Components\Checkbox::make('is_paid')->label('Pagato')->default(true),
                 ])->columns(3)->compact(),
                 Textarea::make('notes')->label('Note')->rows(3)->columnSpanFull(),
@@ -128,6 +128,7 @@ class PaymentsResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('payment_date')->label('Data Pagamento')
                     ->sortable()
+
                     ->searchable(),
                 Tables\Columns\TextColumn::make('payment_method')->label('Metodo Pagamento')
                     ->sortable()

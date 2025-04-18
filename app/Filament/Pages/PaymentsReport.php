@@ -2,20 +2,24 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Resources\PaymentsResource;
 use Filament\Pages\Page;
 use App\Models\Payments;
 use App\Models\Classrooms;
 use App\Models\Courses;
 use Carbon\Carbon;
-
+use Filament\Actions\EditAction;
+use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Livewire;
 use Livewire\Component as LivewireC;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Get;
 use Filament\Tables;
+use Filament\Tables\Actions\EditAction as ActionsEditAction;
 use Filament\Tables\Table;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Indicator;
@@ -27,6 +31,7 @@ use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 class PaymentsReport extends Page implements HasTable
 {
     use InteractsWithTable;
+    protected static ?string $model = Payments::class;
 
     protected static ?string $navigationIcon = 'gmdi-monetization-on-s';
     //protected static ?string $navigationGroup = 'Anagrafica';
@@ -41,6 +46,7 @@ class PaymentsReport extends Page implements HasTable
     public static function table(Table $table) : Table {
         return $table
             ->query(Payments::query())
+
             ->columns([
             Tables\Columns\TextColumn::make('user.full_name')->label('Studente')
             ->formatStateUsing(function ($record) {
@@ -141,7 +147,23 @@ class PaymentsReport extends Page implements HasTable
                 ]),
                 */
                 ],layout:FiltersLayout::AboveContent)
+            ->actions([
+                Action::make('edit')->url(fn ($record) => route('filament.admin.resources.payments.edit',[$record]))
+                    ->label('Modifica')
+                    ->iconButton()
+                    ->icon('heroicon-s-pencil-square')
+                    ->hidden(auth()->user()->hasRole('Nazzareno')),
+                Action::make('print')->url(fn ($record) => route('ricevuta.pdf.stampa',[$record]))->openUrlInNewTab()
+                    ->label('Stampa Ricevuta')
+                    ->iconButton()
+                    ->icon('gmdi-print')
+                    ->hidden(auth()->user()->hasRole('Nazzareno')),
+
+
+
+            ], position: ActionsPosition::BeforeColumns)
            ;
 
     }
+
 }

@@ -31,6 +31,7 @@ class Payments extends Model
         'total_amount' => MoneyCast::class,
         'discount' => MoneyCast::class,
         'amount_paid' => MoneyCast::class,
+        //'payment_date' => 'date'
     ];
 
 
