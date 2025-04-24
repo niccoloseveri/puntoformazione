@@ -290,13 +290,13 @@ class UserResource extends Resource
                         ->searchable(),
                     Forms\Components\Select::make('titolo_studio')->label('Titolo di studio')
                         ->options([
-                            'Diploma Liceo' => 'Diploma Liceo',
-                            'Diploma Istituto tecnico' => 'Diploma Istituto tecnico',
-                            'Laurea Triennale' => 'Laurea Triennale',
-                            'Laurea Magistrale' => 'Laurea Magistrale',
-                            'Diploma scuola secondaria di primo grado' => 'Diploma scuola secondaria di primo grado',
                             "Scuola dell'obbligo" => "Scuola dell'obbligo",
-                            'Nessuno' => 'Nessuno',
+                            "Diploma che non permette l'accesso alle università" => "Diploma che non permette l'accesso alle università",
+                            "Diploma che permette l'accesso alle università" => "Diploma che permette l'accesso alle università",
+                            "ITS" => "ITS",
+                            "Laurea Triennale" => "Laurea Triennale",
+                            "Laurea Magistrale" => "Laurea Magistrale",
+                            "Nessuno" => "Nessuno",
                         ])
                         ->searchable(),
 
