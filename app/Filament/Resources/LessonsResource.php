@@ -120,7 +120,7 @@ class LessonsResource extends Resource
                 Group::make('classrooms.name')->label('Classe')->collapsible(),
             ])
             ->defaultGroup('classrooms.name')
-            ->groupingSettingsHidden()
+
             ->actions([
                 Tables\Actions\Action::make('qr-code')
                     ->fillForm(fn(Model $record) => [
