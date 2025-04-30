@@ -19,6 +19,7 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -115,6 +116,11 @@ class LessonsResource extends Resource
             ->filters([
                 //
             ])
+            ->groups([
+                Group::make('classrooms.name')->label('Classe')->collapsible(),
+            ])
+            ->defaultGroup('classrooms.name')
+            ->groupingSettingsHidden()
             ->actions([
                 Tables\Actions\Action::make('qr-code')
                     ->fillForm(fn(Model $record) => [
