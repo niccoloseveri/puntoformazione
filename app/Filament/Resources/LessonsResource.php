@@ -19,11 +19,14 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 
 class LessonsResource extends Resource
 {
@@ -115,12 +118,34 @@ class LessonsResource extends Resource
                 Tables\Columns\TextColumn::make('starts_at')->label('Inizio'),])
             ->filters([
                 //
-            ])
+                DateRangeFilter::make('starts_at')
+                    ->label('Data e Ora')
+                    ->placeholder('Seleziona un intervallo di date')
+                    ->columnSpan(2)
+                    ,
+                SelectFilter::make('classrooms')
+                    ->relationship('classrooms', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable()
+                    ->label('Classe')
+                    ->placeholder('Seleziona una classe'),
+                SelectFilter::make('users')->label('Docente')
+                    ->relationship('users', 'full_name', modifyQueryUsing: fn (Builder $query) => $query->whereHas('roles', function ($query) {
+                        $query->where('name', 'insegnante');
+                    })->orderBy('surname'))
+                    ->preload()
+                    ->placeholder('Seleziona un docente')
+                    ->searchable()
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->surname} {$record->name}"),
+
+
+            ],layout: FiltersLayout::AboveContent)
             ->groups([
                 Group::make('classrooms.name')->label('Classe')->collapsible(),
             ])
             ->defaultGroup('classrooms.name')
-
+            ->groupingSettingsHidden()
             ->actions([
                 Tables\Actions\Action::make('qr-code')
                     ->fillForm(fn(Model $record) => [
