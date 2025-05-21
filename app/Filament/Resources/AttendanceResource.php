@@ -80,7 +80,8 @@ class AttendanceResource extends Resource
                             return ['class' => 'bg-red-200 dark:bg-red-500'];
                         }
                         return [];
-                    }),
+                    })
+                    ->dateTime('d/m/Y H:i'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

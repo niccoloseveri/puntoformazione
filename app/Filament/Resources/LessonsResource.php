@@ -115,7 +115,7 @@ class LessonsResource extends Resource
                 Tables\Columns\TextColumn::make('courses.name')->label('Corso'),
                 Tables\Columns\TextColumn::make('users.full_name')->label('Docente'),
                 Tables\Columns\TextColumn::make('classrooms.name')->label('Classe'),
-                Tables\Columns\TextColumn::make('starts_at')->label('Inizio'),])
+                Tables\Columns\TextColumn::make('starts_at')->label('Inizio')->dateTime('d/m/Y H:i'),])
             ->filters([
                 //
                 DateRangeFilter::make('starts_at')

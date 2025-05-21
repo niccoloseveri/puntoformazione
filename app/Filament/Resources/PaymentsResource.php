@@ -7,6 +7,7 @@ use App\Filament\Resources\PaymentsResource\RelationManagers;
 use App\Models\Classrooms;
 use App\Models\Courses;
 use App\Models\Payments;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\Livewire;
 use Filament\Forms\Components\Section;
@@ -128,8 +129,11 @@ class PaymentsResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('payment_date')->label('Data Pagamento')
                     ->sortable()
-
-                    ->searchable(),
+                    ->formatStateUsing(
+                        fn ($state) => Carbon::createFromFormat('d/m/Y', $state)->format('d/m/Y')
+                    )
+                    ->searchable()
+                    ,
                 Tables\Columns\TextColumn::make('payment_method')->label('Metodo Pagamento')
                     ->sortable()
                     ->searchable(),
