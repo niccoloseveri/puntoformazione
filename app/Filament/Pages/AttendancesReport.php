@@ -56,7 +56,7 @@ class AttendancesReport extends Page implements HasTable
                 }),
 
             Tables\Columns\TextColumn::make('attend_at')->label('Orario Ingresso')
-                ->dateTime()
+                ->dateTime('d/m/Y H:i:s')
                 ->sortable()
                 ->extraAttributes(function (Attendance $att) {
                     $a=Carbon::create($att->lesson->starts_at);
