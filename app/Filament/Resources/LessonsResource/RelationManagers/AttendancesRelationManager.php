@@ -40,9 +40,15 @@ class AttendancesRelationManager extends RelationManager
         return $table
 
             ->recordTitleAttribute('user_id')
+            ->modifyQueryUsing(function (Builder $query) {
+                $query->leftJoinRelationship('user');
+            })
             ->columns([
+                Tables\Columns\TextColumn::make('user.surname')->label('Cognome'),
+
                 Tables\Columns\TextColumn::make('user.full_name')->label('Utente')
                 ->formatStateUsing(function ($record) {
+                    //dd($record);
                     return $record->user->surname. ' ' .$record->user->name. ' ';
                 })
                 ->html()
@@ -61,7 +67,7 @@ class AttendancesRelationManager extends RelationManager
                 }),
 
             ])
-            ->defaultSort('surname','asc')
+            //->defaultSort('user.surname')
             ->defaultPaginationPageOption('all')
             ->filters([
                 //
