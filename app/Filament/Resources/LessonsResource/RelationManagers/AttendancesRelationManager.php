@@ -38,7 +38,7 @@ class AttendancesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->defaultSort('user.surname','asc')
+
             ->recordTitleAttribute('user_id')
             ->columns([
                 Tables\Columns\TextColumn::make('user.full_name')->label('Utente')
@@ -61,7 +61,7 @@ class AttendancesRelationManager extends RelationManager
                 }),
 
             ])
-            ->defaultSort('attend_at','asc')
+            ->defaultSort('user.surname','asc')
             ->defaultPaginationPageOption('all')
             ->filters([
                 //
