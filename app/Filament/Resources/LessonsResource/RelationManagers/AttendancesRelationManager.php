@@ -61,7 +61,7 @@ class AttendancesRelationManager extends RelationManager
                 }),
 
             ])
-            ->defaultSort('user.surname','asc')
+            ->defaultSort('surname','asc')
             ->defaultPaginationPageOption('all')
             ->filters([
                 //
