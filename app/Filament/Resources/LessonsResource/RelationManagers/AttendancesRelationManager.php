@@ -44,15 +44,12 @@ class AttendancesRelationManager extends RelationManager
                 $query->leftJoinRelationship('user');
             })
             ->columns([
-                Tables\Columns\TextColumn::make('user.surname')->label('Cognome'),
-
-                Tables\Columns\TextColumn::make('user.full_name')->label('Utente')
-                ->formatStateUsing(function ($record) {
-                    //dd($record);
-                    return $record->user->surname. ' ' .$record->user->name. ' ';
-                })
-                ->html()
-                ->sortable('surname')
+                Tables\Columns\TextColumn::make('user.surname')->label('Cognome')
+                ->sortable()
+                ->copyable()
+                ->searchable(),
+                Tables\Columns\TextColumn::make('user.name')->label('Nome')
+                ->sortable('user.name')
                 ->copyable()
                 ->searchable(),
                 Tables\Columns\TextColumn::make('attend_at')->label('Orario ingresso')
@@ -67,7 +64,7 @@ class AttendancesRelationManager extends RelationManager
                 }),
 
             ])
-            //->defaultSort('user.surname')
+            ->defaultSort('user.surname','asc')
             ->defaultPaginationPageOption('all')
             ->filters([
                 //
