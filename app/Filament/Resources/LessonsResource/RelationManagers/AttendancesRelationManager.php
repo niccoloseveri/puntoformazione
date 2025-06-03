@@ -38,7 +38,7 @@ class AttendancesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->defaultSort('surname','asc')
+            ->defaultSort('user.surname','asc')
             ->recordTitleAttribute('user_id')
             ->columns([
                 Tables\Columns\TextColumn::make('user.full_name')->label('Utente')
