@@ -60,4 +60,10 @@ class Lessons extends Model
         return $this->hasMany(Attendance::class,'lesson_id','id');
     }
 
+    //subscriptions: hasManyThrough course
+    public function subscriptions() {
+        return $this->hasManyThrough(Subscriptions::class, Classrooms::class,'id','classrooms_id','classrooms_id','id');
+    }
+
+
 }

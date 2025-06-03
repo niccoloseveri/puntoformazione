@@ -24,15 +24,21 @@ class AttendancesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('user_id')->label('Studente')
+                    ->relationship('user', 'full_name',modifyQueryUsing: fn (Builder $query) => $query->whereHas('courses', function (Builder $query) {
+                        $query->where('courses.id','like',$this->getOwnerRecord()->courses()->first()->id);
+                    })->orderBy('surname'))
+                    ->searchable('name','surname','full_name','email')
+                    ->preload()
+                    ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->surname} {$record->name}")
+                    ->required(),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
+            ->defaultSort('surname','asc')
             ->recordTitleAttribute('user_id')
             ->columns([
                 Tables\Columns\TextColumn::make('user.full_name')->label('Utente')

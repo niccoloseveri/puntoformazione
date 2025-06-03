@@ -43,6 +43,7 @@ class LessonsResource extends Resource
             ->schema([
                 TextInput::make('name')
                     ->label('Nome Lezione')
+                    //->formatStateUsing(fn($record)=>dd($record->subscriptions()->count()))
                     ->required(),
                 Select::make('users_id')
                     ->label('Docente')
@@ -181,6 +182,7 @@ class LessonsResource extends Resource
         return [
             //
             RelationManagers\AttendancesRelationManager::class,
+            RelationManagers\SubscriptionsRelationManager::class,
         ];
     }
 
