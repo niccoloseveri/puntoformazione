@@ -87,6 +87,7 @@ class PaymentsReport extends Page implements HasTable
                     ->searchable()
                     ->preload()
                     ->columns(2)
+                    ->columnSpanFull()
                 ,
                 DateRangeFilter::make('payment_date')->label('Data Pagamento')->placeholder('Seleziona un periodo')->columns(2)->columnSpanFull(),
 
