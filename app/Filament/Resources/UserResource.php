@@ -158,7 +158,8 @@ class UserResource extends Resource
                         fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
                         ->prepend('documento-'),
                     )
-                    ->visibility('private'),
+                    ->visibility('private')
+                    ->openable(),
 
 
                 ]),
