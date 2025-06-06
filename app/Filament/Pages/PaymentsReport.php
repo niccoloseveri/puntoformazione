@@ -86,7 +86,6 @@ class PaymentsReport extends Page implements HasTable
                     ->placeholder('Seleziona uno studente')
                     ->searchable()
                     ->preload()
-                    ->live()
                     ->indicateUsing(function (array $data): array {
                         return [
                             'Studente: ' . ($data['users_id'] ? Payments::find($data['users_id'])->user->full_name : 'Nessuno selezionato'),
