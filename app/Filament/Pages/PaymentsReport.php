@@ -86,10 +86,11 @@ class PaymentsReport extends Page implements HasTable
                     ->placeholder('Seleziona uno studente')
                     ->searchable()
                     ->preload()
-                    ->columns(2)
-                    ->columnSpanFull()
+                    ->columnSpan(2)
+                    //->columns()
+
                 ,
-                DateRangeFilter::make('payment_date')->label('Data Pagamento')->placeholder('Seleziona un periodo')->columns(2)->columnSpanFull(),
+                DateRangeFilter::make('payment_date')->label('Data Pagamento')->placeholder('Seleziona un periodo')->columnSpan(2),
 
                 Filter::make('course_id')
                     ->form([
