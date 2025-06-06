@@ -140,11 +140,22 @@ class PaymentsResource extends Resource
 
             ])
             ->filters([
+                SelectFilter::make('users_id')
+                    ->label('Studente')
+                    ->relationship('user', 'full_name')
+                    ->searchable()
+                    ->preload()
+                    ->native(false)
+                    ->placeholder('Seleziona uno studente')
+                    ->options(
+                        fn () => \App\Models\User::orderBy('surname')->get()->pluck('full_name', 'id')
+                    ),
 
                 Filter::make('courses_id')
                 ->form([
                     Select::make('courses_id')->label('Corso')
                     ->live()
+                    ->native(false)
                     ->dehydrated(false)
                     ->options(Courses::pluck('name', 'id'))
                     ->placeholder('Seleziona un corso')
@@ -156,9 +167,11 @@ class PaymentsResource extends Resource
                 ->form([
                     Select::make('class_id')->label('Classe')
                     ->live()
+                    ->native(false)
                     ->placeholder(fn (Get $get): string => empty($get('courses_id')) ? 'Seleziona prima un corso' : 'Seleziona la classe')
                     ->options(fn($get) => Classrooms::where('course_id', $get('courses_id'))->pluck('name', 'id'))
                 ]),
+
             ],layout:FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -31,14 +31,17 @@ class SubscriptionsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('user_id')
             ->modifyQueryUsing(function (Builder $query){
-                $query->with('user')->with('attendances');
+                $query->leftJoinRelationship('user');//->with('attendances');
+                //dd($query->toSql());
             })
             ->columns([
                 Tables\Columns\TextColumn::make('user.full_name'),
                 //has attended
-                TextColumn::make('attendances')->label('Presente?')
-                    ->sortable()
-                    ->searchable(),
+                TextColumn::make('attended')->formatState(function ($state) {
+                    return dd($state);
+                })->label('Presenze'),
+
+
 
             ])
             ->filters([
