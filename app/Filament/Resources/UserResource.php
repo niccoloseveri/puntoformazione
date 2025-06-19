@@ -121,7 +121,7 @@ class UserResource extends Resource
                                 }
                             },
                         ])
-                        ->unique()
+                        ->unique(ignoreRecord: true)
                         ->validationMessages([
                             'unique' => ':attribute già inserito.'
                         ])
