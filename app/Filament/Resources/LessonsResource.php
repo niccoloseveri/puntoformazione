@@ -54,6 +54,13 @@ class LessonsResource extends Resource
                     ->preload()
                     ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->surname} {$record->name}")
                     ->required(),
+                Select::make('rooms_id')
+                    ->label('Aula')
+                    ->relationship('rooms', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->live()
+                    ->required(),
                 DateTimePicker::make('starts_at')
                     ->label('Data e Ora Inizio')
                     ->required(),
@@ -113,6 +120,8 @@ class LessonsResource extends Resource
                 //
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome Lezione'),
+                //room
+                Tables\Columns\TextColumn::make('rooms.name')->label('Aula')->badge()->color('info'),
                 Tables\Columns\TextColumn::make('courses.name')->label('Corso'),
                 Tables\Columns\TextColumn::make('users.full_name')->label('Docente'),
                 Tables\Columns\TextColumn::make('classrooms.name')->label('Classe'),

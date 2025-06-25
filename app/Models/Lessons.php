@@ -16,6 +16,7 @@ class Lessons extends Model
         'classrooms_id',
         'formativeunits_id',
         'courses_id',
+        'rooms_id',
         'users_id',
         'starts_at',
         'ends_at',
@@ -65,5 +66,9 @@ class Lessons extends Model
         return $this->hasManyThrough(Subscriptions::class, Classrooms::class,'id','classrooms_id','classrooms_id','id');
     }
 
+    //get the rooms associated with the lesson hasOne
+    public function rooms() : BelongsTo {
+        return $this->belongsTo(Rooms::class, 'rooms_id');
+    }
 
 }
