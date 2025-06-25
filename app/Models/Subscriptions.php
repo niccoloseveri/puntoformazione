@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Subscriptions extends Model
@@ -82,6 +83,16 @@ class Subscriptions extends Model
     public function status(): BelongsTo
     {
         return $this->belongsTo(Status::class,'statuses_id');
+    }
+
+    /**
+     * Get the attendance associated with the Subscriptions
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(Attendance::class, 'user_id', 'user_id');
     }
 
 

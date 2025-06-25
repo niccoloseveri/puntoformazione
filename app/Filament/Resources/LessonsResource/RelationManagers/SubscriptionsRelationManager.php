@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\LessonsResource\RelationManagers;
 
+use App\Models\Attendance;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -15,6 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class SubscriptionsRelationManager extends RelationManager
 {
     protected static string $relationship = 'subscriptions';
+    protected static ?string $navigationLabel = 'Registro';
+    protected static ?string $title = 'Registro';
 
     public function form(Form $form): Form
     {
@@ -31,15 +34,38 @@ class SubscriptionsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('user_id')
             ->modifyQueryUsing(function (Builder $query){
-                $query->leftJoinRelationship('user');//->with('attendances');
+                $query->leftJoinRelationship('user');
+
+                //->where('attendances.lesson_id', $this->ownerRecord->id);
                 //dd($query->toSql());
+                //dd($this->ownerRecord->id);
             })
             ->columns([
-                Tables\Columns\TextColumn::make('user.full_name'),
+                Tables\Columns\TextColumn::make('user.full_name')->label('Utente'),
                 //has attended
-                TextColumn::make('attended')->formatState(function ($state) {
-                    return dd($state);
-                })->label('Presenze'),
+
+                TextColumn::make('user.attendances')
+                ->label('Presenze')
+                ->getStateUsing(function ($record, $livewire) {
+                    $lessonId = $livewire->ownerRecord->id;
+                    $attendance= Attendance::where('lesson_id', $lessonId)
+                        ->where('user_id', $record->user_id)
+                        ->first();
+
+                    return $attendance ? 'Presente' : 'Assente';
+                })
+                //background color based on attendance
+                ->badge()
+                ->color(function ($record, $state, $livewire) {
+        $lessonId = $livewire->ownerRecord->id;
+        $attendance = Attendance::where('lesson_id', $lessonId)
+            ->where('user_id', $record->user_id)
+            ->first();
+
+        return $attendance ? 'success' : 'danger';
+    })
+
+
 
 
 
