@@ -57,19 +57,15 @@ class SubscriptionsRelationManager extends RelationManager
                 //background color based on attendance
                 ->badge()
                 ->color(function ($record, $state, $livewire) {
-        $lessonId = $livewire->ownerRecord->id;
-        $attendance = Attendance::where('lesson_id', $lessonId)
-            ->where('user_id', $record->user_id)
-            ->first();
-
-        return $attendance ? 'success' : 'danger';
-    })
-
-
-
-
-
-            ])
+                    $lessonId = $livewire->ownerRecord->id;
+                    $attendance = Attendance::where('lesson_id', $lessonId)
+                        ->where('user_id', $record->user_id)
+                        ->first();
+                        return $attendance ? 'success' : 'danger';
+                    })
+                ])
+            ->defaultSort('user.surname','asc')
+            ->defaultPaginationPageOption('all')
             ->filters([
                 //
             ])
