@@ -41,8 +41,14 @@ class SubscriptionsRelationManager extends RelationManager
                 //dd($this->ownerRecord->id);
             })
             ->columns([
-                Tables\Columns\TextColumn::make('user.full_name')->label('Utente')
-                ->sortable('surname'),
+                Tables\Columns\TextColumn::make('user.surname')->label('Cognome')
+                ->sortable()
+                ->copyable()
+                ->searchable(),
+                Tables\Columns\TextColumn::make('user.name')->label('Nome')
+                ->sortable('user.name')
+                ->copyable()
+                ->searchable(),
                 //has attended
 
                 TextColumn::make('user.attendances')
@@ -65,7 +71,7 @@ class SubscriptionsRelationManager extends RelationManager
                         return $attendance ? 'success' : 'danger';
                     })
                 ])
-            //->defaultSort('user.surname','asc')
+            ->defaultSort('user.surname','asc')
             ->defaultPaginationPageOption('all')
             ->filters([
                 //
