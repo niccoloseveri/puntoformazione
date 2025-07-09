@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\View\TablesRenderHook;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -31,6 +32,10 @@ class RoomsResource extends Resource
                     ->label('Nome Aula')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\ColorPicker::make('color')
+                    ->label('Colore')
+                    ->default('#ffffff')
+                    ->nullable(),
                 Forms\Components\TextInput::make('description')
                     ->label('Descrizione')
                     ->maxLength(500)
@@ -48,7 +53,9 @@ class RoomsResource extends Resource
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Descrizione')
+                    ->label('Descrizione'),
+                Tables\Columns\ColorColumn::make('color')
+                    ->label('Colore'),
                    //
             ])
             ->filters([

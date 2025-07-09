@@ -10,6 +10,7 @@ use App\Models\Lessons;
 use App\Models\User;
 use Carbon\Carbon;
 use Filament\Actions\Action;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
@@ -18,6 +19,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
+use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
@@ -121,7 +123,8 @@ class LessonsResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome Lezione'),
                 //room
-                Tables\Columns\TextColumn::make('rooms.name')->label('Aula')->badge()->color('info'),
+                Tables\Columns\TextColumn::make('rooms.name')->label('Aula')->badge()->color(fn ($record) => Color::hex($record->rooms->color) )
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('courses.name')->label('Corso'),
                 Tables\Columns\TextColumn::make('users.full_name')->label('Docente'),
                 Tables\Columns\TextColumn::make('classrooms.name')->label('Classe'),
