@@ -40,7 +40,7 @@ class UserCalendarWidget extends FullCalendarWidget
                 fn (Lessons $event) =>
                     EventData::make()
                     ->id($event->id)
-                    ->title(Str::limit($event->name, 15, '...'))
+                    ->title(Str::limit($event->name, 12, '...'))
                     ->start($event->starts_at)
                     ->end($event->ends_at)
                     ->backgroundColor($event->rooms()->first()?->color)
