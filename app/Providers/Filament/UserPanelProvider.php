@@ -51,6 +51,8 @@ class UserPanelProvider extends PanelProvider
             ])
             ->plugin(
                 FilamentFullCalendarPlugin::make()
+                    ->locale('it')
+                    //->config()
             )
             ->middleware([
                 EncryptCookies::class,

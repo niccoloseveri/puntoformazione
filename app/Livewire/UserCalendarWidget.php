@@ -12,6 +12,21 @@ class UserCalendarWidget extends FullCalendarWidget
 {
     public Model | string | null $model = Lessons::class;
 
+    public function config(): array
+    {
+        return [
+            'eventDisplay' => 'block',
+        ];
+    }
+
+    public function textColor($event) {
+        $color = ltrim($event->rooms()->first()?->color, '#');
+        $json =file_get_contents('https://webaim.org/resources/contrastchecker/?fcolor=000000&bcolor='.$color.'&api');
+        $djson = json_decode($json,true);
+        $c = $djson['AA'] == 'pass' ? "#000000" : "#FFFFFF";
+        return $c;
+    }
+
     public function fetchEvents(array $fetchInfo): array
     {
         return Lessons::query()
@@ -21,15 +36,16 @@ class UserCalendarWidget extends FullCalendarWidget
             ->where('subscriptions.user_id', auth()->user()->id)
             ->get()
             ->map(
-                fn (Lessons $event) => EventData::make()
+                fn (Lessons $event) =>
+                    EventData::make()
                     ->id($event->id)
                     ->title($event->name)
                     ->start($event->starts_at)
                     ->end($event->ends_at)
-                    /*->url(
-                        url: EventResource::getUrl(name: 'view', parameters: ['record' => $event]),
-                        shouldOpenUrlInNewTab: true
-                    )*/
+                    ->backgroundColor($event->rooms()->first()?->color)
+                    ->borderColor($event->rooms()->first()?->color)
+                    ->textColor($this->textColor($event))
+
             )
             ->toArray();
     }
