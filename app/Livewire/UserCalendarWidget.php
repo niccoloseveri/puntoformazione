@@ -44,7 +44,7 @@ class UserCalendarWidget extends FullCalendarWidget
                     ->end($event->ends_at)
                     ->backgroundColor($event->rooms()->first()?->color)
                     ->borderColor($event->rooms()->first()?->color)
-                    ->textColor($this->textColor($event))
+                    ->textColor($event->rooms()->first()?->textColor)
 
             )
             ->toArray();
