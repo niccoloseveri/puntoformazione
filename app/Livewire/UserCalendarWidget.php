@@ -7,6 +7,7 @@ use Filament\Widgets\Widget;
 use Illuminate\Database\Eloquent\Model;
 use Saade\FilamentFullCalendar\Data\EventData;
 use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
+use Illuminate\Support\Str;
 
 class UserCalendarWidget extends FullCalendarWidget
 {
@@ -39,12 +40,15 @@ class UserCalendarWidget extends FullCalendarWidget
                 fn (Lessons $event) =>
                     EventData::make()
                     ->id($event->id)
-                    ->title($event->name)
+                    ->title(Str::limit($event->name, 18, '...'))
                     ->start($event->starts_at)
                     ->end($event->ends_at)
                     ->backgroundColor($event->rooms()->first()?->color)
                     ->borderColor($event->rooms()->first()?->color)
                     ->textColor($event->rooms()->first()?->textColor)
+                    //->extendedProps(['ftitle' => htmlspecialchars($event->name)])
+                    ->extendedProps(['ftitle' => $event->name])
+
 
             )
             ->toArray();
@@ -54,8 +58,9 @@ class UserCalendarWidget extends FullCalendarWidget
     {
         return <<<JS
             function({ event, timeText, isStart, isEnd, isMirror, isPast, isFuture, isToday, el, view }){
-                el.setAttribute("x-tooltip", "tooltip");
-                el.setAttribute("x-data", "{ tooltip: '"+event.title+"' }");
+
+                el.setAttribute('x-tooltip', 'tooltip');
+                el.setAttribute('x-data', '{ tooltip: "'+event.extendedProps.ftitle+'" }');
             }
         JS;
     }
