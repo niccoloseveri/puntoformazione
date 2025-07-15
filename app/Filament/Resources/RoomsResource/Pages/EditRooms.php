@@ -16,4 +16,13 @@ class EditRooms extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+     protected function mutateFormDataBeforeSave(array $data): array {
+
+        $color= ltrim($data['color'],'#');
+        $json =file_get_contents('https://webaim.org/resources/contrastchecker/?fcolor=000000&bcolor='.$color.'&api');
+        $djson = json_decode($json,true);
+        $data['textColor'] = $djson['AA']=='pass' ? '#000000' : '#FFFFFF';
+        return $data;
+    }
 }

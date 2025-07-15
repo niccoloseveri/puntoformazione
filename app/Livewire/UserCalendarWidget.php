@@ -17,6 +17,12 @@ class UserCalendarWidget extends FullCalendarWidget
     {
         return [
             'eventDisplay' => 'block',
+            'view' => 'dayGridMonth',
+            'headerToolbar' => [
+                'start' => 'title',
+                'center' => '',
+                'end' => 'prev,next today',
+            ],
         ];
     }
 
