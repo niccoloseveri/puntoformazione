@@ -17,6 +17,7 @@ class Rooms extends Model
         'name',
         'color',
         'description',
+        'textColor',
     ];
     /**
      * The attributes that should be cast to native types.
