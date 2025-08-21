@@ -24,6 +24,7 @@ use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
@@ -329,7 +330,8 @@ class UserResource extends Resource
                     ->html()
                     ->sortable('surname')
                     ->copyable()
-                    ->searchable(),
+                    ->searchable()
+                    ->tooltip(fn (Model $record) : string => "Telefono: {$record->tel}"),
                     Tables\Columns\TextColumn::make('cf')
                     ->label('Codice Fiscale')
                     ->copyable()

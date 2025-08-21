@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,6 +27,7 @@ class Subscriptions extends Model
         'payment_options_id',
         'is_teacher',
         'start_date',
+        'imp_rata',
         'statuses_id',
         'next_payment',
         'printed_cont',
@@ -33,6 +35,16 @@ class Subscriptions extends Model
         'printed_whats',
         'is_active'
 
+    ];
+
+     /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'imp_rata' => MoneyCast::class,
+        //'payment_date' => 'date'
     ];
 
     /**
