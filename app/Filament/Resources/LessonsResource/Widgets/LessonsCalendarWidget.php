@@ -1,47 +1,21 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Filament\Resources\LessonsResource\Widgets;
 
 use App\Models\Lessons;
-use Filament\Forms\Components\TextInput;
 use Filament\Widgets\Widget;
-use Illuminate\Database\Eloquent\Model;
 use Saade\FilamentFullCalendar\Data\EventData;
-use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
 use Illuminate\Support\Str;
 
-class UserCalendarWidget extends FullCalendarWidget
+
+class LessonsCalendarWidget extends Widget
 {
-    public Model | string | null $model = Lessons::class;
-
-    public function config(): array
-    {
-        return [
-            'eventDisplay' => 'block',
-            'view' => 'dayGridMonth',
-            'headerToolbar' => [
-                'start' => 'title',
-                'center' => '',
-                'end' => 'prev,next today',
-            ],
-        ];
-    }
-
-    public function textColor($event) {
-        $color = ltrim($event->rooms()->first()?->color, '#');
-        $json =file_get_contents('https://webaim.org/resources/contrastchecker/?fcolor=000000&bcolor='.$color.'&api');
-        $djson = json_decode($json,true);
-        $c = $djson['AA'] == 'pass' ? "#000000" : "#FFFFFF";
-        return $c;
-    }
 
     public function fetchEvents(array $fetchInfo): array
     {
         return Lessons::query()
             ->where('starts_at', '>=', $fetchInfo['start'])
             ->where('ends_at', '<=', $fetchInfo['end'])
-            ->leftJoinRelationship('subscriptions')
-            ->where('subscriptions.user_id', auth()->user()->id)
             ->get()
             ->map(
                 fn (Lessons $event) =>
@@ -76,17 +50,6 @@ class UserCalendarWidget extends FullCalendarWidget
     {
         return [
             //Actions\CreateAction::make(),
-        ];
-    }
-
-        public function getFormSchema(): array
-    {
-        return [
-            //
-            TextInput::make('title')
-                ->label('Titolo')
-                ->required()
-                ->maxLength(255),
         ];
     }
 }

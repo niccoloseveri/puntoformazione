@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Payments extends Model
 {
@@ -68,5 +70,15 @@ class Payments extends Model
             'bank_transfer' => 'Bonifico Bancario',
             default => 'Altro',
         };
+    }
+
+    /**
+     * The installments that belong to the payment.
+     */
+    public function installments() : BelongsToMany
+    {
+        return $this->belongsToMany(Installment::class, 'payments_installments', 'payments_id', 'installments_id')
+                    ->withPivot('amount_applied')
+                    ->withTimestamps();
     }
 }

@@ -2,9 +2,12 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Resources\LessonsResource\Widgets\LessonsCalendarWidget;
+use App\Models\Lessons;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Panel;
 use Filament\Support\Enums\ActionSize;
 
 class Dashboard extends \Filament\Pages\Dashboard
@@ -26,4 +29,6 @@ class Dashboard extends \Filament\Pages\Dashboard
         }
         else return [];
     }
+
+
 }

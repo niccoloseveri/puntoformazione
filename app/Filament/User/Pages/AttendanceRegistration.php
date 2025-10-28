@@ -4,6 +4,7 @@ namespace App\Filament\User\Pages;
 
 use App\Models\Attendance;
 use App\Models\Lessons;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,6 +39,15 @@ class AttendanceRegistration extends Page
 
     public function registerAttendance($lessonId)
     {
+        if (empty($lessonId)) {
+        Notification::make()
+            ->title('Errore')
+            ->body('Impossibile accedere alla pagina da link diretto.')
+            ->danger()
+            ->send();
+
+        return redirect()->route('filament.user.pages.dashboard');
+}
         // Register attendance
         $userId=auth()->user()->id;
 

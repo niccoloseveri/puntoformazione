@@ -50,6 +50,7 @@ class SubscriptionsResource extends Resource
                     ->relationship(name:'courses', titleAttribute:'name')
                     ->searchable('name')
                     ->preload()
+                    ->reactive()
                     ->live(),
 
                 Forms\Components\Select::make('classroom')->label('Classe')
@@ -67,7 +68,136 @@ class SubscriptionsResource extends Resource
                     ->relationship(name: 'paymentoptions', titleAttribute: 'name')
                     ->searchable('name')
                     ->live()
-                    ->preload(),
+                    ->preload()
+                    ->reactive(),
+
+                Forms\Components\Select::make('installments_mode')
+                    ->native(false)
+                    ->label('Modalità piano rate')
+                    ->options([
+                        'by_amount' => 'In base all’importo mensile',
+                        'by_count'  => 'In base al numero di rate',
+                    ])
+                    ->default('by_amount')
+                    ->dehydrated(false) // <-- qui la magia: non va nel DB
+                    ->hidden(function(Get $get) : bool {
+                        $test = Payment_options::find($get('payment_options_id'))!=null ? $test=Payment_options::find($get('payment_options_id')): null ;
+                        //dd($test);
+                        return !(str_contains($test?->name, 'Rateale')||str_contains($test?->name, 'rateale'));
+                    })
+                    ->reactive(),
+
+                Forms\Components\TextInput::make('down_payment')
+                ->label('Anticipo')->numeric()->default(0)
+                ->suffixIcon('gmdi-euro-r')
+                    ->live()
+                    ->reactive()
+                    ->hidden(function(Get $get) : bool {
+                        $test = Payment_options::find($get('payment_options_id'))!=null ? $test=Payment_options::find($get('payment_options_id')): null ;
+                        //dd($test);
+                        return !(str_contains($test?->name, 'Rateale')||str_contains($test?->name, 'rateale'));
+                    }),
+
+                Forms\Components\TextInput::make('pay_day_of_month')
+                    ->label('Giorno pagamento (1–31)')
+                    ->numeric()->minValue(1)->maxValue(31)->default(28)
+                    ->live()
+                    ->reactive()
+                    ->hidden(function(Get $get) : bool {
+                        $test = Payment_options::find($get('payment_options_id'))!=null ? $test=Payment_options::find($get('payment_options_id')): null ;
+                        //dd($test);
+                        return !(str_contains($test?->name, 'Rateale')||str_contains($test?->name, 'rateale'));
+                    }),
+
+                    //
+                Forms\Components\TextInput::make('imp_rata')
+                    ->label('Importo rata (€)')
+                    ->reactive()
+                    ->numeric()
+                    ->hidden(function(Get $get) : bool {
+                        $test = Payment_options::find($get('payment_options_id'))!=null ? $test=Payment_options::find($get('payment_options_id')): null ;
+                        //dd($test);
+                        $b=true;
+                        if(str_contains($test?->name, 'Rateale')||str_contains($test?->name, 'rateale')){
+                            if(($get('installments_mode') =='by_amount')) {
+                                $b=false;
+                            }
+                        }
+                        return $b;
+                        //return !(str_contains($test?->name, 'Rateale')||str_contains($test?->name, 'rateale'));
+                    })
+                    ->live()
+                    ->suffixIcon('gmdi-euro-r')
+                    ->rule(function (Get $get) {
+                        return function (string $attribute, $value, $fail) use ($get) {
+                            if ($get('payment_type') !== 'installments') return;
+                            if (($get('installments_mode') ?? 'by_amount') !== 'by_amount') return;
+
+                            $courseId = $get('courses_id');
+                            if (!$courseId) return;
+
+                            $course = \App\Models\Courses::find($courseId);
+                            if (!$course || !$course->ends_at) return;
+
+                            $state = [
+                                'enrolled_at'       => $get('start_date'),
+                                'pay_day_of_month'  => $get('pay_day_of_month'),
+                                'down_payment'      => $get('down_payment'),
+                                'monthly_amount'    => $value,
+                                'installments_mode' => 'by_amount',
+                            ];
+
+                            $tips = app(\App\Services\InstallmentPlanBuilder::class)->tipsForState($state, $course);
+                            if (isset($tips['minQuota'])) {
+                                $fail('Importo rata insufficiente. Quota minima: € '.number_format($tips['minQuota'], 2, ',', '.'));
+                            }
+                        };
+                    }),
+
+                // by_count
+                Forms\Components\TextInput::make('installments_count')
+                    ->label('Numero di rate')
+                    ->numeric()->minValue(1)
+                    ->reactive()
+                    ->hidden(function(Get $get) : bool {
+                        $test = Payment_options::find($get('payment_options_id'))!=null ? $test=Payment_options::find($get('payment_options_id')): null ;
+                        //dd($test);
+                        $b=true;
+                        if(str_contains($test?->name, 'Rateale')||str_contains($test?->name, 'rateale')){
+                            if(($get('installments_mode') =='by_count')) {
+                                $b=false;
+                            }
+                        }
+                        return $b;
+                        //return !(str_contains($test?->name, 'Rateale')||str_contains($test?->name, 'rateale'));
+                    })
+                    ->live()
+                    ->rule(function (Get $get) {
+                        return function (string $attribute, $value, $fail) use ($get) {
+                            if ($get('payment_type') !== 'installments') return;
+                            if (($get('installments_mode') ?? 'by_amount') !== 'by_count') return;
+
+                            $courseId = $get('courses_id');
+                            if (!$courseId || !$value) return;
+
+                            $course = \App\Models\Courses::find($courseId);
+                            if (!$course || !$course->ends_at) return;
+
+                            $state = [
+                                'enrolled_at'       => $get('start_date'),
+                                'pay_day_of_month'  => $get('pay_day_of_month'),
+                                'down_payment'      => $get('down_payment'),
+                                'installments_mode' => 'by_count',
+                                'installments_count'=> $value,
+                            ];
+
+                            $tips = app(\App\Services\InstallmentPlanBuilder::class)->tipsForState($state, $course);
+
+                            if (isset($tips['maxCount']) && (int)$value > (int)$tips['maxCount']) {
+                                $fail('Troppe rate per la durata del corso. Massimo: '.$tips['maxCount']);
+                            }
+                        };
+                    }),
 
                 Forms\Components\TextInput::make('imp_rata')->label('Importo Rata')
                     ->required()
@@ -80,17 +210,45 @@ class SubscriptionsResource extends Resource
                         return !(str_contains($test?->name, 'Rateale')||str_contains($test?->name, 'rateale'));
                     }),
 
+
                 Forms\Components\DatePicker::make('start_date')
-                    ->required(),
+                    ->required()
+                    ->reactive()
+                    ->live()
+                    ->label('Data iscrizione'),
 
                 Forms\Components\Select::make('statuses_id')->label('Stato Iscrizione')
                     ->relationship(name: 'status', titleAttribute: 'name')
                     ->searchable('name')
                     ->preload(),
-                Forms\Components\DatePicker::make('next_payment'),
+
+                 // ——— ANTEPRIMA ———
+            Forms\Components\Section::make('Anteprima piano rate')
+    //->visible(fn (Get $get) => ($get('payment_type') ?? 'full') === 'installments')
+    ->schema([
+        Forms\Components\View::make('filament.subscriptions.preview')
+            ->live()
+            ->extraAttributes([
+                // hook JS per forzare un re-render del form al volo
+                'x-data' => '{}',
+                'x-init' => "
+                    window.addEventListener('refreshPreview', () => {
+                        // trigger un tick di Livewire (senza GET/redirect)
+                        \$wire.\$refresh();
+                    });
+                ",
+            ])
+            ->viewData(function () {
+                // legge l’ultima simulazione dalla sessione
+                $rows = session('simulated_installments', []);
+                $meta = session('simulated_meta', ['count'=>0,'total'=>0]);
+                return compact('rows','meta');
+            }),
+    ]),
 
             ]);
-    }
+}
+
 
     public static function table(Table $table): Table
     {

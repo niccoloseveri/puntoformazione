@@ -22,7 +22,7 @@ class EditRooms extends EditRecord
         $color= ltrim($data['color'],'#');
         $json =file_get_contents('https://webaim.org/resources/contrastchecker/?fcolor=000000&bcolor='.$color.'&api');
         $djson = json_decode($json,true);
-        $data['textColor'] = $djson['AA']=='pass' ? '#000000' : '#FFFFFF';
+        $data['textColor'] = $djson['AA']=='pass' ? '#FFFFFF' : '#000000';
         return $data;
     }
 }

@@ -33,7 +33,11 @@ class Subscriptions extends Model
         'printed_cont',
         'printed_priv',
         'printed_whats',
-        'is_active'
+        'is_active',
+        'pay_day_of_month',
+        'down_payment',
+        'installments_count',
+        'installments_mode',
 
     ];
 
@@ -44,6 +48,7 @@ class Subscriptions extends Model
      */
     protected $casts = [
         'imp_rata' => MoneyCast::class,
+        'down_payment' => MoneyCast::class,
         //'payment_date' => 'date'
     ];
 
@@ -105,6 +110,14 @@ class Subscriptions extends Model
     public function attendances(): HasMany
     {
         return $this->hasMany(Attendance::class, 'user_id', 'user_id');
+    }
+
+    /**
+     * Get the installments for the subscription.
+     */
+    public function installments(): HasMany
+    {
+        return $this->hasMany(Installment::class);
     }
 
 

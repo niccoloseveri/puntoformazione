@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Arr;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class PaymentsResource extends Resource
 {
@@ -90,6 +91,16 @@ class PaymentsResource extends Resource
                     //Forms\Components\TextInput::make('total_amount')->numeric()->label('Importo Totale'),
                     Forms\Components\DatePicker::make('payment_date')->label('Data Pagamento')->displayFormat('d/m/Y')->required(),
                     Forms\Components\Checkbox::make('is_paid')->label('Pagato')->default(true),
+                    Forms\Components\FileUpload::make('attachment')->label('Ricevuta Bonifico')
+                    ->disk('s3')
+                    ->getUploadedFileNameForStorageUsing(
+                        fn (TemporaryUploadedFile $file, Forms\Get $get) : string => (string) str($get('name').' '.$get('surname').'.'.$file->getClientOriginalExtension())
+                        ->prepend('documento-'),
+                    )
+                    ->visibility('private')
+                    ->openable()
+                    ,
+
                 ])->columns(3)->compact(),
                 Textarea::make('notes')->label('Note')->rows(3)->columnSpanFull(),
             ])
@@ -137,6 +148,7 @@ class PaymentsResource extends Resource
                 Tables\Columns\TextColumn::make('payment_method')->label('Metodo Pagamento')
                     ->sortable()
                     ->searchable(),
+
 
             ])
             ->filters([

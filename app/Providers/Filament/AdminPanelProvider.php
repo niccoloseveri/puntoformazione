@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+use App\Filament\Resources\LessonsResource\Widgets\LessonsCalendarWidget;
 use App\Http\Middleware\RedirectToProperPanelMiddleware;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -20,6 +21,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -54,6 +56,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentSpatieRolesPermissionsPlugin::make(),
+                FilamentFullCalendarPlugin::make()
             ])
             ->resources([
                 config('filament-logger.activity_resource'),
@@ -61,7 +64,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                Widgets\FilamentInfoWidget::class
             ])
             ->middleware([
                 EncryptCookies::class,
