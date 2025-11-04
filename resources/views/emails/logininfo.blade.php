@@ -15,7 +15,8 @@
 
         <!-- Body -->
         <div class="p-6 text-gray-700">
-            <p class="mb-4">Di seguito i dati per registrare la propria presenza alle lezioni:</p>
+            <p class="mb-4">Di seguito i dati per accedere alla piattaforma e registrare la propria presenza alle lezioni:</p>
+            <p class="mb-2"><strong>Link piattaforma:</strong> <a href="https://gestionalepf.pythonsrl.com/login" target="_blank">https://gestionalepf.pythonsrl.com/login</a></p>
             <p class="mb-2"><strong>Nome:</strong> {{$user->name}}</p>
             <p class="mb-2"><strong>Cognome:</strong> {{$user->surname}}</p>
             <p class="mb-2"><strong>Email:</strong> {{$user->email}}</p>

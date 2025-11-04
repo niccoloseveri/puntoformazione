@@ -95,7 +95,7 @@ class CreateSubscriptions extends CreateRecord
 {
     $sub = $this->record;
     $s=Payment_options::find($sub->payment_options_id);
-    ds($s,'payment option');
+    //ds($s,'payment option');
     //ds($sub->payment_options_id);
 
     if (str_contains($s->name,'rateale') || str_contains($s->name,'Rateale')) {
