@@ -89,6 +89,7 @@ class SubscriptionsResource extends Resource
 
                 Forms\Components\TextInput::make('down_payment')
                 ->label('Anticipo')->numeric()->default(0)
+                ->dehydrated(true) // <-- qui la magia: non va nel DB
                 ->suffixIcon('gmdi-euro-r')
                     ->live()
                     ->reactive()

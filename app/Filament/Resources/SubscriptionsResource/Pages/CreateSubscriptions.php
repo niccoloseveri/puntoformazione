@@ -22,6 +22,10 @@ class CreateSubscriptions extends CreateRecord
             ->color('gray')
             ->action(function () {
                 try{
+                    if(session()->has('simulated_installments')){
+                    session()->forget('simulated_installments');
+                    session()->forget('simulated_meta');
+                    }
                     $state = $this->form->getState();
 
                     // 🔎 LOG diagnostico dello state grezzo (solo chiavi + subset valori)
@@ -225,11 +229,9 @@ class CreateSubscriptions extends CreateRecord
                 ->danger()
                 ->send();
     } finally {
-
-
-    // svuota anteprima
-    session()->forget('simulated_installments');
-    session()->forget('simulated_meta');
+        // svuota anteprima
+        session()->forget('simulated_installments');
+        session()->forget('simulated_meta');
     }
 }
 
