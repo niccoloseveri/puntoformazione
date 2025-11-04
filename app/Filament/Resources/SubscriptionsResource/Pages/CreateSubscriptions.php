@@ -23,6 +23,14 @@ class CreateSubscriptions extends CreateRecord
             ->action(function () {
                 try{
                     $state = $this->form->getState();
+
+                    // 🔎 LOG diagnostico dello state grezzo (solo chiavi + subset valori)
+                    Log::info('[Subscriptions][Simulate] Incoming state', [
+                        'keys'   => array_keys($state),
+                        'sample' => array_intersect_key($state, array_flip([
+                        'course','courses_id','start_date','enrolled_at','pay_day_of_month','down_payment','imp_rata','monthly_amount','installments_count'
+                        ])),
+                    ]);
                     //dd($state);
                     // Mappa i nomi reali del tuo form
                     $courseId        = $state['course']            ?? null;   // id corso
@@ -98,13 +106,15 @@ class CreateSubscriptions extends CreateRecord
                     // ricarica la pagina per forzare la lettura della sessione nella view di anteprima
                     $this->dispatch('refreshPreview');
                 }   catch (ValidationException $ve){
-                        $flat = collect($ve->errors())->flatten()->join(' | ');
                             Log::warning('[Subscriptions][Simulate] ValidationException', [
-                                'message' => $flat,
+                                'errors' => $ve->errors(),
                             ]);
+                            $flat = collect($ve->errors())
+                            ->map(fn($msgs, $field) => $field.': '.implode(' | ', $msgs))
+                            ->values()->join(" \n ");
                             \Filament\Notifications\Notification::make()
                                 ->title('Simulazione non valida')
-                                ->body($flat)
+                                ->body($flat ?: 'Errore di validazione.')
                                 ->danger()
                                 ->send();
                     }
@@ -120,7 +130,8 @@ class CreateSubscriptions extends CreateRecord
                             ->danger()
                             ->send();
                     }
-            }),
+            }
+        ),
 
         //\Filament\Actions\CreateAction::make(),
     ];
@@ -223,3 +234,4 @@ class CreateSubscriptions extends CreateRecord
 }
 
 }
+
