@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Mail;
+use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UsersRelationManager extends RelationManager
 {
@@ -55,6 +56,7 @@ class UsersRelationManager extends RelationManager
                 })
             ])
             ->actions([
+                Impersonate::make()->label('Impersona'),
                 Tables\Actions\Action::make('Invia Dati Login')->action(function (User $user) {
                     //$user = $this->getRecord();
                     Mail::to($user)->send(new \App\Mail\SendLoginInfo($user));
