@@ -21,7 +21,7 @@ public function fetchEvents(array $fetchInfo): array
                 fn (Lessons $event) =>
                     EventData::make()
                     ->id($event->id)
-                    ->title(Str::limit($event->classrooms()->first()->name.' - '.$event->name, 14, '...'))
+                    ->title($event->classrooms()->first()->name.' - '.$event->name)
                     ->start($event->starts_at)
                     ->end($event->ends_at)
                     ->backgroundColor($event->rooms()->first()?->color)
