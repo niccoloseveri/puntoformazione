@@ -21,14 +21,14 @@ public function fetchEvents(array $fetchInfo): array
                 fn (Lessons $event) =>
                     EventData::make()
                     ->id($event->id)
-                    ->title(Str::limit($event->courses()->first()->name.' - '.$event->classrooms()->first()->name.' - '.$event->name, 14, '...'))
+                    ->title(Str::limit($event->classrooms()->first()->name.' - '.$event->name, 14, '...'))
                     ->start($event->starts_at)
                     ->end($event->ends_at)
                     ->backgroundColor($event->rooms()->first()?->color)
                     ->borderColor($event->rooms()->first()?->color)
                     ->textColor($event->rooms()->first()?->textColor)
                     //->extendedProps(['ftitle' => htmlspecialchars($event->name)])
-                    ->extendedProps(['ftitle' => $event->name.' - '.$event->teacher()->first()->full_name])
+                    ->extendedProps(['ftitle' => $event->courses()->first()->name.' - '.$event->classrooms()->first()->name.' - '.$event->teacher()->first()->full_name.': '.$event->name])
 
 
             )
