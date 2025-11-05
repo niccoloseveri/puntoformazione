@@ -25,6 +25,7 @@ use Filament\Tables;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
@@ -374,6 +375,14 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make()->iconButton()->tooltip('Modifica'),
                 Impersonate::make(),
+                Tables\Actions\Action::make('Invia Dati Login')->action(function (User $user) {
+                    //$user = $this->getRecord();
+                    Mail::to($user)->send(new \App\Mail\SendLoginInfo($user));
+                    \Filament\Notifications\Notification::make()
+                        ->title('Email inviata con successo a '.$user->email)
+                        ->success()
+                        ->send();
+                })->iconButton()->icon('gmdi-email-r')->tooltip('Invia email con dati di accesso'),
                 /*
                 Tables\Actions\ActionGroup::make([
                     Action::make('priv-print')->url(fn($record) => route('privacy.pdf.stampa',[$record]))->openUrlInNewTab()->label('Stampa informativa Privacy'),

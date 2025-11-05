@@ -55,8 +55,17 @@ class UsersRelationManager extends RelationManager
                 })
             ])
             ->actions([
+                Tables\Actions\Action::make('Invia Dati Login')->action(function (User $user) {
+                    //$user = $this->getRecord();
+                    Mail::to($user)->send(new \App\Mail\SendLoginInfo($user));
+                    \Filament\Notifications\Notification::make()
+                        ->title('Email inviata con successo a '.$user->email)
+                        ->success()
+                        ->send();
+                })->icon('gmdi-email-r')->tooltip('Invia email con dati di accesso'),
                 Tables\Actions\EditAction::make()->url(fn ($record) => UserResource::getUrl('edit', ['record' => $record->id])),
                 Tables\Actions\DeleteAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
