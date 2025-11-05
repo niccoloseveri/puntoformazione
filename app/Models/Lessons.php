@@ -55,6 +55,10 @@ class Lessons extends Model
         return $this->users()->where('role', 'insegnante')->get();
     }
 
+    //teacher
+    public function teacher() : BelongsTo {
+        return $this->belongsTo(User::class, 'users_id');
+    }
 
     //attendance_id
     public function attendances() {
