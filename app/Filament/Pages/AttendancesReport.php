@@ -44,7 +44,7 @@ class AttendancesReport extends Page implements HasTable
             ->sortable('surname')
             ->copyable()
             ,
-            Tables\Columns\TextColumn::make('lessons.name')->label('Lezione')
+            Tables\Columns\TextColumn::make('lesson.name')->label('Lezione')
                 ->sortable(),
             Tables\Columns\TextColumn::make('status')->label('Stato')
 
