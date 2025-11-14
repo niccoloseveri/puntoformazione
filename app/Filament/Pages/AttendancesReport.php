@@ -16,6 +16,7 @@ use Filament\Tables\Table;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\BaseFilter;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Indicator;
 use Filament\Tables\Filters\SelectFilter;
@@ -75,29 +76,105 @@ class AttendancesReport extends Page implements HasTable
                         ->options(Courses::pluck('name', 'id'))
                         ->placeholder('Seleziona un corso')
                         ->native(false),
+
                     Select::make('classrooms_id')->label('Classe')
                         ->options(fn (Get $get):Collection => Classrooms::query()
                             ->where('course_id', $get('courses_id'))
                             ->pluck('name', 'id')
                         )
                         ->preload()
-                        ->native(false)
+                        ->native(false),
+
+                    Select::make('lessons_id')->label('Lezione')
+                        ->options(fn (Get $get):Collection => \App\Models\Lessons::query()
+                            ->when($get('classrooms_id') && $get('courses_id'), function (Builder $query) use ($get) {
+                                $query = $query
+                                    ->where('classrooms_id', $get('classrooms_id'))
+                                    ->where('courses_id', $get('courses_id'));
+                                })
+                            ->when(!$get('classrooms_id') && $get('courses_id'), function (Builder $query) use ($get) {
+                                $query = $query->where('courses_id', $get('courses_id'));
+                            })
+
+                            ->pluck('name', 'id')
+                        )
+                        //->live()
+                        ->preload()
+                        ->native(false),
                 ])
-                ->columns(2)
+                ->columns(3)
                 ->columnSpanFull()
                 ->query(function (Builder $query, array $data):Builder{
-                    if (isset($data['courses_id'])) {
-                        $query->whereHas('lesson', function (Builder $query) use ($data) {
+                // CLASSICO
+                    if (isset($data['courses_id']) && isset($data['classrooms_id']) && isset($data['lessons_id'])) {
+                        // tutto selezionato
+                       $query = $query->whereHas('lesson', function (Builder $query) use ($data){
+                            $query->where('courses_id', $data['courses_id'])
+                            ->where('classrooms_id', $data['classrooms_id']);
+                        })->where('lesson_id', $data['lessons_id']);
+                    } elseif (isset($data['courses_id']) && isset($data['classrooms_id']) && !isset($data['lessons_id'])) {
+                        // corso + classe selezionati, lezione no
+                        $query = $query->whereHas('lesson', function (Builder $query) use ($data){
+                            $query->where('courses_id', $data['courses_id'])
+                            ->where('classrooms_id', $data['classrooms_id']);
+                        });
+                    } elseif (isset($data['courses_id']) && !isset($data['classrooms_id']) && isset($data['lessons_id'])) {
+                        // corso + lezione selezionati, classe no
+                        $query = $query->whereHas('lesson', function (Builder $query) use ($data){
+                            $query->where('courses_id', $data['courses_id']);
+                        })->where('lesson_id', $data['lessons_id']);
+                    } elseif (!isset($data['courses_id']) && !isset($data['classrooms_id']) && isset($data['lessons_id'])) {
+                        // solo lezione selezionata
+                        $query = $query->whereHas('lesson')->where('lesson_id', $data['lessons_id']);
+                    } elseif (isset($data['courses_id']) && !isset($data['classrooms_id']) && !isset($data['lessons_id'])) {
+                        // solo corso selezionato
+                        $query = $query->whereHas('lesson', function (Builder $query) use ($data){
                             $query->where('courses_id', $data['courses_id']);
                         });
                     }
-                    if (isset($data['classrooms_id'])) {
-                        $query->whereHas('lesson', function (Builder $query) use ($data) {
-                            $query->where('classrooms_id', $data['classrooms_id']);
-                        });
+                    /*
+                        if (isset($data['classrooms_id'])) {
+                            // corso + classe selezionati
+                            if (isset($data['lessons_id'])) {
+                                // corso + classe + lezione selezionati
+                                $query = $query->where('courses_id', $data['courses_id'])->where('classrooms_id', $data['classrooms_id'])->where('lessons_id', $data['lessons_id']);
+                            } else {
+                                // corso + classe selezionati
+                                $query = $query->whereHas('lesson', function (Builder $query) use ($data) {
+                                    $query->where('courses_id', $data['courses_id'])
+                                          ->where('classrooms_id', $data['classrooms_id']);
+                                });
+                            }
+                        } else {
+                            // solo corso selezionato
+                            $query = $query->whereHas('lesson', function (Builder $query) use ($data) {
+                                $query->where('courses_id', $data['courses_id']);
+                            });
+                        }
+                    }
+                        */
+                    return $query;
+
+                /* NUOVO
+                    if(isset($data['lessons_id'])){
+                    //lezione sì
+                        ds('LEZIONE SELEZIONATA');
+                        $query = $query->where('lesson_id', $data['lessons_id']);
+
+                        if(isset($data['courses_id'])){
+                        //lez+corso sì
+                            ds('CORSO+LEZ SELEZIONATA - no classe');
+                            $query = $query->where('courses_id', $data['courses_id'])->where('lessons_id', $data['lessons_id']);
+                        }
+                    }else{
+                        ds('LEZIONE NON SELEZIONATA');
+
+                        //lezione no
                     }
                     return $query;
+                */
                 })
+
                 ->indicateUsing(function (array $data) : array {
                     $indicators=[];
                     if($data['courses_id'] ?? null){
@@ -108,22 +185,12 @@ class AttendancesReport extends Page implements HasTable
                         $indicators[] = Indicator::make('Classe: '.Classrooms::find($data['classrooms_id'])->name)
                         ->removeField('classrooms_id');
                     }
+                    if($data['lessons_id'] ?? null){
+                        $indicators[] = Indicator::make('Lezione: '.\App\Models\Lessons::find($data['lessons_id'])->name)
+                        ->removeField('lessons_id');
+                    }
                     return $indicators;
                 }),
-                //lesson filter
-                Filter::make('lessons_id')
-                ->form([
-                    Select::make('lessons_id')->label('Lezione')
-                        ->options(fn (Get $get):Collection => \App\Models\Lessons::query()
-                            ->where('courses_id', $get('courses_id'))
-                            ->where('classrooms_id', $get('classrooms_id'))
-                            ->pluck('name', 'id')
-                        )
-                        ->placeholder('Seleziona una lezione')
-                        ->preload()
-                        ->native(false),
-                ])
-
                 ],layout:FiltersLayout::AboveContent)
            ;
 
