@@ -25,8 +25,10 @@ class AttendancesRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')->label('Studente')
-                    ->relationship('user', 'full_name',modifyQueryUsing: fn (Builder $query) => $query->whereHas('courses', function (Builder $query) {
-                        $query->where('courses.id','like',$this->getOwnerRecord()->courses()->first()->id);
+                    ->relationship('user', 'full_name',modifyQueryUsing: fn (Builder $query) => $query->whereHas('classrooms', function (Builder $query) {
+                        //ds($this->getOwnerRecord()->classrooms()->first());
+                        $query->where('classrooms.id',$this->getOwnerRecord()->classrooms()->first()->id)
+                        ->where('classrooms.course_id',$this->getOwnerRecord()->courses()->first()->id);
                     })->orderBy('surname'))
                     ->searchable('name','surname','full_name','email')
                     ->preload()
