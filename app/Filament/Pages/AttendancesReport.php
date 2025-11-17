@@ -45,10 +45,10 @@ class AttendancesReport extends Page implements HasTable
             ->sortable('surname')
             ->copyable()
             ,
-            Tables\Columns\TextColumn::make('lesson.id')->label('Corso')
+            Tables\Columns\TextColumn::make('lesson.id')->label('Corso - Classe ')
                 ->formatStateUsing(function ($record) {
                     //dd($record->lesson->courses->name);
-                    return $record->lesson->courses->name ?? '';
+                    return $record->lesson->courses->name.' - '.$record->lesson->classrooms->name ?? '';
                 })
                 ->html()
                 ->sortable(),
