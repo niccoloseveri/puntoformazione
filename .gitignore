@@ -27,3 +27,5 @@ vendor/filament/.DS_Store
 .DS_Store
 .DS_Store
 laradumps.yaml
+app/.DS_Store
+storage/.DS_Store
