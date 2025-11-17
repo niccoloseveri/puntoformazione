@@ -32,13 +32,17 @@ class AttendancesRelationManager extends RelationManager
                     ->preload()
                     ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->surname} {$record->name}")
                     ->required(),
+                Forms\Components\DateTimePicker::make('attend_at')->label('Orario ingresso')
+                    ->required(),
+                //status
+                Forms\Components\TextInput::make('status')->default('present')->readOnly()
+                    ->maxLength(255),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
-
             ->recordTitleAttribute('user_id')
             ->modifyQueryUsing(function (Builder $query) {
                 $query->leftJoinRelationship('user');
