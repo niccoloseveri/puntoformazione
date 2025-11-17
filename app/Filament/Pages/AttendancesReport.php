@@ -22,6 +22,7 @@ use Filament\Tables\Filters\Indicator;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection as Collection;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 
 class AttendancesReport extends Page implements HasTable
 {
@@ -44,6 +45,13 @@ class AttendancesReport extends Page implements HasTable
             ->sortable('surname')
             ->copyable()
             ,
+            Tables\Columns\TextColumn::make('lesson.id')->label('Corso')
+                ->formatStateUsing(function ($record) {
+                    //dd($record->lesson->courses->name);
+                    return $record->lesson->courses->name ?? '';
+                })
+                ->html()
+                ->sortable(),
             Tables\Columns\TextColumn::make('lesson.name')->label('Lezione')
                 ->sortable(),
             Tables\Columns\TextColumn::make('status')->label('Stato')
@@ -68,6 +76,7 @@ class AttendancesReport extends Page implements HasTable
                 }),
            ])
            ->filters([
+                //DateRangeFilter::make('lesson.starts_at')->label('Data Lezioni')-,
                 Filter::make('courses_id')
                 ->form([
                     Select::make('courses_id')->label('Corso')
