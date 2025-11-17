@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\LessonsResource\RelationManagers;
 
+use App\Filament\Resources\LessonsResource;
 use App\Models\Attendance;
 use Carbon\Carbon;
 use Filament\Forms;

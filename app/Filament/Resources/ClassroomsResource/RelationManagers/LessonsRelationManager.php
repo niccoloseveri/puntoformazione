@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ClassroomsResource\RelationManagers;
 
+use App\Filament\Resources\LessonsResource;
 use App\Models\Classrooms;
 use App\Models\User;
 use Filament\Forms;
@@ -96,7 +97,7 @@ class LessonsRelationManager extends RelationManager
                     ->form(\LaraZeus\Qr\Facades\Qr::getFormSchema('qr-data', 'qr-options'))
                     ->action(fn($data) => dd($data))
                     ->icon('gmdi-qr-code-2'),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->url(fn (Model $record): string => LessonsResource::getUrl('edit', ['record' => $record])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
