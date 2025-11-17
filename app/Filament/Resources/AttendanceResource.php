@@ -37,12 +37,15 @@ class AttendanceResource extends Resource
                     ->preload()
                     ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->surname} {$record->name}")
                     ->required(),
-                Forms\Components\TextInput::make('lesson_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('status')
+                Forms\Components\Select::make('lesson_id')->label('Lezione')
+                    ->relationship('lesson', 'name',modifyQueryUsing: fn (Builder $query) => $query->orderBy('starts_at', 'desc'))
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->name} - ".Carbon::create($record->starts_at)->format('d/m/Y'))
+                    ->searchable('name')
+                    ->preload()
+                    ->required(),
+                Forms\Components\TextInput::make('status')->label('Stato')->default('present')->readOnly()
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('attend_at')
+                Forms\Components\DateTimePicker::make('attend_at')->label('Orario ingresso')
                     ->required(),
             ]);
     }

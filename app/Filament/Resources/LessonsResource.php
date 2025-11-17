@@ -193,8 +193,9 @@ class LessonsResource extends Resource
     {
         return [
             //
-            RelationManagers\SubscriptionsRelationManager::class,
+
             RelationManagers\AttendancesRelationManager::class,
+            RelationManagers\SubscriptionsRelationManager::class,
         ];
     }
 
