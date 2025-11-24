@@ -49,22 +49,29 @@ class UsersRelationManager extends RelationManager
             ->headerActions([
                 //Tables\Actions\CreateAction::make(),
                 Action::make('Invia Dati Login')->action(function () {
+                    $successCount = 0;
                     foreach($this->getOwnerRecord()->users()->get() as $data){
                         Mail::to($data)->send(new \App\Mail\SendLoginInfo($data));
+                        $successCount++;
                     }
+                    \Filament\Notifications\Notification::make()
+                        ->title("Email inviate con successo a $successCount utenti")
+                        ->success()
+                        ->send();
                     //Mail::to($this->user)->send(new \App\Mail\SendLoginInfo($this->user));
                 })
             ])
             ->actions([
                 Impersonate::make()->label('Impersona'),
-                Tables\Actions\Action::make('Invia Dati Login')->action(function (User $user) {
-                    //$user = $this->getRecord();
+                Tables\Actions\Action::make('Invia Dati Login_single')->action(function (User $user) {
+
                     Mail::to($user)->send(new \App\Mail\SendLoginInfo($user));
                     \Filament\Notifications\Notification::make()
                         ->title('Email inviata con successo a '.$user->email)
                         ->success()
                         ->send();
-                })->icon('gmdi-email-r')->tooltip('Invia email con dati di accesso'),
+                })->icon('gmdi-email-r')->tooltip('Invia email con dati di accesso')->label('Invia Dati Login'),
+
                 Tables\Actions\EditAction::make()->url(fn ($record) => UserResource::getUrl('edit', ['record' => $record->id])),
                 Tables\Actions\DeleteAction::make(),
 
