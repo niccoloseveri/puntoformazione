@@ -2,12 +2,15 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Imports\InstallmentImporter;
 use App\Filament\Resources\PaymentsResource\Pages;
 use App\Filament\Resources\PaymentsResource\RelationManagers;
 use App\Models\Classrooms;
 use App\Models\Courses;
+use App\Models\Installment;
 use App\Models\Payments;
 use Carbon\Carbon;
+use EightyNine\ExcelImport\ExcelImportAction;
 use Filament\Forms;
 use Filament\Forms\Components\Livewire;
 use Filament\Forms\Components\Section;
@@ -57,9 +60,13 @@ class PaymentsResource extends Resource
                     )
                     ->options(
                         fn($get) =>
-                            Courses::whereHas('users', function ($query) use ($get) {
+                            ds(Courses::whereHas('users', function ($query) use ($get) {
                                 $query->where('users.id', $get('users_id'));
-                            })->get()->pluck('name', 'id')
+                            })->whereHas('subscriptions', function ($query) use ($get) {
+                                $query->where('user_id',$get('users_id'));
+                            })->get()
+                            //->pluck('name', 'id')
+                            )
                     )
                     ->required(),
                 Forms\Components\Select::make('classrooms_id')->label('Classe')
@@ -187,6 +194,10 @@ class PaymentsResource extends Resource
             ],layout:FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),
+            ])
+            ->headerActions([
+                ExcelImportAction::make('Importa Rate')
+                ->importer(InstallmentImporter::class),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

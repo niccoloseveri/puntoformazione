@@ -16,6 +16,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Get;
 use Filament\Tables;
 use Filament\Tables\Actions\EditAction as ActionsEditAction;
+use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Table;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -63,8 +64,10 @@ class PaymentsReport extends Page implements HasTable
             //amount_paid
             Tables\Columns\TextColumn::make('amount_paid')->label('Importo Pagato')
                 ->sortable()
-                ->money('EUR'),
+                ->money('EUR')
+                ->summarize(Sum::make()->label('Totale:')->money('EUR', divideBy:100)),
            ])
+           ->defaultPaginationPageOption(50)
            ->filters([
                 /*
                 SelectFilter::make('course')
