@@ -382,7 +382,8 @@ class UserResource extends Resource
                         ->title('Email inviata con successo a '.$user->email)
                         ->success()
                         ->send();
-                })->iconButton()->icon('gmdi-email-r')->tooltip('Invia email con dati di accesso'),
+                })->iconButton()->icon('gmdi-email-r')->tooltip('Invia email con dati di accesso')
+                ->authorize('delete', User::class),
                 /*
                 Tables\Actions\ActionGroup::make([
                     Action::make('priv-print')->url(fn($record) => route('privacy.pdf.stampa',[$record]))->openUrlInNewTab()->label('Stampa informativa Privacy'),
