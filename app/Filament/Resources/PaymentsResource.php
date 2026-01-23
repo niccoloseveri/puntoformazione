@@ -196,8 +196,8 @@ class PaymentsResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->headerActions([
-                ExcelImportAction::make('Importa Rate')
-                ->importer(InstallmentImporter::class),
+                /*ExcelImportAction::make('Importa Rate')
+                ->importer(InstallmentImporter::class),*/
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
