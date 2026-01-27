@@ -60,13 +60,14 @@ class PaymentsResource extends Resource
                     )
                     ->options(
                         fn($get) =>
-                            ds(Courses::whereHas('users', function ($query) use ($get) {
+                            ///ds(
+                                Courses::whereHas('users', function ($query) use ($get) {
                                 $query->where('users.id', $get('users_id'));
                             })->whereHas('subscriptions', function ($query) use ($get) {
                                 $query->where('user_id',$get('users_id'));
                             })->get()
                             //->pluck('name', 'id')
-                            )
+                            //)
                     )
                     ->required(),
                 Forms\Components\Select::make('classrooms_id')->label('Classe')
