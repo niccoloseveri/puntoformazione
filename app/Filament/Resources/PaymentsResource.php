@@ -66,7 +66,7 @@ class PaymentsResource extends Resource
                             })->whereHas('subscriptions', function ($query) use ($get) {
                                 $query->where('user_id',$get('users_id'));
                             })->get()
-                            //->pluck('name', 'id')
+                            ->pluck('name', 'id')
                             //)
                     )
                     ->required(),
